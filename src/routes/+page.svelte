@@ -1,24 +1,38 @@
 <script>
   import { onMount } from "svelte";
-  import { initMap, toggleMode, draw, place, activeData } from "$lib/map.js";
   import "$lib/app.css";
   import "$lib/base.css";
 
   let map;
   let L; // Keep Leaflet reference available
-  let nodes = [];
+  let graph = { main: {} };
   let is_running = { mains: false };
   let interval;
   let clickHandler;
+  let location = []
+  
+  let toggleMode;
+  let draw;
+  let place;
 
   onMount(async () => {
     try {
+      // Lazy import to avoid SSR issues
+      const module = await import("$lib/map.js");
+      const { initMap, activeData } = module;
+      toggleMode = module.toggleMode;
+      draw = module.draw;
+      place = module.place;
+      
       // Assign to the local L so other functions can use it
+      await import("leaflet/dist/leaflet.css");
       L = (await import("leaflet")).default;
       map = await initMap("map", "/Manhattan.geojson", L);
+      
     } catch (err) {
       console.error("Error initializing map:", err);
     }
+
   });
 
   function toggle(func) {
@@ -33,9 +47,9 @@
       if (is_running.mains) {
         if (map) {
           clickHandler = (e) => {
-            nodes = place(map,nodes,e.latlng.lat,e.latlng.lng,nodes.length === 0 ? [] : nodes[nodes.length - 1],
+            graph.main = place(map,graph.main,e.latlng.lat,e.latlng.lng,Object.keys(graph.main).length === 0 ? [] : Object.values(graph.main)[Object.keys(graph.main).length - 1],
             );
-            draw(map, nodes);
+            draw(map, graph.main);
           };
           map.on("click", clickHandler);
         }
@@ -46,12 +60,15 @@
         }
       }
     } else if (func === "print") {
-      console.log(nodes);
+      console.log(graph.main);
     } else if (func === "undo") {
-      nodes.pop();
-      nodes = [...nodes]; // Trigger reactivity
-      if (map) {
-        draw(map, nodes);
+      const ids = Object.keys(graph.main).map(Number).sort((a, b) => b - a);
+      if (ids.length > 0) {
+        delete graph.main[ids[0]];
+        graph = { ...graph }; // Trigger reactivity
+        if (map) {
+          draw(map, graph.main);
+        }
       }
     }
   }
@@ -61,7 +78,7 @@
 
 <div id="ui">
   <div id="drop">
-    <button on:click={toggleMode} class="toggle" aria-label="mode">
+    <button on:click={() => toggleMode()} class="toggle" aria-label="mode">
       <div class="in"></div>
     </button>
     <button on:click={() => toggle("Dev")} class="toggle">
@@ -86,14 +103,15 @@
   </div>
 
   <div id="inspect">
-    <h1 id="name">{$activeData?.properties?.name ?? "Click on a tiles"}</h1>
+    <h1 id="name">{"Click on a tiles"}</h1>
     <div id="subinspect">
-      <h2 id="priority">{$activeData?.properties?.priority ?? "priority"}</h2>
-      <h2 id="store">{$activeData?.properties?.store ?? "store"}</h2>
-      <h2 id="prod">{$activeData?.properties?.prod ?? "production"}</h2>
-      <h2 id="dem">{$activeData?.properties?.dem ?? "demand"}</h2>
-    </div>
-    <h2 id="pos">{$activeData?.properties?.pos ?? "position"}</h2>
+    <h2 id="priority">priority</h2>
+    <h2 id="store">store</h2>
+    <h2 id="prod">production</h2>
+    <h2 id="dem">demand</h2>
+  </div>
+
+  <h2 id="pos">position</h2>
   </div>
 </div>
 

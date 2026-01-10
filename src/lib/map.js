@@ -1,14 +1,14 @@
 // map.js
+import { latLng } from 'leaflet';
 import { writable } from 'svelte/store';
 
-export let map, Light, Dark, layer, active, darkMode = false, debug = false;
+
+export let map, Light, Dark, layer, active, darkMode = false, debug = false, graph;
 export const activeData = writable(null);
-let manualLayerGroup;
 
 export async function initMap(containerId, geojsonUrl) {
   // browser-only import
-  const L = (await import('leaflet')).default;
-  await import('leaflet/dist/leaflet.css');
+  L = (await import('leaflet')).default;
 
   map = L.map(containerId);
 
@@ -22,6 +22,9 @@ export async function initMap(containerId, geojsonUrl) {
     subdomains: 'abcd',
     maxZoom: 19
   });
+
+  // Initialize graph layer group
+  graph = L.layerGroup();
 
   // Fetch GeoJSON
   const res = await fetch(geojsonUrl);
@@ -55,6 +58,8 @@ export async function initMap(containerId, geojsonUrl) {
 
 
       });
+    
+      //L.circleMarker(latLng(feature.pos[0] , feature.pos[1] , 0)).addTo(graph);
     }
   }).addTo(map);
 
@@ -68,9 +73,6 @@ export async function initMap(containerId, geojsonUrl) {
   const latShift = (northEast.lat - southWest.lat) * -0.4;
   map.setView([center.lat + latShift, center.lng], map.getZoom());
   map.setMinZoom(map.getBoundsZoom(bounds));
-
-  // Initialize manual layer group
-  manualLayerGroup = L.layerGroup().addTo(map);
 
   return map;
 }
@@ -95,18 +97,64 @@ export function toggleMode() {
       fillOpacity: darkMode ? 0.2 : 0.5
     });
   });
+
+  // Toggle graph visibility
+  if (darkMode) {
+    if (graph) graph.addTo(map);
+  } else {
+    if (graph) graph.remove();
+  }
+}
+
+
+//--MARKER FUNCTIONS--//
+export function addMarker(lat, lng, options = {}) {
+  const marker = L.circleMarker([lat, lng], {
+    radius: options.radius || 8,
+    color: options.color || 'blue',
+    fillColor: options.fillColor || 'blue',
+    fillOpacity: options.fillOpacity || 0.8,
+    ...options
+  }).addTo(markerLayerGroup);
+  
+  if (options.popup) {
+    marker.bindPopup(options.popup);
+  }
+  
+  return marker;
+}
+
+export function showMarkers() {
+  if (markerLayerGroup && map) {
+    markerLayerGroup.addTo(map);
+  }
+}
+
+export function hideMarkers() {
+  if (markerLayerGroup && map) {
+    markerLayerGroup.remove();
+  }
+}
+
+export function clearMarkers() {
+  if (markerLayerGroup) {
+    markerLayerGroup.clearLayers();
+  }
 }
 
 
 // Manual Graph Logic
-export function draw(map, nodes) {
+export function draw(map, graphMain) {
   // Ensure the layer group exists
-  if (!manualLayerGroup) {
-    manualLayerGroup = L.layerGroup().addTo(map);
+  if (!graph) {
+    graph = L.layerGroup();
   }
 
   // Clear existing manual layers to redraw
-  manualLayerGroup.clearLayers();
+  graph.clearLayers();
+
+  // Get nodes as array
+  const nodes = Object.values(graphMain);
 
   // Draw all nodes and edges from current nodes array
   nodes.forEach((node, index) => {
@@ -115,8 +163,7 @@ export function draw(map, nodes) {
       radius: 6,
       color: "red",
       fillColor: "blue",
-      fillOpacity: 0.8,
-    }).addTo(manualLayerGroup);
+    }).addTo(graph);
 
     marker.on('click', () => {
       console.log('Node clicked:', node);
@@ -131,41 +178,54 @@ export function draw(map, nodes) {
           [prevNode.lat, prevNode.lng],
         ],
         { color: "red", weight: 3 },
-      ).addTo(manualLayerGroup);
+      ).addTo(graph);
     }
 
     // Also draw explicit neighbors if any
-    node.neighbors.forEach(neighborId => {
-      const neighbor = nodes.find(n => n.id === neighborId);
-      if (neighbor) {
-        L.polyline(
-          [[node.lat, node.lng], [neighbor.lat, neighbor.lng]],
-          { color: "red", weight: 3 }
-        ).addTo(manualLayerGroup);
-      }
-    });
+    if (Array.isArray(node.neighbors)) {
+      node.neighbors.forEach(neighborId => {
+        const neighbor = graphMain[neighborId];
+        if (neighbor) {
+          L.polyline(
+            [[node.lat, node.lng], [neighbor.lat, neighbor.lng]],
+            { color: "red", weight: 3 }
+          ).addTo(graph);
+        }
+      });
+    }
   });
 }
 
-export function place(map, nodes, lat, lng, neighbors) {
-  const id = nodes.length;
-  const vert = { id, lat, lng, neighbors };
+export function place(map, graphMain, lat, lng, neighbors) {
+  const id = Object.keys(graphMain).length;
+  
+  // Normalize neighbors to an array
+  let neighborIds = [];
+  if (Array.isArray(neighbors)) {
+    neighborIds = [...neighbors];
+  } else if (neighbors && typeof neighbors === 'object' && neighbors.id !== undefined) {
+    neighborIds = [neighbors.id];
+  }
+  
+  const vert = { id, lat, lng, neighbors: neighborIds };
   const range = 0.0001;
 
-  const exists = nodes.find(
+  const exists = Object.values(graphMain).find(
     (n) =>
       Math.abs(n.lat - vert.lat) <= range &&
       Math.abs(n.lng - vert.lng) <= range,
   );
 
   if (exists) {
+    if (!Array.isArray(exists.neighbors)) {
+      exists.neighbors = [];
+    }
     exists.neighbors.push(id);
     vert.neighbors.push(exists.id);
-    nodes.push(vert);
+    graphMain[id] = vert;
   } else {
-    nodes.push(vert);
+    graphMain[id] = vert;
   }
 
-  return nodes;
-  draw(map, nodes);
+  return graphMain;
 }
