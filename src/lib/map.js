@@ -1,8 +1,9 @@
 // map.js
+import { writable } from 'svelte/store';
+
 export let map, Light, Dark, layer, active, darkMode = false, debug = false;
+export const activeData = writable(null);
 let manualLayerGroup;
-let clickHandler;
-let currentNodes;
 
 export async function initMap(containerId, geojsonUrl) {
   // browser-only import
@@ -28,16 +29,31 @@ export async function initMap(containerId, geojsonUrl) {
 
   layer = L.geoJSON(geojson, {
     style: { color: 'black', weight: 1, fillOpacity: 0.5, fillColor: 'red' },
+
+    //click thing
     onEachFeature: (feature, lyr) => {
       lyr.on('click', () => {
         lyr.setStyle({ fillColor: 'green' });
 
         if (active) active.setStyle({ fillColor: darkMode ? 'orange' : 'red' });
         active = lyr;
+        activeData.set(feature);
 
-        const name = feature.properties.BASE_BBL || 'Unknown';
-        const nameEl = document.getElementById('name');
-        if (nameEl) nameEl.innerText = name;
+        function setText(id, value, fallback = "Null") {
+          const el = document.getElementById(id);
+          if (el) el.innerText = value ?? fallback;
+        }
+
+        const props = feature.properties || {};
+
+        setText("name", props.name, "Click on a tile");
+        setText("priority", `Priority: ${props.priority}`);
+        setText("store", `Store: ${props.store}`);
+        setText("prod", `Prod: ${props.prod}`);
+        setText("dem", `Dem: ${props.dem}`);
+        setText("pos", `${props.pos}`);
+
+
       });
     }
   }).addTo(map);
@@ -83,58 +99,30 @@ export function toggleMode() {
 
 
 // Manual Graph Logic
-export function ManualGraph(L, map, nodes, onNodeAdded) {
-  if (!map) return { map, nodes };
-  currentNodes = nodes;
-
-  // 1. Ensure the layer group exists
+export function draw(map, nodes) {
+  // Ensure the layer group exists
   if (!manualLayerGroup) {
     manualLayerGroup = L.layerGroup().addTo(map);
   }
 
-  // 2. Clear existing manual layers to redraw
+  // Clear existing manual layers to redraw
   manualLayerGroup.clearLayers();
 
-  // 3. Setup click listener once
-  if (!clickHandler) {
-    clickHandler = (e) => {
-      const id = currentNodes.length;
-      const vert = { id, lat: e.latlng.lat, lng: e.latlng.lng, neighbors: [] };
-      const range = 0.0001;
-
-      const exists = currentNodes.find(
-        (n) =>
-          Math.abs(n.lat - vert.lat) <= range &&
-          Math.abs(n.lng - vert.lng) <= range,
-      );
-
-      if (exists) {
-        exists.neighbors.push(id);
-        vert.neighbors.push(exists.id);
-        currentNodes.push(vert);
-      } else {
-        currentNodes.push(vert);
-      }
-
-      if (onNodeAdded) onNodeAdded([...currentNodes]);
-      // Redraw after addition
-      ManualGraph(L, map, currentNodes);
-    };
-    map.on("click", clickHandler);
-  }
-
-  // 4. Redraw all nodes and edges from current nodes array
+  // Draw all nodes and edges from current nodes array
   nodes.forEach((node, index) => {
     // Draw Node
-    L.circleMarker([node.lat, node.lng], {
+    const marker = L.circleMarker([node.lat, node.lng], {
       radius: 6,
       color: "red",
       fillColor: "blue",
       fillOpacity: 0.8,
     }).addTo(manualLayerGroup);
 
+    marker.on('click', () => {
+      console.log('Node clicked:', node);
+    });
+
     // Draw Edges (to neighbors or previous node based on original logic)
-    // Original logic: if (id !== 0) drawEdge(L, vert, nodes[id - 1]);
     if (index > 0) {
       const prevNode = nodes[index - 1];
       L.polyline(
@@ -157,6 +145,27 @@ export function ManualGraph(L, map, nodes, onNodeAdded) {
       }
     });
   });
+}
 
-  return { map, nodes };
+export function place(map, nodes, lat, lng, neighbors) {
+  const id = nodes.length;
+  const vert = { id, lat, lng, neighbors };
+  const range = 0.0001;
+
+  const exists = nodes.find(
+    (n) =>
+      Math.abs(n.lat - vert.lat) <= range &&
+      Math.abs(n.lng - vert.lng) <= range,
+  );
+
+  if (exists) {
+    exists.neighbors.push(id);
+    vert.neighbors.push(exists.id);
+    nodes.push(vert);
+  } else {
+    nodes.push(vert);
+  }
+
+  return nodes;
+  draw(map, nodes);
 }

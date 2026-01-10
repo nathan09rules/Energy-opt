@@ -80,3 +80,15 @@ html[data-theme="dark"] {
 #inspect #name{
     text-align: center;
 }
+
+#subinspect {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 50%;
+    padding-left: 30px;
+    height: 100px;
+}
+
+#pos{
+    text-align: center;
+}

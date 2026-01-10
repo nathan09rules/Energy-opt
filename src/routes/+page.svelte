@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { initMap, toggleMode, ManualGraph, active } from "$lib/map.js";
+  import { initMap, toggleMode, draw, place, activeData } from "$lib/map.js";
   import "$lib/app.css";
   import "$lib/base.css";
 
@@ -9,6 +9,7 @@
   let nodes = [];
   let is_running = { mains: false };
   let interval;
+  let clickHandler;
 
   onMount(async () => {
     try {
@@ -28,23 +29,29 @@
     } else if (func === "mains") {
       is_running.mains = !is_running.mains;
 
+      //main wires
       if (is_running.mains) {
-        if (map && L) {
-          // Initialize manual drawing mode once
-          ManualGraph(L, map, nodes, (updatedNodes) => {
-            nodes = updatedNodes;
-          });
+        if (map) {
+          clickHandler = (e) => {
+            nodes = place(map,nodes,e.latlng.lat,e.latlng.lng,nodes.length === 0 ? [] : nodes[nodes.length - 1],
+            );
+            draw(map, nodes);
+          };
+          map.on("click", clickHandler);
         }
       } else {
-        // Option to disable drawing could be added here
+        if (map && clickHandler) {
+          map.off("click", clickHandler);
+          clickHandler = null;
+        }
       }
     } else if (func === "print") {
       console.log(nodes);
     } else if (func === "undo") {
       nodes.pop();
       nodes = [...nodes]; // Trigger reactivity
-      if (map && L) {
-        ManualGraph(L, map, nodes); // This will clear and redraw based on nodes.pop()
+      if (map) {
+        draw(map, nodes);
       }
     }
   }
@@ -79,7 +86,14 @@
   </div>
 
   <div id="inspect">
-    <h1>{active.nodes}</h1>
+    <h1 id="name">{$activeData?.properties?.name ?? "Click on a tiles"}</h1>
+    <div id="subinspect">
+      <h2 id="priority">{$activeData?.properties?.priority ?? "priority"}</h2>
+      <h2 id="store">{$activeData?.properties?.store ?? "store"}</h2>
+      <h2 id="prod">{$activeData?.properties?.prod ?? "production"}</h2>
+      <h2 id="dem">{$activeData?.properties?.dem ?? "demand"}</h2>
+    </div>
+    <h2 id="pos">{$activeData?.properties?.pos ?? "position"}</h2>
   </div>
 </div>
 
