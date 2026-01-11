@@ -1,38 +1,34 @@
 <script>
   import { onMount } from "svelte";
+  import { get } from "svelte/store";
   import "$lib/app.css";
   import "$lib/base.css";
 
+  import {
+    initMap,
+    toggleMode,
+    getL,
+    getGraphLayer,
+    getMarkerLayerGroup,
+  } from "$lib/map.js";
+  import { place, draw } from "$lib/graph.js";
+  import { addMarker } from "$lib/markers.js";
+  import { graph, activeModel } from "$lib/stores.js";
+
   let map;
-  let L; // Keep Leaflet reference available
-  let graph = { main: {} };
+  let L;
   let is_running = { mains: false };
-  let interval;
   let clickHandler;
-  let location = []
-  
-  let toggleMode;
-  let draw;
-  let place;
 
   onMount(async () => {
     try {
-      // Lazy import to avoid SSR issues
-      const module = await import("$lib/map.js");
-      const { initMap, activeData } = module;
-      toggleMode = module.toggleMode;
-      draw = module.draw;
-      place = module.place;
-      
-      // Assign to the local L so other functions can use it
       await import("leaflet/dist/leaflet.css");
-      L = (await import("leaflet")).default;
-      map = await initMap("map", "/Manhattan.geojson", L);
-      
+      // initMap handles L import if needed, but we pass it nothing initially or wait
+      map = await initMap("map", "/Manhattan.geojson");
+      L = getL();
     } catch (err) {
       console.error("Error initializing map:", err);
     }
-
   });
 
   function toggle(func) {
@@ -47,9 +43,34 @@
       if (is_running.mains) {
         if (map) {
           clickHandler = (e) => {
-            graph.main = place(map,graph.main,e.latlng.lat,e.latlng.lng,Object.keys(graph.main).length === 0 ? [] : Object.values(graph.main)[Object.keys(graph.main).length - 1],
-            );
-            draw(map, graph.main);
+            // Get current active node to connect FROM
+            const currentActive = get(activeModel);
+
+            // Should valid 'main' node be neighbor?
+            let neighbor = null;
+            if (currentActive && currentActive.id !== undefined) {
+              neighbor = currentActive;
+            } else {
+              // Fallback to last node if nothing selected (optional, or force user to select)
+              const g = get(graph);
+              const keys = Object.keys(g.mains);
+              if (keys.length > 0) {
+                neighbor = g.mains[keys[keys.length - 1]];
+              }
+            }
+
+            graph.update((g) => {
+              g.mains = place(
+                map,
+                g.mains,
+                e.latlng.lat,
+                e.latlng.lng,
+                neighbor,
+              );
+              // Draw triggers redraw
+              draw(map, g.mains, L, getGraphLayer());
+              return g;
+            });
           };
           map.on("click", clickHandler);
         }
@@ -60,16 +81,19 @@
         }
       }
     } else if (func === "print") {
-      console.log(graph.main);
+      console.log(get(graph));
     } else if (func === "undo") {
-      const ids = Object.keys(graph.main).map(Number).sort((a, b) => b - a);
-      if (ids.length > 0) {
-        delete graph.main[ids[0]];
-        graph = { ...graph }; // Trigger reactivity
-        if (map) {
-          draw(map, graph.main);
+      graph.update((g) => {
+        const ids = Object.keys(g.mains)
+          .map(Number)
+          .sort((a, b) => b - a);
+        if (ids.length > 0) {
+          delete g.mains[ids[0]];
+          // Redraw
+          if (map) draw(map, g.mains, L, getGraphLayer());
         }
-      }
+        return g;
+      });
     }
   }
 </script>
@@ -105,13 +129,13 @@
   <div id="inspect">
     <h1 id="name">{"Click on a tiles"}</h1>
     <div id="subinspect">
-    <h2 id="priority">priority</h2>
-    <h2 id="store">store</h2>
-    <h2 id="prod">production</h2>
-    <h2 id="dem">demand</h2>
-  </div>
+      <h2 id="priority">priority</h2>
+      <h2 id="store">store</h2>
+      <h2 id="prod">production</h2>
+      <h2 id="dem">demand</h2>
+    </div>
 
-  <h2 id="pos">position</h2>
+    <h2 id="pos" class="visible">position</h2>
   </div>
 </div>
 

@@ -1,14 +1,14 @@
 // map.js
-import { latLng } from 'leaflet';
-import { writable } from 'svelte/store';
+import { activeData, activeModel } from './stores.js';
 
+export let map, Light, Dark, layer, markerLayerGroup;
+export let darkMode = false;
+let L; // Leaflet instance
+let graphLayer; // Layer for graph nodes (mains)
 
-export let map, Light, Dark, layer, active, darkMode = false, debug = false, graph;
-export const activeData = writable(null);
-
-export async function initMap(containerId, geojsonUrl) {
-  // browser-only import
-  L = (await import('leaflet')).default;
+export async function initMap(containerId, geojsonUrl, leafletInstance) {
+  // Use passed instance or dynamic import
+  L = leafletInstance || (await import('leaflet')).default;
 
   map = L.map(containerId);
 
@@ -24,22 +24,30 @@ export async function initMap(containerId, geojsonUrl) {
   });
 
   // Initialize graph layer group
-  graph = L.layerGroup();
+  graphLayer = L.layerGroup().addTo(map);
+  markerLayerGroup = L.layerGroup().addTo(map);
 
   // Fetch GeoJSON
   const res = await fetch(geojsonUrl);
   const geojson = await res.json();
+
+  let activeFeatureLayer = null;
 
   layer = L.geoJSON(geojson, {
     style: { color: 'black', weight: 1, fillOpacity: 0.5, fillColor: 'red' },
 
     //click thing
     onEachFeature: (feature, lyr) => {
-      lyr.on('click', () => {
+      const props = feature.properties
+
+      lyr.on('click', (e) => {
+        L.DomEvent.stopPropagation(e);
         lyr.setStyle({ fillColor: 'green' });
 
-        if (active) active.setStyle({ fillColor: darkMode ? 'orange' : 'red' });
-        active = lyr;
+        if (activeFeatureLayer) activeFeatureLayer.setStyle({ fillColor: darkMode ? 'yellow' : 'red' });
+        activeFeatureLayer = lyr;
+
+        // Update store
         activeData.set(feature);
 
         function setText(id, value, fallback = "Null") {
@@ -47,19 +55,21 @@ export async function initMap(containerId, geojsonUrl) {
           if (el) el.innerText = value ?? fallback;
         }
 
-        const props = feature.properties || {};
-
         setText("name", props.name, "Click on a tile");
         setText("priority", `Priority: ${props.priority}`);
         setText("store", `Store: ${props.store}`);
         setText("prod", `Prod: ${props.prod}`);
         setText("dem", `Dem: ${props.dem}`);
         setText("pos", `${props.pos}`);
-
-
       });
-    
-      //L.circleMarker(latLng(feature.pos[0] , feature.pos[1] , 0)).addTo(graph);
+
+      // Show small markers for existing points? This corresponds to original logic line 61
+      try {
+        const coords = props.pos.slice(1, -1).split(',').map(Number);
+        if (coords.length === 2 && !isNaN(coords[0])) {
+          L.circleMarker([coords[1], coords[0]], { radius: 2, color: 'gray' }).addTo(graphLayer);
+        }
+      } catch (e) { console.warn("Error parsing pos for marker", props.pos); }
     }
   }).addTo(map);
 
@@ -100,30 +110,15 @@ export function toggleMode() {
 
   // Toggle graph visibility
   if (darkMode) {
-    if (graph) graph.addTo(map);
+    if (graphLayer) graphLayer.addTo(map);
   } else {
-    if (graph) graph.remove();
+    if (graphLayer) graphLayer.remove();
   }
 }
 
 
 //--MARKER FUNCTIONS--//
-export function addMarker(lat, lng, options = {}) {
-  const marker = L.circleMarker([lat, lng], {
-    radius: options.radius || 8,
-    color: options.color || 'blue',
-    fillColor: options.fillColor || 'blue',
-    fillOpacity: options.fillOpacity || 0.8,
-    ...options
-  }).addTo(markerLayerGroup);
-  
-  if (options.popup) {
-    marker.bindPopup(options.popup);
-  }
-  
-  return marker;
-}
-
+/*
 export function showMarkers() {
   if (markerLayerGroup && map) {
     markerLayerGroup.addTo(map);
@@ -141,91 +136,8 @@ export function clearMarkers() {
     markerLayerGroup.clearLayers();
   }
 }
+*/
+export function getL() { return L; }
+export function getGraphLayer() { return graphLayer; }
+export function getMarkerLayerGroup() { return markerLayerGroup; }
 
-
-// Manual Graph Logic
-export function draw(map, graphMain) {
-  // Ensure the layer group exists
-  if (!graph) {
-    graph = L.layerGroup();
-  }
-
-  // Clear existing manual layers to redraw
-  graph.clearLayers();
-
-  // Get nodes as array
-  const nodes = Object.values(graphMain);
-
-  // Draw all nodes and edges from current nodes array
-  nodes.forEach((node, index) => {
-    // Draw Node
-    const marker = L.circleMarker([node.lat, node.lng], {
-      radius: 6,
-      color: "red",
-      fillColor: "blue",
-    }).addTo(graph);
-
-    marker.on('click', () => {
-      console.log('Node clicked:', node);
-    });
-
-    // Draw Edges (to neighbors or previous node based on original logic)
-    if (index > 0) {
-      const prevNode = nodes[index - 1];
-      L.polyline(
-        [
-          [node.lat, node.lng],
-          [prevNode.lat, prevNode.lng],
-        ],
-        { color: "red", weight: 3 },
-      ).addTo(graph);
-    }
-
-    // Also draw explicit neighbors if any
-    if (Array.isArray(node.neighbors)) {
-      node.neighbors.forEach(neighborId => {
-        const neighbor = graphMain[neighborId];
-        if (neighbor) {
-          L.polyline(
-            [[node.lat, node.lng], [neighbor.lat, neighbor.lng]],
-            { color: "red", weight: 3 }
-          ).addTo(graph);
-        }
-      });
-    }
-  });
-}
-
-export function place(map, graphMain, lat, lng, neighbors) {
-  const id = Object.keys(graphMain).length;
-  
-  // Normalize neighbors to an array
-  let neighborIds = [];
-  if (Array.isArray(neighbors)) {
-    neighborIds = [...neighbors];
-  } else if (neighbors && typeof neighbors === 'object' && neighbors.id !== undefined) {
-    neighborIds = [neighbors.id];
-  }
-  
-  const vert = { id, lat, lng, neighbors: neighborIds };
-  const range = 0.0001;
-
-  const exists = Object.values(graphMain).find(
-    (n) =>
-      Math.abs(n.lat - vert.lat) <= range &&
-      Math.abs(n.lng - vert.lng) <= range,
-  );
-
-  if (exists) {
-    if (!Array.isArray(exists.neighbors)) {
-      exists.neighbors = [];
-    }
-    exists.neighbors.push(id);
-    vert.neighbors.push(exists.id);
-    graphMain[id] = vert;
-  } else {
-    graphMain[id] = vert;
-  }
-
-  return graphMain;
-}
