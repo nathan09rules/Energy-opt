@@ -1,6 +1,6 @@
 // map.js
-import { activeData, activeModel } from './stores.js';
-
+import { activeData, activeModel, graph } from './stores.js';
+import { get } from 'svelte/store';
 export let map, Light, Dark, layer, markerLayerGroup;
 export let darkMode = false;
 let L; // Leaflet instance
@@ -32,13 +32,14 @@ export async function initMap(containerId, geojsonUrl, leafletInstance) {
   const geojson = await res.json();
 
   let activeFeatureLayer = null;
+  let temp = {};
 
   layer = L.geoJSON(geojson, {
     style: { color: 'black', weight: 1, fillOpacity: 0.5, fillColor: 'red' },
-
     //click thing
     onEachFeature: (feature, lyr) => {
       const props = feature.properties
+      temp[props.id] = feature.properties;
 
       lyr.on('click', (e) => {
         L.DomEvent.stopPropagation(e);
@@ -67,12 +68,14 @@ export async function initMap(containerId, geojsonUrl, leafletInstance) {
       try {
         const coords = props.pos.slice(1, -1).split(',').map(Number);
         if (coords.length === 2 && !isNaN(coords[0])) {
-          L.circleMarker([coords[1], coords[0]], { radius: 2, color: 'gray' }).addTo(graphLayer);
+          L.circleMarker([coords[1], coords[0]], { radius: 10, color: 'gray' }).addTo(graphLayer);
+
         }
       } catch (e) { console.warn("Error parsing pos for marker", props.pos); }
     }
   }).addTo(map);
 
+  get(graph).loc = temp;
   // Fit bounds and shift center
   const bounds = layer.getBounds();
   map.fitBounds(bounds);

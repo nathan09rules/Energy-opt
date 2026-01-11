@@ -4,6 +4,8 @@
   import "$lib/app.css";
   import "$lib/base.css";
 
+  import { chunk } from "$lib/graph.js";
+
   import {
     initMap,
     toggleMode,
@@ -12,6 +14,7 @@
     getMarkerLayerGroup,
   } from "$lib/map.js";
   import { place, draw } from "$lib/graph.js";
+  import { optimize } from "$lib/optamize.js";
   import { addMarker } from "$lib/markers.js";
   import { graph, activeModel } from "$lib/stores.js";
 
@@ -26,6 +29,8 @@
       // initMap handles L import if needed, but we pass it nothing initially or wait
       map = await initMap("map", "/Manhattan.geojson");
       L = getL();
+      optimize(graph);
+      draw(map, graph, L, getGraphLayer());
     } catch (err) {
       console.error("Error initializing map:", err);
     }
@@ -68,7 +73,7 @@
                 neighbor,
               );
               // Draw triggers redraw
-              draw(map, g.mains, L, getGraphLayer());
+              draw(map, g, L, getGraphLayer());
               return g;
             });
           };
@@ -82,6 +87,7 @@
       }
     } else if (func === "print") {
       console.log(get(graph));
+      //console.log(JSON.stringify(get(chunk), null, 2));
     } else if (func === "undo") {
       graph.update((g) => {
         const ids = Object.keys(g.mains)
@@ -90,10 +96,15 @@
         if (ids.length > 0) {
           delete g.mains[ids[0]];
           // Redraw
-          if (map) draw(map, g.mains, L, getGraphLayer());
+          if (map) draw(map, g, L, getGraphLayer());
         }
         return g;
       });
+    } else if (func === "optimize") {
+      optimize(graph);
+      draw(map, get(graph), L, getGraphLayer());
+    } else if (func === "draw") {
+      draw(map, get(graph), L, getGraphLayer());
     }
   }
 </script>
@@ -121,8 +132,14 @@
     <button on:click={() => toggle("undo")} class="toggle"
       ><div class="in">Z</div></button
     >
+    <button on:click={() => toggle("optimize")} class="toggle"
+      ><div class="in">O</div></button
+    >
     <button on:click={() => toggle("print")} class="toggle"
       ><div class="in">P</div></button
+    >
+    <button on:click={() => toggle("draw")} class="toggle"
+      ><div class="in">D</div></button
     >
   </div>
 
