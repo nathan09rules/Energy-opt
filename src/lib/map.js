@@ -33,7 +33,7 @@ export async function initMap(containerId, geojsonUrl, leafletInstance) {
   let temp = {};
 
   layer = L.geoJSON(geojson, {
-    style: { color: 'black', weight: 1, fillOpacity: 0.5, fillColor: 'red' },
+    style: { color: 'black', weight: 1, fillOpacity: 0.5, fillColor: 'green' },
     onEachFeature: (feature, lyr) => {
       const props = feature.properties
       temp[props.name] = feature.properties;
@@ -45,11 +45,21 @@ export async function initMap(containerId, geojsonUrl, leafletInstance) {
         }
       } catch (e) { console.warn("Error parsing pos for lat lng", props.pos); }
 
+      //VISULAS
+      if (feature.properties.prod - feature.properties.dem < 0) {
+        lyr.setStyle({fillColor: "red"});
+      }
+
+      //CLICKING
       lyr.on('click', (e) => {
         L.DomEvent.stopPropagation(e);
-        lyr.setStyle({ fillColor: 'green' });
+        lyr.setStyle({ fillColor: 'blue' });
 
-        if (activeFeatureLayer) activeFeatureLayer.setStyle({ fillColor: darkMode ? 'yellow' : 'red' });
+        if (activeFeatureLayer) {
+          const prevProps = activeFeatureLayer.feature.properties;
+          const prevColor = (prevProps.prod - prevProps.dem < 0) ? 'red' : 'green';
+          activeFeatureLayer.setStyle({ fillColor: prevColor });
+        }
         activeFeatureLayer = lyr;
 
         // Update store
@@ -95,8 +105,10 @@ export function toggleMode() {
   }
 
   layer.eachLayer(lyr => {
+    const props = lyr.feature.properties;
+    const baseColor = (props.prod - props.dem < 0) ? 'red' : 'green';
     lyr.setStyle({
-      fillColor: darkMode ? 'yellow' : 'red',
+      fillColor: baseColor,
       color: darkMode ? 'white' : 'black',
       fillOpacity: darkMode ? 0.2 : 0.5
     });

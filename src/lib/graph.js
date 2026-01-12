@@ -1,7 +1,7 @@
 import { get } from 'svelte/store';
 import { writable } from 'svelte/store';
 import { activeModel, activeData, graph } from './stores.js';
-import { updateInspect } from './map.js';
+import { updateInspect, layer } from './map.js';
 import { chunks } from './stores.js';
 export const is_running = writable(false);
 
@@ -217,12 +217,17 @@ export function draw(map, graph, L, layerGroup) {
         }
     }
 
-    chunk.set(tempChunk);
+    chunks.set(tempChunk);
 }
 
 export function path(map, graphData, L, LayerGroup, index) {
 
-    get(graph).loc[index.start].prod -= index.transfered;
+    // Update prod and dem for start and end
+    graph.update(g => {
+        g.loc[index.start].prod -= index.transfered;
+        g.loc[index.end].dem -= index.transfered;
+        return g;
+    });
 
     const newGraph = get(graph);
     const currentActive = get(activeData);
@@ -233,6 +238,19 @@ export function path(map, graphData, L, LayerGroup, index) {
             activeData.set(newGraph.loc[index.end]);
         }
     }
+
+    // Update colors for affected locations
+    if (layer) {
+        layer.eachLayer(lyr => {
+            const name = lyr.feature.properties.name;
+            if (name === index.start || name === index.end) {
+                const loc = newGraph.loc[name];
+                const color = (loc.prod - loc.dem < 0) ? 'red' : 'green';
+                lyr.setStyle({fillColor: color});
+            }
+        });
+    }
+
     //THE VISULALS LOOKS OK
     for (let i = 0; i < index.path.length; i++) {
         const element = index.path[i];
