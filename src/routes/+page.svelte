@@ -4,7 +4,7 @@
   import "$lib/app.css";
   import "$lib/base.css";
 
-  import { chunk } from "$lib/graph.js";
+  import { chunks } from "$lib/stores.js";
 
   import {
     initMap,

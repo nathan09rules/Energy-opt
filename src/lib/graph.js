@@ -2,7 +2,7 @@ import { get } from 'svelte/store';
 import { writable } from 'svelte/store';
 import { activeModel, activeData, graph } from './stores.js';
 import { updateInspect } from './map.js';
-export const chunk = writable({});
+import { chunks } from './stores.js';
 export const is_running = writable(false);
 
 export function place(map, graphMain, lat, lng, neighbor) {

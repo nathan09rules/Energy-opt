@@ -35,3 +35,5 @@ export const graph = writable({
     loc: {
     }
 });
+
+export const chunks = writable({});
