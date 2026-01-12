@@ -31,17 +31,20 @@ export async function initMap(containerId, geojsonUrl, leafletInstance) {
 
   let activeFeatureLayer = null;
   let temp = {};
+  let nextId = 27; // Assuming mains ids 0-26
 
   layer = L.geoJSON(geojson, {
     style: { color: 'black', weight: 1, fillOpacity: 0.5, fillColor: 'green' },
     onEachFeature: (feature, lyr) => {
       const props = feature.properties
-      temp[props.name] = feature.properties;
+      const id = nextId++;
+      temp[id] = { ...props, id, type: 'loc' };
+      lyr.feature.properties.id = id;
       try {
         const coords = props.pos.slice(1, -1).split(',').map(Number);
         if (coords.length === 2 && !isNaN(coords[0]) && !isNaN(coords[1])) {
-          temp[props.name].lat = coords[1];
-          temp[props.name].lng = coords[0];
+          temp[id].lat = coords[1];
+          temp[id].lng = coords[0];
         }
       } catch (e) { console.warn("Error parsing pos for lat lng", props.pos); }
 
@@ -63,8 +66,8 @@ export async function initMap(containerId, geojsonUrl, leafletInstance) {
         activeFeatureLayer = lyr;
 
         // Update store
-        activeData.set(feature);
-        updateInspect(props);
+        activeData.set(temp[id]);
+        updateInspect(temp[id]);
       });
 
       // Show small markers for existing points? This corresponds to original logic line 61
@@ -193,7 +196,7 @@ export function sublines(graph) {
     let closestLoc = null;
     for (let other of chunks[Math.floor(house.lat / 10)][Math.floor(house.lng / 10)]) {
 
-      if (other.name !== house.name && !other.neighbors?.includes(house.name) && other.neighbors?.length < CONFIGS['max neighbors']) {
+      if (other.id !== house.id && !other.neighbors?.includes(house.id) && other.neighbors?.length < CONFIGS['max neighbors']) {
         const to_main = distance(closestMain.lat - other.lat, closestMain.lng - other.lng);
         const to_loc = distance(other.lat - house.lat, other.lng - house.lng);
         const dist = to_main * CONFIGS['closest main weight'] + to_loc;
@@ -212,8 +215,8 @@ export function sublines(graph) {
       }
     } else {
       // export this closest loc as neighbour
-      if (closestLoc && !house.neighbors.includes(closestLoc.name)) {
-        house.neighbors.push(closestLoc.name);
+      if (closestLoc && !house.neighbors.includes(closestLoc.id)) {
+        house.neighbors.push(closestLoc.id);
       }
     }
   }

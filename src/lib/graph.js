@@ -18,7 +18,7 @@ export function place(map, graphMain, lat, lng, neighbor) {
         neighborIds = [neighbor];
     }
 
-    const vert = { id, lat, lng, neighbors: neighborIds };
+    const vert = { id, lat, lng, neighbors: neighborIds, type: 'main' };
     const range = 0.0001;
 
     const exists = Object.values(graphMain).find(
@@ -219,90 +219,73 @@ export function draw(map, graph, L, layerGroup) {
 
     chunks.set(tempChunk);
 }
-
 export function path(map, graphData, L, LayerGroup, index) {
+    if (!LayerGroup) return;
 
-    // Update prod and dem for start and end
+    // Clear previous path markers/polylines from this LayerGroup
+    LayerGroup.clearLayers();
+
+    const g = get(graph);
+
+    // Update prod/dem for start and end (optional: depends if you want path to simulate transfer visually)
     graph.update(g => {
-        console.log(g)
-        g.loc[index.start].prod -= index.transfered;
-        g.loc[index.end].dem -= index.transfered;
+        if (g.loc[index.start]) g.loc[index.start].dem += index.transfered;
+        if (g.loc[index.end]) g.loc[index.end].dem -= index.transfered;
         return g;
     });
 
-    const newGraph = get(graph);
+    // Update activeData if needed
     const currentActive = get(activeData);
     if (currentActive) {
-        if (currentActive.name === index.start) {
-            activeData.set(newGraph.loc[index.start]);
-        } else if (currentActive.name === index.end) {
-            activeData.set(newGraph.loc[index.end]);
-        }
+        if (currentActive.id === index.start) activeData.set(g.loc[index.start] ?? g.mains[index.start]);
+        else if (currentActive.id === index.end) activeData.set(g.loc[index.end] ?? g.mains[index.end]);
     }
 
-    // Update colors for affected locations
-    if (layer) {
-        layer.eachLayer(lyr => {
-            const name = lyr.feature.properties.name;
-            if (name === index.start || name === index.end) {
-                const loc = newGraph.loc[name];
-                const color = (loc.prod - loc.dem < 0) ? 'red' : 'green';
-                lyr.setStyle({fillColor: color});
-            }
-        });
-    }
-
-    //THE VISULALS LOOKS OK
-    for (let i = 0; i < index.path.length; i++) {
-        const element = index.path[i];
-        const node = graphData.mains[element] || graphData.loc[element];
+    // Draw **markers** for all nodes in the path
+    const latlngs = [];
+    index.path.forEach(nodeId => {
+        const node = graphData.loc[nodeId] ?? graphData.mains[nodeId];
         if (node) {
+            latlngs.push([node.lat, node.lng]);
+
+            // marker for each node
             L.circleMarker([node.lat, node.lng], {
                 radius: 4,
                 color: "green",
                 fillColor: "orange",
                 fillOpacity: 0.8
             }).addTo(LayerGroup);
-
-            // Draw path
-            if (i === index.path.length - 1) {
-                L.polyline(
-                    index.path.map((id) => {
-                        const node = graphData.mains[id] || graphData.loc[id];
-                        return [node.lat, node.lng];
-                    }),
-                    { color: "green", weight: 3 }
-                ).addTo(LayerGroup);
-            }
         }
+    });
+
+    // Draw one polyline along the full path
+    if (latlngs.length > 1) {
+        L.polyline(latlngs, { color: "green", weight: 3 }).addTo(LayerGroup);
     }
+
+    // Optional: center map on last node
+    const lastNode = graphData.loc[index.path[index.path.length - 1]] ?? graphData.mains[index.path[index.path.length - 1]];
+    // map.setView([lastNode.lat, lastNode.lng], 18);
 }
 
-export function undo(entry) {
+export function undo(entry, LayerGroup) {
     graph.update(g => {
         if (g.loc[entry.start]) g.loc[entry.start].prod += entry.transfered;
         if (g.loc[entry.end]) g.loc[entry.end].dem += entry.transfered;
         return g;
     });
+
+    // Clear previous visualization
+    if (LayerGroup) LayerGroup.clearLayers();
 }
 
-export function applyTransfer(entry) {
+export function applyTransfer(entry, LayerGroup) {
     // Update prod and dem
     graph.update(g => {
-        g.loc[entry.start].prod -= entry.transfered;
-        g.loc[entry.end].dem -= entry.transfered;
+        if (g.loc[entry.start]) g.loc[entry.start].prod -= entry.transfered;
+        if (g.loc[entry.end]) g.loc[entry.end].dem -= entry.transfered;
         return g;
     });
 
-    // Update colors
-    if (layer) {
-        layer.eachLayer(lyr => {
-            const name = lyr.feature.properties.name;
-            if (name === entry.start || name === entry.end) {
-                const loc = get(graph).loc[name];
-                const color = (loc.prod - loc.dem < 0) ? 'red' : 'green';
-                lyr.setStyle({fillColor: color});
-            }
-        });
-    }
+    if (LayerGroup) LayerGroup.clearLayers();
 }

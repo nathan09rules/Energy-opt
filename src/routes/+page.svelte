@@ -194,7 +194,8 @@
       on:click={() => {
         if (active_index < ledger.length - 1) {
           active_index++;
-          draw(map, get(graph), L, getGraphLayer());
+          console.log(ledger);
+          //draw(map, get(graph), L, getGraphLayer());
           path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
         }
       }}>FORWARD</button
