@@ -59,9 +59,9 @@ html[data-theme="dark"] {
 #inspect {
     position: fixed;
     width: 100vw;
-    height: 40vh;
+    height: 35vh;
     left: 0;
-    bottom: 0;
+    bottom: 5vh;
     background-color: rgba(255, 255, 255, .8);
     padding: 10px;
     padding-top: 1px;
@@ -110,5 +110,5 @@ html[data-theme="dark"] {
     align-items: center;
     /* center vertically */
 
-    gap: 50%;
+    gap: 20%;
 }

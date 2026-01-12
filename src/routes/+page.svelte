@@ -14,7 +14,7 @@
     getMarkerLayerGroup,
     sublines,
   } from "$lib/map.js";
-  import { place, draw, path } from "$lib/graph.js";
+  import { place, draw, path, undo, applyTransfer } from "$lib/graph.js";
   import { optimize } from "$lib/optamize.js";
   import { addMarker } from "$lib/markers.js";
   import { graph, activeModel, activeData } from "$lib/stores.js";
@@ -174,20 +174,28 @@
     <button
       on:click={() => {
         if (active_index > -1) {
+          undo(ledger[active_index]);
           active_index--;
           draw(map, get(graph), L, getGraphLayer());
-          path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
+          if (active_index >= 0) path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
         }
       }}>BACK</button
     >
     <button
       on:click={() => {
+        for (let i = 0; i < ledger.length; i++) {
+          applyTransfer(ledger[i]);
+        }
+        draw(map, get(graph), L, getGraphLayer());
+        active_index = ledger.length - 1;
+      }}>FINAL</button
+    >
+    <button
+      on:click={() => {
         if (active_index < ledger.length - 1) {
           active_index++;
-          console.log(get(graph).loc[ledger[active_index].start].prod);
           draw(map, get(graph), L, getGraphLayer());
           path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
-          console.log(get(graph).loc[ledger[active_index].start].prod);
         }
       }}>FORWARD</button
     >

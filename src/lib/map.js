@@ -46,7 +46,7 @@ export async function initMap(containerId, geojsonUrl, leafletInstance) {
       } catch (e) { console.warn("Error parsing pos for lat lng", props.pos); }
 
       //VISULAS
-      if (feature.properties.prod - feature.properties.dem < 0) {
+      if (feature.properties.prod < feature.properties.dem) {
         lyr.setStyle({fillColor: "red"});
       }
 

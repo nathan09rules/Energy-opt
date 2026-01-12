@@ -1,88 +1,83 @@
-import { chunks, graph } from "./stores.js";
+import { graph } from "./stores.js";
 import { get } from "svelte/store";
 
-const chunk = get(chunks);
-const graphData = get(graph)
-export function optimize(g) {
-    let ledger = [] //{start , end , path , transfered , recieved}
-    const sorted = Object.values(graphData.loc).sort((a, b) => a.priority - b.priority);
+const MAX_DEPTH = 3;
 
-    let deficet = [];
-    let surplus = [];
+/**
+ * DFS search for surplus or main
+ * @param {object} graphData - graph store
+ * @param {string} startId - starting location ID (deficit)
+ * @param {Set} visited - visited nodes
+ * @param {number} depth - current DFS depth
+ * @returns {object|null} { sourceId, path, available }
+ */
+function dfsFindEnergy(graphData, startId, visited = new Set(), depth = 0) {
+    if (depth > MAX_DEPTH) return null;
 
-    //sort into deficet and surplus
-    sorted.forEach((loc) => {
-        const net = loc.prod - loc.dem;
-        if (net < 0) {
-            deficet.push(loc);
-        } else if (net > 0) {
-            surplus.push(loc);
+    if (visited.has(startId)) return null;
+    visited.add(startId);
+
+    const node = graphData.loc[startId] || graphData.mains[startId];
+    if (!node) return null;
+
+    // Main = infinite source
+    if (graphData.mains[startId]) {
+        return { sourceId: startId, path: [startId], available: Infinity };
+    }
+
+    const surplus = node.prod - node.dem;
+    if (surplus > 0) {
+        return { sourceId: startId, path: [startId], available: surplus };
+    }
+
+    if (!node.neighbors) return null;
+
+    for (const nb of node.neighbors) {
+        const res = dfsFindEnergy(graphData, nb, visited, depth + 1);
+        if (res) {
+            return { sourceId: res.sourceId, path: [startId, ...res.path], available: res.available };
         }
-    })
+    }
 
-    //deficet.forEach((loc) => { //ignore weights for now
-    if (sorted.length === 0) return [];
-    const loc = sorted[0]
+    return null;
+}
 
-    /*
-    if (!loc.neighbors) return [];
-    const net = loc.prod - loc.dem;
-    let gains = 0;
-    let path = []
-    let current = Object.values(loc.neighbors).map(x => [x, 0, [loc.id]]); //0 is weighs sum and [] is path
-    let next = []
+/**
+ * Optimize energy distribution
+ * Returns ledger array: { start, end, path, transfered, recieved }
+ */
+export function optimize() {
+    const g = get(graph);
+    const ledger = [];
 
+    // Step 1: sort by priority
+    const sortedLocs = Object.values(g.loc).sort((a, b) => a.priority - b.priority);
 
-    let margin = net;
-    let step = 0;
-    let value = [];
-    while (margin < 0 || step < 1) {
-        for (const n of current) {
-            const near = graphData.loc[n[0]];
-            if (!near) continue;
+    // Step 2: identify deficits
+    const deficits = sortedLocs.filter(l => l.prod < l.dem);
 
-            let x = 0;
-            if (near.prod - near.dem > 0) {
-                x = near.prod - near.dem;
-            }
+    // Step 3-4: DFS per deficit
+    for (const deficit of deficits) {
+        let remaining = deficit.dem - deficit.prod;
+        if (remaining <= 0) continue;
 
-            value = [near.neighbors, x + n[1], [...n[2], near.name]];
+        const visited = new Set();
+        const result = dfsFindEnergy(g, deficit.id, visited);
 
-            if (value[1] >= margin) {
-                ledger.push({
-                    start: value[2][0],
-                    end: value[2][value[2].length - 1],
-                    path: value[2],
-                    transfered: -margin,
-                    recieved: -margin
-                });
+        if (!result) continue;
 
-                break;
-            }
+        const transfer = Math.min(remaining, result.available);
+        const pathArr = [...result.path].reverse(); // source -> deficit
 
-            next.push(value);
-        }
+        ledger.push({
+            start: result.sourceId,
+            end: deficit.id,
+            path: pathArr,
+            transfered: transfer,
+            recieved: transfer
+        });
+    }
 
-        current = next;
-        next = [];
-
-        step += 1;
-
-        value = current[0]; //next.sort((a, b) => a[1] - b[1])[0];
-        console.log(next);
-        if (step > 1 && value && value[2]) {
-            console.log((value));
-            ledger.push({
-                start: value[2][0],
-                end: value[2][value[2].length - 1],
-                path: value[2],
-                transfered: -margin,
-                recieved: -margin
-            });
-        }
-    };
-*/
     console.log(ledger)
-    return ledger
-
+    return ledger;
 }

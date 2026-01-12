@@ -224,6 +224,7 @@ export function path(map, graphData, L, LayerGroup, index) {
 
     // Update prod and dem for start and end
     graph.update(g => {
+        console.log(g)
         g.loc[index.start].prod -= index.transfered;
         g.loc[index.end].dem -= index.transfered;
         return g;
@@ -274,5 +275,34 @@ export function path(map, graphData, L, LayerGroup, index) {
                 ).addTo(LayerGroup);
             }
         }
+    }
+}
+
+export function undo(entry) {
+    graph.update(g => {
+        if (g.loc[entry.start]) g.loc[entry.start].prod += entry.transfered;
+        if (g.loc[entry.end]) g.loc[entry.end].dem += entry.transfered;
+        return g;
+    });
+}
+
+export function applyTransfer(entry) {
+    // Update prod and dem
+    graph.update(g => {
+        g.loc[entry.start].prod -= entry.transfered;
+        g.loc[entry.end].dem -= entry.transfered;
+        return g;
+    });
+
+    // Update colors
+    if (layer) {
+        layer.eachLayer(lyr => {
+            const name = lyr.feature.properties.name;
+            if (name === entry.start || name === entry.end) {
+                const loc = get(graph).loc[name];
+                const color = (loc.prod - loc.dem < 0) ? 'red' : 'green';
+                lyr.setStyle({fillColor: color});
+            }
+        });
     }
 }
