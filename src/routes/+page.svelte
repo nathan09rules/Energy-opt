@@ -12,25 +12,33 @@
     getL,
     getGraphLayer,
     getMarkerLayerGroup,
+    sublines,
   } from "$lib/map.js";
-  import { place, draw } from "$lib/graph.js";
+  import { place, draw, path } from "$lib/graph.js";
   import { optimize } from "$lib/optamize.js";
   import { addMarker } from "$lib/markers.js";
-  import { graph, activeModel } from "$lib/stores.js";
+  import { graph, activeModel, activeData } from "$lib/stores.js";
+  import { updateInspect } from "$lib/map.js";
 
   let map;
   let L;
   let is_running = { mains: false };
   let clickHandler;
+  let active_index = -1;
+  let ledger = [];
+
+  activeData.subscribe((data) => {
+    if (data) updateInspect(data);
+  });
 
   onMount(async () => {
     try {
       await import("leaflet/dist/leaflet.css");
-      // initMap handles L import if needed, but we pass it nothing initially or wait
       map = await initMap("map", "/Manhattan.geojson");
       L = getL();
-      optimize(graph);
-      draw(map, graph, L, getGraphLayer());
+      draw(map, get(graph), L, getGraphLayer());
+
+      ledger = optimize(graph) || [];
     } catch (err) {
       console.error("Error initializing map:", err);
     }
@@ -73,7 +81,6 @@
                 neighbor,
               );
               // Draw triggers redraw
-              draw(map, g, L, getGraphLayer());
               return g;
             });
           };
@@ -145,6 +152,13 @@
 
   <div id="inspect">
     <h1 id="name">{"Click on a tiles"}</h1>
+    <button
+      id="copy"
+      on:click={() =>
+        navigator.clipboard.writeText(
+          document.getElementById("name").textContent,
+        )}>COPY</button
+    >
     <div id="subinspect">
       <h2 id="priority">priority</h2>
       <h2 id="store">store</h2>
@@ -153,6 +167,30 @@
     </div>
 
     <h2 id="pos" class="visible">position</h2>
+    <h2>{active_index}</h2>
+  </div>
+
+  <div id="timeline">
+    <button
+      on:click={() => {
+        if (active_index > -1) {
+          active_index--;
+          draw(map, get(graph), L, getGraphLayer());
+          path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
+        }
+      }}>BACK</button
+    >
+    <button
+      on:click={() => {
+        if (active_index < ledger.length - 1) {
+          active_index++;
+          console.log(get(graph).loc[ledger[active_index].start].prod);
+          draw(map, get(graph), L, getGraphLayer());
+          path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
+          console.log(get(graph).loc[ledger[active_index].start].prod);
+        }
+      }}>FORWARD</button
+    >
   </div>
 </div>
 

@@ -1,13 +1,13 @@
 // map.js
 import { activeData, activeModel, graph } from './stores.js';
 import { get } from 'svelte/store';
+import { CONFIGS } from './configs.js';
 export let map, Light, Dark, layer, markerLayerGroup;
 export let darkMode = false;
 let L; // Leaflet instance
 let graphLayer; // Layer for graph nodes (mains)
 
 export async function initMap(containerId, geojsonUrl, leafletInstance) {
-  // Use passed instance or dynamic import
   L = leafletInstance || (await import('leaflet')).default;
 
   map = L.map(containerId);
@@ -23,11 +23,9 @@ export async function initMap(containerId, geojsonUrl, leafletInstance) {
     maxZoom: 19
   });
 
-  // Initialize graph layer group
   graphLayer = L.layerGroup().addTo(map);
   markerLayerGroup = L.layerGroup().addTo(map);
 
-  // Fetch GeoJSON
   const res = await fetch(geojsonUrl);
   const geojson = await res.json();
 
@@ -36,10 +34,16 @@ export async function initMap(containerId, geojsonUrl, leafletInstance) {
 
   layer = L.geoJSON(geojson, {
     style: { color: 'black', weight: 1, fillOpacity: 0.5, fillColor: 'red' },
-    //click thing
     onEachFeature: (feature, lyr) => {
       const props = feature.properties
-      temp[props.id] = feature.properties;
+      temp[props.name] = feature.properties;
+      try {
+        const coords = props.pos.slice(1, -1).split(',').map(Number);
+        if (coords.length === 2 && !isNaN(coords[0]) && !isNaN(coords[1])) {
+          temp[props.name].lat = coords[1];
+          temp[props.name].lng = coords[0];
+        }
+      } catch (e) { console.warn("Error parsing pos for lat lng", props.pos); }
 
       lyr.on('click', (e) => {
         L.DomEvent.stopPropagation(e);
@@ -50,27 +54,12 @@ export async function initMap(containerId, geojsonUrl, leafletInstance) {
 
         // Update store
         activeData.set(feature);
-
-        function setText(id, value, fallback = "Null") {
-          const el = document.getElementById(id);
-          if (el) el.innerText = value ?? fallback;
-        }
-
-        setText("name", props.name, "Click on a tile");
-        setText("priority", `Priority: ${props.priority}`);
-        setText("store", `Store: ${props.store}`);
-        setText("prod", `Prod: ${props.prod}`);
-        setText("dem", `Dem: ${props.dem}`);
-        setText("pos", `${props.pos}`);
+        updateInspect(props);
       });
 
       // Show small markers for existing points? This corresponds to original logic line 61
       try {
         const coords = props.pos.slice(1, -1).split(',').map(Number);
-        if (coords.length === 2 && !isNaN(coords[0])) {
-          L.circleMarker([coords[1], coords[0]], { radius: 10, color: 'gray' }).addTo(graphLayer);
-
-        }
       } catch (e) { console.warn("Error parsing pos for marker", props.pos); }
     }
   }).addTo(map);
@@ -86,6 +75,8 @@ export async function initMap(containerId, geojsonUrl, leafletInstance) {
   const latShift = (northEast.lat - southWest.lat) * -0.4;
   map.setView([center.lat + latShift, center.lng], map.getZoom());
   map.setMinZoom(map.getBoundsZoom(bounds));
+
+  sublines(graph);
 
   return map;
 }
@@ -121,7 +112,6 @@ export function toggleMode() {
 
 
 //--MARKER FUNCTIONS--//
-/*
 export function showMarkers() {
   if (markerLayerGroup && map) {
     markerLayerGroup.addTo(map);
@@ -139,8 +129,88 @@ export function clearMarkers() {
     markerLayerGroup.clearLayers();
   }
 }
-*/
+
 export function getL() { return L; }
 export function getGraphLayer() { return graphLayer; }
 export function getMarkerLayerGroup() { return markerLayerGroup; }
 
+function updateInspect(props) {
+  function setText(id, value, fallback = "") {
+    const el = document.getElementById(id);
+    if (el) el.innerText = value ?? fallback;
+  }
+  setText("name", props.name || props.id || "Click on a tile");
+  setText("priority", props.priority ? `Priority: ${props.priority}` : "");
+  setText("store", props.store ? `Store: ${props.store}` : "");
+  setText("prod", props.prod ? `Prod: ${props.prod}` : "");
+  setText("dem", props.dem ? `Dem: ${props.dem}` : "");
+  setText("pos", props.pos || "");
+}
+
+export { updateInspect };
+
+
+export function sublines(graph) {
+  let graphData = get(graph);
+  //let mains = graphData.mains;
+  //let loc = graphData.loc;
+  let chunks = {};
+  let mains_pos = [];
+
+  for (let loc of Object.values(graphData.loc)) {
+    const x = Math.floor(loc.lat / 10);
+    const y = Math.floor(loc.lng / 10);
+
+    chunks[x] ??= {};
+    chunks[x][y] ??= [];
+    chunks[x][y].push(loc);
+  }
+
+  for (let house of Object.values(graphData.loc)) {
+    let closest = 100000000;
+    let closestMain = null;
+    for (let main of Object.values(graphData.mains)) {
+      const dist = distance(house.lat - main.lat, house.lng - main.lng);
+      if (dist < closest) {
+        closest = dist;
+        closestMain = main;
+      }
+    }
+
+    let loc_closest = 100000000;
+    let closestLoc = null;
+    for (let other of chunks[Math.floor(house.lat / 10)][Math.floor(house.lng / 10)]) {
+
+      if (other.name !== house.name && !other.neighbors?.includes(house.name) && other.neighbors?.length < CONFIGS['max neighbors']) {
+        const to_main = distance(closestMain.lat - other.lat, closestMain.lng - other.lng);
+        const to_loc = distance(other.lat - house.lat, other.lng - house.lng);
+        const dist = to_main * CONFIGS['closest main weight'] + to_loc;
+        if (dist < loc_closest) {
+          loc_closest = dist;
+          closestLoc = other;
+        }
+      }
+    }
+
+    if (!house.neighbors) house.neighbors = [];
+    if ((closest * CONFIGS['main resistance']) < (loc_closest * CONFIGS['location resistance'])) {
+      // export this closest main as neighbour
+      if (closestMain && !house.neighbors.includes(closestMain.id)) {
+        house.neighbors.push(closestMain.id);
+      }
+    } else {
+      // export this closest loc as neighbour
+      if (closestLoc && !house.neighbors.includes(closestLoc.name)) {
+        house.neighbors.push(closestLoc.name);
+      }
+    }
+  }
+
+  // Update the store
+  graph.update(g => ({ ...g, loc: graphData.loc }));
+}
+
+
+function distance(x, y) {
+  return Math.sqrt(x * x + y * y);
+}

@@ -1,11 +1,12 @@
 import { get } from 'svelte/store';
 import { writable } from 'svelte/store';
-import { activeModel, activeData } from './stores.js';
+import { activeModel, activeData, graph } from './stores.js';
+import { updateInspect } from './map.js';
 export const chunk = writable({});
 export const is_running = writable(false);
 
 export function place(map, graphMain, lat, lng, neighbor) {
-    const id = Object.keys(graphMain).length;
+    const id = Object.keys(graphMain).length.toString();
 
     // Normalize neighbors to an array
     let neighborIds = [];
@@ -109,10 +110,7 @@ export function draw(map, graph, L, layerGroup) {
                     });
                 } else {
                     activeModel.set(node);
-                    console.log('Node selected:', node);
-                    document.getElementById('name').textContent = node.id;
-                    document.getElementById('pos').textContent = `(${node.lat},${node.lng})`;
-                    // colour change is handled by the highlight in draw
+                    updateInspect({ id: node.id, name: node.id, lat: node.lat, lng: node.lng });
                 }
             });
 
@@ -151,12 +149,19 @@ export function draw(map, graph, L, layerGroup) {
                 const lat = coords[1];
                 const lng = coords[0];
                 // Draw house marker
+
                 const marker = L.circleMarker([lat, lng], {
-                    radius: 2,
+                    radius: 0,
                     color: "orange",
                     fillColor: "yellow",
                     fillOpacity: 0.5,
                 }).addTo(layerGroup);
+
+                marker.on('click', (e) => {
+                    L.DomEvent.stopPropagation(e);
+                    activeData.set(house);
+                    updateInspect(house);
+                });
 
                 // Draw house edges
                 if (Array.isArray(house.neighbors)) {
@@ -213,4 +218,43 @@ export function draw(map, graph, L, layerGroup) {
     }
 
     chunk.set(tempChunk);
+}
+
+export function path(map, graphData, L, LayerGroup, index) {
+
+    get(graph).loc[index.start].prod -= index.transfered;
+
+    const newGraph = get(graph);
+    const currentActive = get(activeData);
+    if (currentActive) {
+        if (currentActive.name === index.start) {
+            activeData.set(newGraph.loc[index.start]);
+        } else if (currentActive.name === index.end) {
+            activeData.set(newGraph.loc[index.end]);
+        }
+    }
+    //THE VISULALS LOOKS OK
+    for (let i = 0; i < index.path.length; i++) {
+        const element = index.path[i];
+        const node = graphData.mains[element] || graphData.loc[element];
+        if (node) {
+            L.circleMarker([node.lat, node.lng], {
+                radius: 4,
+                color: "green",
+                fillColor: "orange",
+                fillOpacity: 0.8
+            }).addTo(LayerGroup);
+
+            // Draw path
+            if (i === index.path.length - 1) {
+                L.polyline(
+                    index.path.map((id) => {
+                        const node = graphData.mains[id] || graphData.loc[id];
+                        return [node.lat, node.lng];
+                    }),
+                    { color: "green", weight: 3 }
+                ).addTo(LayerGroup);
+            }
+        }
+    }
 }

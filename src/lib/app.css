@@ -1,8 +1,8 @@
 body {
-  font-family: 'JetBrains Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
 }
 
-#map{
+#map {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -10,7 +10,7 @@ body {
     left: 0;
 }
 
-#drop{
+#drop {
     position: fixed;
     right: 10px;
     top: 10px;
@@ -19,7 +19,7 @@ body {
     row-gap: 10px;
 }
 
-.toggle{
+.toggle {
     background-color: rgb(255, 255, 255);
     padding: 2px;
     border-radius: 5px;
@@ -27,17 +27,17 @@ body {
     text-align: center;
 }
 
-.toggle .in{
-    width:20px;
+.toggle .in {
+    width: 20px;
     height: 20px;
     background-color: black;
     font-size: 1rem;
     color: white;
 }
 
-#dev{
+#dev {
     position: fixed;
-    top : 48px;
+    top: 48px;
     right: 40px;
     display: flex;
     flex-direction: row;
@@ -49,18 +49,19 @@ html[data-theme="dark"] {
         background-color: white;
         color: black;
     }
-    .toggle{
+
+    .toggle {
         background-color: black;
         color: white;
     }
 }
 
-#inspect{
+#inspect {
     position: fixed;
     width: 100vw;
     height: 40vh;
     left: 0;
-    bottom: 0;    
+    bottom: 0;
     background-color: rgba(255, 255, 255, .8);
     padding: 10px;
     padding-top: 1px;
@@ -77,7 +78,7 @@ html[data-theme="dark"] {
 }
 
 
-#inspect #name{
+#inspect #name {
     text-align: center;
 }
 
@@ -89,6 +90,25 @@ html[data-theme="dark"] {
     height: 100px;
 }
 
-#pos{
+#pos {
     text-align: center;
+}
+
+#timeline {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5vh;
+
+    background-color: rgba(255, 255, 255, 0.8);
+    border-top: 2px solid black;
+
+    display: flex;
+    justify-content: center;
+    /* center horizontally */
+    align-items: center;
+    /* center vertically */
+
+    gap: 50%;
 }
