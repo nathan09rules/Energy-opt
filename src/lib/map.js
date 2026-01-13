@@ -1,5 +1,5 @@
 // map.js
-import { activeData, activeModel, graph } from './stores.js';
+import { graph , activeData, activeModel } from './stores.js';
 import { get } from 'svelte/store';
 import { CONFIGS } from './configs.js';
 import { initial } from './initial.js';

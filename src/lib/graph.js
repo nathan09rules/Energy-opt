@@ -1,7 +1,7 @@
 import { get } from 'svelte/store';
 import { writable } from 'svelte/store';
 import { activeModel, activeData, graph } from './stores.js';
-import { updateInspect, layer } from './map.js';
+import { updateInspect, layer, darkMode } from './map.js';
 import { chunks } from './stores.js';
 export const is_running = writable(false);
 
@@ -71,13 +71,8 @@ export function place(map, graphMain, lat, lng, neighbor) {
     return graphMain;
 }
 
-export function draw(map, graph, L, layerGroup) {
-    if (!layerGroup) return;
-    layerGroup.clearLayers();
-
-    let tempChunk = {};
+export function drawGraph(map, graph, L, layerGroup) {
     const mains = Object.values(graph.mains);
-    const loc = Object.values(graph.loc);
 
     // Draw mains
     mains.forEach((node) => {
@@ -89,13 +84,6 @@ export function draw(map, graph, L, layerGroup) {
                 fillColor: "blue",
                 fillOpacity: 1,
             }).addTo(layerGroup);
-
-            const latKey = Math.floor(node.lat).toString();
-            const lngKey = Math.floor(node.lng).toString();
-
-            // Ensure parent exists
-            tempChunk[latKey] ??= {};
-            tempChunk[latKey][lngKey] = node.id;
 
             marker.on('click', (e) => {
                 L.DomEvent.stopPropagation(e); // Prevent map click
@@ -141,6 +129,11 @@ export function draw(map, graph, L, layerGroup) {
             }
         }
     });
+}
+
+export function drawLoc(map, graph, L, layerGroup) {
+    const loc = Object.values(graph.loc);
+
     // Draw houses
     loc.forEach((house) => {
         if (house.pos) {
@@ -192,7 +185,9 @@ export function draw(map, graph, L, layerGroup) {
             }
         }
     });
+}
 
+export function drawActive(map, graph, L, layerGroup) {
     // Highlight active node
     const currentActive = get(activeModel);
     if (currentActive) {
@@ -216,9 +211,48 @@ export function draw(map, graph, L, layerGroup) {
             }).addTo(layerGroup);
         }
     }
+}
+
+export function draw(map, graph, L, layerGroup) {
+    if (!layerGroup) return;
+    layerGroup.clearLayers();
+
+    let tempChunk = {};
+    const mains = Object.values(graph.mains);
+
+    // For chunks, still need mains
+    mains.forEach((node) => {
+        if (node.lat !== undefined && node.lng !== undefined) {
+            const latKey = Math.floor(node.lat).toString();
+            const lngKey = Math.floor(node.lng).toString();
+            tempChunk[latKey] ??= {};
+            tempChunk[latKey][lngKey] = node.id;
+        }
+    });
+
+    drawGraph(map, graph, L, layerGroup);
+    drawLoc(map, graph, L, layerGroup);
+    drawActive(map, graph, L, layerGroup);
 
     chunks.set(tempChunk);
+
+    // Update and apply styling to each location layer
+    layer.eachLayer(lyr => {
+        const id = lyr.feature.properties.id;
+        const locData = graph.loc[id];
+        if (locData) {
+            lyr.feature.properties = { ...locData };
+        }
+        const props = lyr.feature.properties;
+        const baseColor = (props.prod - props.dem < 0) ? 'red' : 'green';
+        lyr.setStyle({
+          fillColor: baseColor,
+          color: darkMode ? 'white' : 'black',
+          fillOpacity: darkMode ? 0.2 : 0.5
+        });
+    });
 }
+
 export function path(map, graphData, L, LayerGroup, index) {
     if (!LayerGroup) return;
 

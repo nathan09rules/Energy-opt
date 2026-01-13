@@ -1,139 +1,160 @@
-import { graph } from './stores.js';
-import { get } from 'svelte/store';
+import { graph } from "./stores.js";
+import { get } from "svelte/store";
 
 const MAX_LOCAL_DEPTH = 5;
-const MAX_MAIN_ENTRY_LAYER = 3;
+const MAX_MAIN_ENTRY_LAYER = 5;
 
-// Local DFS to find surplus within neighbors
-function dfsLocal(currentId, visited = new Set(), depth = 0) {
-    if (depth > MAX_LOCAL_DEPTH) return null;
-    visited.add(currentId);
+/* ---------------- HELPERS ---------------- */
 
-    const node = get(graph).loc[currentId];
-    if (!node) return null;
-
-    if (node.prod > node.dem) return { path: [currentId], surplus: node };
-
-    for (let neighborId of node.neighbors) {
-        if (visited.has(neighborId)) continue;
-        const res = dfsLocal(neighborId, visited, depth + 1);
-        if (res) return { path: [currentId, ...res.path], surplus: res.surplus };
-    }
-    return null;
-}
-
-// Find nearest main node within max layers
-function findNearestMain(nodeId) {
-    const visited = new Set();
-    const queue = [{ id: nodeId, path: [nodeId], depth: 0 }];
+function bfsLocal(startId, data) {
+    const visited = new Set([startId]);
+    const queue = [{ id: startId, path: [startId] }];
 
     while (queue.length) {
-        const { id, path, depth } = queue.shift();
-        if (depth > MAX_MAIN_ENTRY_LAYER) continue;
-        visited.add(id);
+        const { id, path } = queue.shift();
+        if (path.length > MAX_LOCAL_DEPTH) continue;
 
-        if (get(graph).mains[id]) return { mainNode: get(graph).mains[id], path };
-
-        const node = get(graph).loc[id];
+        const node = data.loc[id];
         if (!node) continue;
 
-        for (let neighborId of node.neighbors) {
-            if (!visited.has(neighborId)) queue.push({ id: neighborId, path: [...path, neighborId], depth: depth + 1 });
+        if (id !== startId && node.prod > node.dem) {
+            return { sourceId: id, path };
+        }
+
+        for (const n of node.neighbors || []) {
+            if (!visited.has(n)) {
+                visited.add(n);
+                queue.push({ id: n, path: [...path, n] });
+            }
         }
     }
     return null;
 }
 
-// DFS along main chain only (non-branching)
-function dfsMains(mainStartId, mainEndId) {
-    const mains = get(graph).mains;
+function findNearestMain(startId, data) {
+    const visited = new Set([startId]);
+    const queue = [{ id: startId, path: [startId] }];
+
+    while (queue.length) {
+        const { id, path } = queue.shift();
+        if (path.length > MAX_MAIN_ENTRY_LAYER) continue;
+
+        if (data.mains[id]) return { mainId: id, path };
+
+        const node = data.loc[id];
+        if (!node) continue;
+
+        for (const n of node.neighbors || []) {
+            if (!visited.has(n)) {
+                visited.add(n);
+                queue.push({ id: n, path: [...path, n] });
+            }
+        }
+    }
+    return null;
+}
+
+function dfsMains(start, end, data) {
     const visited = new Set();
     const path = [];
 
-    function dfs(currentId) {
-        if (visited.has(currentId)) return false;
-        visited.add(currentId);
-        path.push(currentId);
-        if (currentId === mainEndId) return true;
+    function dfs(id) {
+        if (visited.has(id)) return false;
+        visited.add(id);
+        path.push(id);
 
-        const node = mains[currentId];
-        if (!node) return false;
+        if (id === end) return true;
 
-        // Only follow main neighbors
-        for (let neighborId of node.neighbors) {
-            if (dfs(neighborId)) return true;
+        for (const n of data.mains[id]?.neighbors || []) {
+            if (data.mains[n] && dfs(n)) return true;
         }
+
         path.pop();
         return false;
     }
 
-    dfs(mainStartId);
+    dfs(start);
     return path;
 }
 
-// Full fallback path: deficit → nearest main → main DFS → nearest main to surplus → surplus
-function fallbackPathViaMains(deficitId, surplusId) {
-    const deficitEntry = findNearestMain(deficitId);
-    const surplusEntry = findNearestMain(surplusId);
+/* ---------------- OPTIMIZER ---------------- */
 
-    if (!deficitEntry || !surplusEntry) return null;
-
-    const mainPath = dfsMains(deficitEntry.mainNode.id, surplusEntry.mainNode.id);
-
-    if (!mainPath.length) return null;
-
-    // Full path: deficit → deficit entry → main path → surplus entry → surplus
-    const fullPath = [
-        ...deficitEntry.path.reverse(), // deficit → nearest main
-        ...mainPath,
-        ...surplusEntry.path.slice(1),  // nearest main → surplus
-        surplusId
-    ];
-
-    return fullPath;
-}
-
-// Main optimization
 export function optimize() {
+    // 🔒 CLONE — makes function PURE
+    const data = structuredClone(get(graph));
+
     const ledger = [];
-    const nodes = Object.values(get(graph).loc);
+    const ids = Object.keys(data.loc);
 
-    const deficits = nodes.filter(n => n.prod < n.dem)
-                          .sort((a, b) => a.priority - b.priority);
+    const deficits = ids
+        .filter(id => data.loc[id].dem > data.loc[id].prod)
+        .sort((a, b) => data.loc[a].priority - data.loc[b].priority);
 
-    for (let deficit of deficits) {
-        // Try local DFS
-        const localResult = dfsLocal(deficit.id);
+    for (const deficitId of deficits) {
+        const deficit = data.loc[deficitId];
 
-        let path, sourceNode;
-        if (localResult) {
-            path = localResult.path.reverse();
-            sourceNode = localResult.surplus;
-        } else {
-            // fallback via mains
-            const globalSurplus = nodes.filter(n => n.prod > n.dem)
-                                       .sort((a, b) => (a.prod - a.dem) - (b.prod - b.dem))[0];
-            if (!globalSurplus) continue;
+        if (deficit.dem <= deficit.prod) continue; // 🔑 FIX
 
-            const fallbackPath = fallbackPathViaMains(deficit.id, globalSurplus.id);
-            if (!fallbackPath) continue;
+        let path = null;
+        let sourceId = null;
 
-            path = fallbackPath;
-            sourceNode = globalSurplus;
+        // 1️⃣ Local search
+        const local = bfsLocal(deficitId, data);
+        if (local) {
+            sourceId = local.sourceId;
+            path = local.path;
+        }
+        // 2️⃣ Global fallback
+        else {
+            const bestSource = ids
+                .filter(id => id !== deficitId && data.loc[id].prod > data.loc[id].dem)
+                .sort(
+                    (a, b) =>
+                        (data.loc[b].prod - data.loc[b].dem) -
+                        (data.loc[a].prod - data.loc[a].dem)
+                )[0];
+
+            if (!bestSource) continue;
+
+            const defMain = findNearestMain(deficitId, data);
+            const srcMain = findNearestMain(bestSource, data);
+
+            if (defMain && srcMain) {
+                const mainPath = dfsMains(defMain.mainId, srcMain.mainId, data);
+                if (mainPath.length) {
+                    sourceId = bestSource;
+                    path = [
+                        ...defMain.path,
+                        ...mainPath.slice(1),
+                        ...srcMain.path.slice(1).reverse()
+                    ];
+                }
+            }
         }
 
-        const transfer = Math.min(sourceNode.prod - sourceNode.dem, deficit.dem - deficit.prod);
+        // 3️⃣ Transfer (pure math)
+        if (sourceId && path) {
+            const source = data.loc[sourceId];
 
-        ledger.push({
-            start: sourceNode.id,
-            end: deficit.id,
-            path,
-            transfered: transfer,
-            recieved: transfer
-        });
+            const available = source.prod - source.dem;
+            const needed = deficit.dem - deficit.prod;
 
-        sourceNode.prod -= transfer;
-        deficit.prod += transfer;
+            if (available > 0 && needed > 0) {
+                const amount = Math.min(available, needed);
+
+                ledger.push({
+                    start: sourceId,
+                    end: deficitId,
+                    path: [...path].reverse(),
+                    transfered: amount,
+                    recieved: amount
+                });
+
+                // mutate ONLY the local clone
+                source.prod -= amount;
+                deficit.prod += amount;
+            }
+        }
     }
 
     return ledger;

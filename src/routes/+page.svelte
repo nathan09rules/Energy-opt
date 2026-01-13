@@ -4,7 +4,7 @@
   import { initial } from "$lib/initial.js";
   import "$lib/app.css";
   import "$lib/base.css";
-  import { chunks } from "$lib/stores.js";
+  import { chunks, graph } from "$lib/stores.js";
 
   import {
     initMap,
@@ -16,7 +16,7 @@
   } from "$lib/map.js";
   import { place, draw, path, undo, applyTransfer } from "$lib/graph.js";
   import { optimize } from "$lib/optamize.js";
-  import { graph, activeModel, activeData } from "$lib/stores.js";
+  import { activeModel, activeData } from "$lib/stores.js";
   import { updateInspect } from "$lib/map.js";
 
   let map;
@@ -26,6 +26,8 @@
   let active_index = -1;
   let ledger = [];
 
+  let g = {};
+
   activeData.subscribe((data) => {
     if (data) updateInspect(data);
   });
@@ -34,10 +36,13 @@
     try {
       await import("leaflet/dist/leaflet.css");
       map = await initMap("map", "../data.geojson");
+      g = get(graph);
       L = getL();
       draw(map, get(graph), L, getGraphLayer());
-
+      console.log(g.loc[27].prod , g.loc[27].dem);
       ledger = optimize(graph) || [];
+      console.log(g.loc[27].prod , g.loc[27].dem);
+
     } catch (err) {
       console.error("Error initializing map:", err);
     }
@@ -201,7 +206,6 @@
       on:click={() => {
         if (active_index < ledger.length - 1) {
           active_index++;
-          console.log(ledger);
           //draw(map, get(graph), L, getGraphLayer());
           path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
         }
