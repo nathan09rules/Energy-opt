@@ -18,7 +18,6 @@
   import { optimize } from "$lib/optamize.js";
   import { graph, activeModel, activeData } from "$lib/stores.js";
   import { updateInspect } from "$lib/map.js";
-    import { geoJSON } from "leaflet";
 
   let map;
   let L;
