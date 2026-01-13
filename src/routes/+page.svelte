@@ -1,22 +1,24 @@
 <script>
   import { onMount } from "svelte";
   import { get } from "svelte/store";
+  import { initial } from "$lib/initial.js";
   import "$lib/app.css";
   import "$lib/base.css";
-
   import { chunks } from "$lib/stores.js";
 
   import {
     initMap,
     toggleMode,
     getL,
+    getGraphLayer,
+    getMarkerLayerGroup,
     sublines,
   } from "$lib/map.js";
   import { place, draw, path, undo, applyTransfer } from "$lib/graph.js";
   import { optimize } from "$lib/optamize.js";
-  //import { addMarker } from "$lib/markers.js";
   import { graph, activeModel, activeData } from "$lib/stores.js";
   import { updateInspect } from "$lib/map.js";
+    import { geoJSON } from "leaflet";
 
   let map;
   let L;
@@ -32,7 +34,7 @@
   onMount(async () => {
     try {
       await import("leaflet/dist/leaflet.css");
-      map = await initMap("map", "/data.geojson");
+      map = await initMap("map", "../data.geojson");
       L = getL();
       draw(map, get(graph), L, getGraphLayer());
 
@@ -124,6 +126,14 @@
     <button on:click={() => toggle("Dev")} class="toggle">
       <div class="in">||</div>
     </button>
+    <button on:click={async () => {
+        if (!map || !L) return;
+        const bounds = map.getBounds(); // get current viewport
+        map = await initial(map, L, bounds); // pass bounds to load only current area
+    }}>
+        <div class="in">I</div>
+    </button>
+
   </div>
 
   <div id="dev" class="hidden">
