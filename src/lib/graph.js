@@ -291,7 +291,7 @@ export function path(map, graphData, L, LayerGroup, index) {
     }
 
     const lastNode = graphData.loc[index.path[index.path.length - 1]] ?? graphData.mains[index.path[index.path.length - 1]];
-    map.setView([lastNode.lat, lastNode.lng], 18);
+    //map.setView([lastNode.lat, lastNode.lng], 18);
 }
 
 export function undo(index, LayerGroup) {
