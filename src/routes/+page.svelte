@@ -10,13 +10,11 @@
     initMap,
     toggleMode,
     getL,
-    getGraphLayer,
-    getMarkerLayerGroup,
     sublines,
   } from "$lib/map.js";
   import { place, draw, path, undo, applyTransfer } from "$lib/graph.js";
   import { optimize } from "$lib/optamize.js";
-  import { addMarker } from "$lib/markers.js";
+  //import { addMarker } from "$lib/markers.js";
   import { graph, activeModel, activeData } from "$lib/stores.js";
   import { updateInspect } from "$lib/map.js";
 
@@ -34,7 +32,7 @@
   onMount(async () => {
     try {
       await import("leaflet/dist/leaflet.css");
-      map = await initMap("map", "/Manhattan.geojson");
+      map = await initMap("map", "/data.geojson");
       L = getL();
       draw(map, get(graph), L, getGraphLayer());
 

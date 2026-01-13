@@ -2,6 +2,8 @@
 import { activeData, activeModel, graph } from './stores.js';
 import { get } from 'svelte/store';
 import { CONFIGS } from './configs.js';
+import { initial } from './initial.js';
+
 export let map, Light, Dark, layer, markerLayerGroup;
 export let darkMode = false;
 let L; // Leaflet instance
