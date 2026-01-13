@@ -222,9 +222,6 @@ export function draw(map, graph, L, layerGroup) {
 export function path(map, graphData, L, LayerGroup, index) {
     if (!LayerGroup) return;
 
-    // Clear previous path markers/polylines from this LayerGroup
-    LayerGroup.clearLayers();
-
     const g = get(graph);
 
     // Update prod/dem for start and end (optional: depends if you want path to simulate transfer visually)
@@ -241,42 +238,44 @@ export function path(map, graphData, L, LayerGroup, index) {
         else if (currentActive.id === index.end) activeData.set(g.loc[index.end] ?? g.mains[index.end]);
     }
 
-    // Draw **markers** for all nodes in the path
+    // Set path color for nodes in the path
     const latlngs = [];
     index.path.forEach(nodeId => {
         const node = graphData.loc[nodeId] ?? graphData.mains[nodeId];
         if (node) {
             latlngs.push([node.lat, node.lng]);
-
-            // marker for each node
-            L.circleMarker([node.lat, node.lng], {
-                radius: 4,
-                color: "green",
-                fillColor: "orange",
-                fillOpacity: 0.8
-            }).addTo(LayerGroup);
+            node.pathColor = 'blue';
         }
     });
 
-    // Draw one polyline along the full path
+    // Redraw the graph with updated colors
+    draw(map, graphData, L, LayerGroup);
+
+    // Draw the path polyline
     if (latlngs.length > 1) {
-        L.polyline(latlngs, { color: "green", weight: 3 }).addTo(LayerGroup);
+        L.polyline(latlngs, { color: "green", weight: 5 }).addTo(LayerGroup);
     }
 
-    // Optional: center map on last node
     const lastNode = graphData.loc[index.path[index.path.length - 1]] ?? graphData.mains[index.path[index.path.length - 1]];
-    // map.setView([lastNode.lat, lastNode.lng], 18);
+    map.setView([lastNode.lat, lastNode.lng], 18);
 }
 
-export function undo(entry, LayerGroup) {
+export function undo(index, LayerGroup) {
+    const g = get(graph);
     graph.update(g => {
-        if (g.loc[entry.start]) g.loc[entry.start].prod += entry.transfered;
-        if (g.loc[entry.end]) g.loc[entry.end].dem += entry.transfered;
+        if (g.loc[index.start]) g.loc[index.start].dem -= index.transfered;
+        if (g.loc[index.end]) g.loc[index.end].dem += index.transfered;
         return g;
     });
 
     // Clear previous visualization
     if (LayerGroup) LayerGroup.clearLayers();
+
+    const currentActive = get(activeData);
+    if (currentActive) {
+        if (currentActive.id === index.start) activeData.set(g.loc[index.start] ?? g.mains[index.start]);
+        else if (currentActive.id === index.end) activeData.set(g.loc[index.end] ?? g.mains[index.end]);
+    }
 }
 
 export function applyTransfer(entry, LayerGroup) {
