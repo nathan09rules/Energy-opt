@@ -161,7 +161,8 @@ function updateInspect(props) {
   setText("store", props.store ? `Store: ${props.store}` : "");
   setText("prod", props.prod ? `Prod: ${props.prod}` : "");
   setText("dem", props.dem ? `Dem: ${props.dem}` : "");
-  setText("pos", props.pos || "");
+  const temp_pos = props.pos.slice(1 , -1).split(",").map(s =>(Number(s).toPrecision(6)));
+  setText("pos",`${temp_pos[0]} , ${temp_pos[1]}` || "");
 }
 
 export { updateInspect };

@@ -127,17 +127,17 @@
     <button on:click={() => toggleMode()} class="toggle" aria-label="mode">
       <div class="in"></div>
     </button>
+
     <button on:click={() => toggle("Dev")} class="toggle">
       <div class="in">||</div>
     </button>
-    <button on:click={async () => {
+    <button class="toggle" on:click={async () => {
         if (!map || !L) return;
         const bounds = map.getBounds(); // get current viewport
         map = await initial(map, L, bounds); // pass bounds to load only current area
     }}>
         <div class="in">I</div>
-    </button>
-
+    </button>  
   </div>
 
   <div id="dev" class="hidden">
@@ -169,17 +169,22 @@
       on:click={() =>
         navigator.clipboard.writeText(
           document.getElementById("name").textContent,
-        )}>COPY</button
-    >
+        )} aria-label="Copy to clipboard">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM15 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V11C21 9.9 20.1 9 19 9H18V7C18 5.9 17.1 5 16 5ZM8 21H19V11H8V21Z" fill="currentColor"/>
+      </svg>
+    </button>
     <div id="subinspect">
+      <h2 id="id">id</h2>
       <h2 id="priority">priority</h2>
       <h2 id="store">store</h2>
       <h2 id="prod">production</h2>
       <h2 id="dem">demand</h2>
+      <h2 id="neighbours">neighbours</h2>
     </div>
 
     <h2 id="pos" class="visible">position</h2>
-    <h2>{active_index}</h2>
+    <h2>Step: {active_index}</h2>
   </div>
 
   <div id="timeline">
@@ -191,8 +196,11 @@
           draw(map, get(graph), L, getGraphLayer());
           if (active_index >= 0) path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
         }
-      }}>BACK</button
+      }}
+      aria-label="Previous step"
     >
+      &lt
+    </button>
     <button
       on:click={() => {
         for (let i = 0; i < ledger.length; i++) {
@@ -200,8 +208,10 @@
         }
         draw(map, get(graph), L, getGraphLayer());
         active_index = ledger.length - 1;
-      }}>FINAL</button
-    >
+      }}
+      aria-label="Final step">
+      FINAL
+    </button>
     <button
       on:click={() => {
         if (active_index < ledger.length - 1) {
@@ -209,8 +219,10 @@
           //draw(map, get(graph), L, getGraphLayer());
           path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
         }
-      }}>FORWARD</button
-    >
+      }}
+      aria-label="Next step">
+      &gt;
+    </button>
   </div>
 </div>
 
