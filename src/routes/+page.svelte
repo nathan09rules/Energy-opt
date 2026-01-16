@@ -1,414 +1,354 @@
 <script>
   import { onMount } from "svelte";
   import { get } from "svelte/store";
-  import { initial } from "$lib/initial.js";
   import "$lib/app.css";
   import "$lib/base.css";
-  import { chunks, graph, powerSources, powerIndicators, initialPowerSources } from "$lib/stores.js";
+  import {
+    graph,
+    powerSources,
+    powerIndicators,
+    initialPowerSources,
+    activeData,
+    activeModel,
+  } from "$lib/stores.js";
+  import { CONFIGS } from "$lib/configs.js";
 
   import {
     initMap,
     toggleMode,
     getL,
     getGraphLayer,
-    getMarkerLayerGroup,
-    sublines,
+    syncPowerSources,
+    darkMode,
   } from "$lib/map.js";
-  import { place, draw, path, undo, applyTransfer } from "$lib/graph.js";
-  import { optimize } from "$lib/optamize.js";
-  import { activeModel, activeData } from "$lib/stores.js";
-  import { updateInspect, updateLayerProperties } from "$lib/map.js";
+  import { place, draw, path, autoConnect } from "$lib/graph.js";
+  import { optimize, minimizeLoss } from "$lib/optamize.js";
 
-  let powerNodesLayer;
+  let map, L;
+  let isDashboardOpen = false;
+  let showAdvanced = false;
+  let isScanning = false;
+  let ledger = [];
+  let activeIndex = -1;
 
-  const endpoints = [
-      "https://overpass.kumi.systems/api/interpreter",
-      "https://overpass-api.de/api/interpreter",
-      "https://overpass.openstreetmap.ru/api/interpreter"
-  ];
+  // SYSTEM MODES
+  // Standard: Basic view and optimization
+  // Edit: Add nodes, change connections
+  // Predict: Future usage analysis
+  let currentMode = "standard";
 
-  const typeMap = {
-      'solar': { code: 'S', color: '#FFD700' },
-      'wind': { code: 'W', color: '#00BFFF' },
-      'hydro': { code: 'H', color: '#4169E1' },
-      'nuclear': { code: 'N', color: '#ADFF2F' }
-  };
+  async function reoptimize() {
+    autoConnect(graph);
+    ledger = optimize() || [];
+    if (map) draw(map, get(graph), L, getGraphLayer());
+  }
 
   async function loadPowerData() {
-      if (!map) return;
+    isScanning = true;
+    const b = map.getBounds();
+    const bbox = `${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`;
+    // Using multiple endpoints for reliability
+    const endpoints = [
+      "https://overpass-api.de/api/interpreter",
+      "https://overpass.kumi.systems/api/interpreter",
+    ];
 
-      const b = map.getBounds();
-      const bbox = `${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`;
+    const query = `[out:json][timeout:25];(node["power"~"generator|plant"](${bbox});way["power"~"generator|plant"](${bbox}););out center;`;
 
-      // ADDED "way" with "out center" to catch plants drawn as areas
-      const query = `[out:json][timeout:15];(node["power"~"generator|plant"](${bbox});way["power"~"generator|plant"](${bbox}););out center;`;
-
-      for (let url of endpoints) {
-          try {
-              const res = await fetch(url, { method: "POST", body: query });
-              if (!res.ok) continue;
-
-              const data = await res.json();
-
-              // Check if we actually got elements
-              if (!data.elements || data.elements.length === 0) {
-                  console.warn("No power sources found in this view. Try zooming out.");
-                  continue;
-              }
-              powerNodesLayer.clearLayers();
-
-              const newSources = data.elements.map(el => {
-                  const tags = el.tags || {};
-                  const rawType = (tags['generator:source'] || tags['fuel'] || tags['power:source'] || '').toLowerCase();
-                  const info = typeMap[rawType] || {
-                      code: tags.name ? tags.name.charAt(0).toUpperCase() : 'P',
-                      color: '#00FF88'
-                  };
-
-                  // Coordinates for nodes use el.lat/lon; for ways they use el.center.lat/lon
-                  const lat = el.lat || el.center.lat;
-                  const lon = el.lon || el.center.lon;
-
-                  L.circleMarker([lat, lon], {
-                      radius: 10, fillColor: info.color, color: '#000', weight: 2, fillOpacity: 1
-                  }).bindPopup(tags.name || "Station").addTo(powerNodesLayer);
-
-                  return { id: el.id, lat, lng: lon, info, name: tags.name || "STATION" };
-              });
-
-              powerSources.set(newSources);
-              updateIndicators();
-              return;
-          } catch (e) {
-              console.error(`Mirror ${url} failed.`);
-          }
+    for (let url of endpoints) {
+      try {
+        const res = await fetch(url, { method: "POST", body: query });
+        if (!res.ok) continue;
+        const data = await res.json();
+        const newSources = data.elements.map((el) => ({
+          id: el.id,
+          lat: el.lat || el.center.lat,
+          lng: el.lon || el.center.lon,
+          info: { code: "P", color: "#00FF88" },
+          name: el.tags.name || "Station",
+        }));
+        powerSources.set(newSources);
+        syncPowerSources();
+        reoptimize();
+        isScanning = false;
+        return;
+      } catch (e) {
+        console.error(`Failed to fetch from ${url}:`, e);
       }
-  }
-
-  function updateIndicators() {
-      if (!map) return;
-      const size = map.getSize();
-      const center = map.latLngToContainerPoint(map.getCenter());
-
-      const currentSources = get(powerSources);
-      const inds = currentSources.map(source => {
-          const targetPoint = map.latLngToContainerPoint([source.lat, source.lng]);
-          const isOffScreen = targetPoint.x < 0 || targetPoint.x > size.x ||
-                             targetPoint.y < 0 || targetPoint.y > size.y;
-
-          if (!isOffScreen) return { ...source, visible: false };
-
-          const dx = targetPoint.x - center.x;
-          const dy = targetPoint.y - center.y;
-          const angle = Math.atan2(dy, dx);
-
-          const padding = 40;
-          let x, y;
-          const slope = dy / dx;
-
-          if (Math.abs(slope) < (size.y / size.x)) {
-              x = dx > 0 ? size.x - padding : padding;
-              y = center.y + (x - center.x) * slope;
-          } else {
-              y = dy > 0 ? size.y - padding : padding;
-              x = center.x + (y - center.y) / slope;
-          }
-
-          return { ...source, visible: true, x, y, rotation: angle * (180 / Math.PI) };
-      });
-      powerIndicators.set(inds);
-  }
-
-  let map;
-  let L;
-  let is_running = { mains: false };
-  let clickHandler;
-  let active_index = -1;
-  let ledger = [];
-
-  let g = {};
-
-  activeData.subscribe((data) => {
-    if (data) updateInspect(data);
-  });
-
-  function updateProp(prop, value) {
-    graph.update(g => {
-      const id = $activeData.id;
-      if (g.loc[id]) {
-        g.loc[id][prop] = value;
-        if (prop === 'prod' || prop === 'dem') {
-          updateLayerProperties(id, { [prop]: value });
-        }
-      }
-      return g;
-    });
-    if (prop === 'neighbors') {
-      activeData.update(current => { current.neighborsStr = value.join(', '); return current; });
     }
-    ledger = optimize(graph) || [];
+    isScanning = false;
   }
 
   onMount(async () => {
     try {
       await import("leaflet/dist/leaflet.css");
       map = await initMap("map", "../data.geojson");
-      g = get(graph);
       L = getL();
-      draw(map, get(graph), L, getGraphLayer());
-      ledger = optimize(graph) || [];
-      powerNodesLayer = L.layerGroup().addTo(map);
       powerSources.set(initialPowerSources);
-      initialPowerSources.forEach(source => {
-        L.circleMarker([source.lat, source.lng], {
-          radius: 10, fillColor: source.info.color, color: '#000', weight: 2, fillOpacity: 1
-        }).bindPopup(source.name).addTo(powerNodesLayer);
+      syncPowerSources();
+      reoptimize();
+
+      map.on("moveend", () => {
+        // Optional: Auto fetch on move?
       });
-      updateIndicators();
-      map.on('move', updateIndicators);
-
-
-    } catch (err) {
-      console.error("Error initializing map:", err);
+    } catch (e) {
+      console.error("Initialization error:", e);
     }
   });
 
-  function toggle(func) {
-    if (func === "Dev") {
-      const devEl = document.getElementById("dev");
-      devEl.classList.toggle("hidden");
-      devEl.classList.toggle("visible");
-    } else if (func === "mains") {
-      is_running.mains = !is_running.mains;
+  function switchMode(m) {
+    currentMode = m;
+    is_running.mains = m === "edit";
+    reoptimize();
+  }
 
-      //main wires
-      if (is_running.mains) {
-        if (map) {
-          clickHandler = (e) => {
-            // Get current active node to connect FROM
-            const currentActive = get(activeModel);
+  function handleDashReturn() {
+    isDashboardOpen = false;
+    reoptimize();
+  }
 
-            // Should valid 'main' node be neighbor?
-            let neighbor = null;
-            if (currentActive && currentActive.id !== undefined) {
-              neighbor = currentActive;
-            } else {
-              // Fallback to last node if nothing selected (optional, or force user to select)
-              const g = get(graph);
-              const keys = Object.keys(g.mains);
-              if (keys.length > 0) {
-                neighbor = g.mains[keys[keys.length - 1]];
-              }
-            }
+  let is_running = { mains: false };
+  let clickHandler;
 
-            graph.update((g) => {
-              g.mains = place(
-                map,
-                g.mains,
-                e.latlng.lat,
-                e.latlng.lng,
-                neighbor,
-              );
-              // Draw triggers redraw
-              return g;
-            });
-          };
-          map.on("click", clickHandler);
-        }
-      } else {
-        if (map && clickHandler) {
-          map.off("click", clickHandler);
-          clickHandler = null;
-        }
-      }
-    } else if (func === "print") {
-      console.log(get(graph));
-      //console.log(JSON.stringify(get(chunk), null, 2));
-    } else if (func === "undo") {
-      graph.update((g) => {
-        const ids = Object.keys(g.mains)
-          .map(Number)
-          .sort((a, b) => b - a);
-        if (ids.length > 0) {
-          delete g.mains[ids[0]];
-          // Redraw
-          if (map) draw(map, g, L, getGraphLayer());
-        }
-        return g;
-      });
-    } else if (func === "optimize") {
-      optimize(graph);
-      draw(map, get(graph), L, getGraphLayer());
-    } else if (func === "draw") {
-      draw(map, get(graph), L, getGraphLayer());
+  function toggleMains() {
+    is_running.mains = !is_running.mains;
+    if (is_running.mains) {
+      clickHandler = (e) => {
+        const currentActive = get(activeModel);
+        graph.update((g) => {
+          g.mains = place(
+            map,
+            g.mains,
+            e.latlng.lat,
+            e.latlng.lng,
+            currentActive,
+          );
+          return g;
+        });
+        draw(map, get(graph), L, getGraphLayer());
+      };
+      map.on("click", clickHandler);
+    } else {
+      if (clickHandler) map.off("click", clickHandler);
     }
   }
 </script>
 
 <div id="map"></div>
 
-{#each $powerIndicators as ind (ind.id)}
-  {#if ind.visible}
-    <div class="hud" style="left: {ind.x}px; top: {ind.y}px; border-color: {ind.info.color};">
-      <div class="arrow" style="transform: rotate({ind.rotation}deg); border-left-color: {ind.info.color}"></div>
-      <div class="sym" style="color: {ind.info.color}">{ind.info.code}</div>
-    </div>
-  {/if}
-{/each}
+<div class="mode-badge">MODE: {currentMode.toUpperCase()}</div>
 
-<button class="search-btn" on:click={loadPowerData}>📡 PULSE SCAN</button>
+<button class="search-btn" on:click={loadPowerData}>
+  {isScanning ? "📡 FETCHING ENERGY DATA..." : "📡 PULSE SCAN"}
+</button>
 
 <div id="ui">
+  <!-- Top Right Controls (Classic Style) -->
   <div id="drop">
-    <button on:click={() => toggleMode()} class="toggle" aria-label="mode">
-      <div class="in"></div>
-    </button>
-
-    <button on:click={() => toggle("Dev")} class="toggle">
-      <div class="in">||</div>
-    </button>
-    <button class="toggle" on:click={async () => {
-        if (!map || !L) return;
-        const bounds = map.getBounds(); // get current viewport
-        map = await initial(map, L, bounds); // pass bounds to load only current area
-    }}>
-        <div class="in">I</div>
-    </button>  
-  </div>
-
-  <div id="dev" class="hidden">
     <button
-      on:click={() => toggle("mains")}
+      on:click={() => toggleMode()}
       class="toggle"
-      class:active={is_running.mains}
+      title="Toggle Dark/Light"
     >
-      <div class="in">{is_running.mains ? "O" : "C"}</div>
+      <div class="in">🌓</div>
     </button>
-    <button on:click={() => toggle("undo")} class="toggle"
-      ><div class="in">Z</div></button
-    >
-    <button on:click={() => toggle("optimize")} class="toggle"
-      ><div class="in">O</div></button
-    >
-    <button on:click={() => toggle("print")} class="toggle"
-      ><div class="in">P</div></button
-    >
-    <button on:click={() => toggle("draw")} class="toggle"
-      ><div class="in">D</div></button
-    >
-  </div>
-
-  <div id="inspect">
-    <h1 id="name">{"Click on a tiles"}</h1>
     <button
-      id="copy"
-      on:click={() =>
-        navigator.clipboard.writeText(
-          document.getElementById("name").textContent,
-        )} aria-label="Copy to clipboard">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM15 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V11C21 9.9 20.1 9 19 9H18V7C18 5.9 17.1 5 16 5ZM8 21H19V11H8V21Z" fill="currentColor"/>
-      </svg>
+      on:click={() => (isDashboardOpen = true)}
+      class="toggle"
+      title="Settings"
+    >
+      <div class="in">⚙️</div>
     </button>
-    <div id="subinspect">
-      {#if $activeData}
-        <div>
-          <label>ID:</label>
-          <input id="id" type="number" bind:value={$activeData.id} on:input={() => updateProp('id', $activeData.id)} />
-        </div>
-        <div>
-          <label>Priority:</label>
-          <input id="priority" type="number" bind:value={$activeData.priority} on:input={() => updateProp('priority', $activeData.priority)} />
-        </div>
-        <div>
-          <label>Store:</label>
-          <input id="store" type="number" bind:value={$activeData.store} on:input={() => updateProp('store', $activeData.store)} />
-        </div>
-        <div>
-          <label>Production:</label>
-          <input id="prod" type="number" bind:value={$activeData.prod} on:input={() => updateProp('prod', $activeData.prod)} />
-        </div>
-        <div>
-          <label>Demand:</label>
-          <input id="dem" type="number" bind:value={$activeData.dem} on:input={() => updateProp('dem', $activeData.dem)} />
-        </div>
-        <div>
-          <label>Neighbours:</label>
-          <input id="neighbours" bind:value={$activeData.neighborsStr} on:input={() => updateProp('neighbors', $activeData.neighborsStr.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n)))} />
-        </div>
-      {/if}
-    </div>
-
-    <h2 id="pos" class="visible">position</h2>
-    <h2>Step: {active_index}</h2>
+    <button
+      on:click={() => {
+        const modes = ["standard", "edit", "predict"];
+        const next = modes[(modes.indexOf(currentMode) + 1) % modes.length];
+        switchMode(next);
+      }}
+      class="toggle"
+      title="Switch Mode"
+    >
+      <div class="in">M</div>
+    </button>
   </div>
 
+  <!-- Mode Specific Tools -->
+  {#if currentMode === "edit"}
+    <div id="dev">
+      <button
+        on:click={toggleMains}
+        class="toggle"
+        class:active={is_running.mains}
+        title="Add Main"
+      >
+        <div class="in">A</div>
+      </button>
+      <button
+        on:click={() => {
+          graph.update((g) => {
+            const ids = Object.keys(g.mains)
+              .map(Number)
+              .sort((a, b) => b - a);
+            if (ids.length > 0) delete g.mains[ids[0]];
+            return g;
+          });
+          draw(map, get(graph), L, getGraphLayer());
+        }}
+        class="toggle"
+        title="Undo"
+      >
+        <div class="in">Z</div>
+      </button>
+    </div>
+  {/if}
+
+  <!-- Inspector Panel (Classic Style) -->
+  <div id="inspect">
+    {#if $activeData}
+      <div
+        style="display: flex; justify-content: space-between; align-items: flex-start;"
+      >
+        <h1 id="name">{$activeData.name || "ID: " + $activeData.id}</h1>
+        <button
+          class="toggle"
+          style="width: 24px; height: 24px;"
+          on:click={() => (showAdvanced = !showAdvanced)}
+        >
+          <div class="in" style="font-size: 10px;">
+            {showAdvanced ? "S" : "A"}
+          </div>
+        </button>
+      </div>
+
+      <div id="subinspect">
+        {#if !showAdvanced}
+          <!-- Simple Mode -->
+          <div class="inspect-row">
+            <label>Net Energy:</label>
+            <span
+              style="color: {$activeData.prod - $activeData.dem >= 0
+                ? 'green'
+                : 'red'}; font-weight: bold;"
+            >
+              {($activeData.prod - $activeData.dem).toFixed(2)}
+            </span>
+          </div>
+          <div class="inspect-row">
+            <label>Storage:</label>
+            <span>{($activeData.store || 0).toFixed(0)} / 1000</span>
+          </div>
+        {:else}
+          <!-- Advanced Mode (Full Access) -->
+          <div class="inspect-row">
+            <label>Prod:</label><input
+              type="number"
+              bind:value={$activeData.prod}
+              on:change={reoptimize}
+            />
+          </div>
+          <div class="inspect-row">
+            <label>Dem:</label><input
+              type="number"
+              bind:value={$activeData.dem}
+              on:change={reoptimize}
+            />
+          </div>
+          <div class="inspect-row">
+            <label>Store:</label><input
+              type="number"
+              bind:value={$activeData.store}
+              on:change={reoptimize}
+            />
+          </div>
+          <div class="inspect-row">
+            <label>Priority:</label><input
+              type="number"
+              bind:value={$activeData.priority}
+              on:change={reoptimize}
+            />
+          </div>
+
+          {#if currentMode === "predict"}
+            <hr />
+            <div class="inspect-row">
+              <label>Future Use:</label><span>Expected +12%</span>
+            </div>
+          {/if}
+        {/if}
+      </div>
+    {:else}
+      <p style="font-size: 0.8rem;">
+        Click a map element to inspect grid properties.
+      </p>
+    {/if}
+  </div>
+
+  <!-- Timeline (Classic Style) -->
   <div id="timeline">
     <button
       on:click={() => {
-        if (active_index > -1) {
-          undo(ledger[active_index]);
-          active_index--;
-          draw(map, get(graph), L, getGraphLayer());
-          if (active_index >= 0) path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
+        if (activeIndex > -1) {
+          activeIndex--;
+          reoptimize();
+          if (activeIndex >= 0)
+            path(map, get(graph), L, getGraphLayer(), ledger[activeIndex]);
         }
-      }}
-      aria-label="Previous step"
+      }}>PREV</button
     >
-      &lt
-    </button>
+    <div style="text-align: center; min-width: 100px;">
+      <span style="font-weight: bold;">STEP {activeIndex + 1}</span>
+    </div>
     <button
       on:click={() => {
-        for (let i = 0; i < ledger.length; i++) {
-          applyTransfer(ledger[i]);
+        if (activeIndex < ledger.length - 1) {
+          activeIndex++;
+          path(map, get(graph), L, getGraphLayer(), ledger[activeIndex]);
         }
-        draw(map, get(graph), L, getGraphLayer());
-        active_index = ledger.length - 1;
-      }}
-      aria-label="Final step">
-      FINAL
-    </button>
-    <button
-      on:click={() => {
-        if (active_index < ledger.length - 1) {
-          active_index++;
-          //draw(map, get(graph), L, getGraphLayer());
-          path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
-        }
-      }}
-      aria-label="Next step">
-      &gt;
-    </button>
+      }}>NEXT</button
+    >
+
+    {#if currentMode === "predict"}
+      <button
+        on:click={() => {
+          minimizeLoss(graph);
+          reoptimize();
+        }}
+        style="background: yellow; color: black; font-weight: bold;"
+        >RUN PREDICTION</button
+      >
+    {/if}
   </div>
 </div>
 
-<style>
-  .hidden {
-    display: none;
-  }
-  .visible {
-    display: block;
-  }
-  .active {
-    background-color: #ff3e00;
-  } /* Visual feedback for active state */
+<!-- SETTINGS DASHBOARD -->
+<div id="dashboard" class:open={isDashboardOpen}>
+  <div
+    style="display: flex; justify-content: space-between; align-items: center;"
+  >
+    <h2 style="margin: 0;">Settings</h2>
+    <button class="toggle" on:click={handleDashReturn}
+      ><div class="in">X</div></button
+    >
+  </div>
 
-  .search-btn {
-    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-    z-index: 1000; background: #000; color: #0f8; border: 2px solid #0f8;
-    padding: 10px 25px; cursor: pointer; font-family: monospace; font-size: 16px;
-  }
+  <div style="overflow-y: auto; flex: 1;">
+    <h3 style="font-size: 0.9rem;">Grid Constants</h3>
+    {#each Object.entries(CONFIGS) as [key, value]}
+      <div style="display: flex; flex-direction: column; margin-bottom: 10px;">
+        <label style="font-size: 0.7rem;">{key}</label>
+        <input
+          type="number"
+          step="0.1"
+          bind:value={CONFIGS[key]}
+          on:change={reoptimize}
+          style="width: 100%; border: 1px solid black;"
+        />
+      </div>
+    {/each}
+  </div>
 
-  .hud {
-    position: absolute; width: 40px; height: 40px; background: rgba(0,0,0,0.8);
-    border: 2px solid; border-radius: 50%; display: flex; align-items: center;
-    justify-content: center; z-index: 2000; transform: translate(-50%, -50%);
-  }
-
-  .arrow {
-    width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent;
-    border-left: 10px solid; position: absolute; right: -13px;
-  }
-
-  .sym { font-weight: bold; }
-</style>
+  <div style="padding: 10px; border: 1px solid gray; font-size: 0.8rem;">
+    <strong>Active Phase:</strong>
+    {currentMode.toUpperCase()}
+  </div>
+</div>
