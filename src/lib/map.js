@@ -68,8 +68,8 @@ export async function initMap(containerId, geojsonUrl, leafletInstance) {
         activeFeatureLayer = lyr;
 
         // Update store
-        activeData.set(temp[id]);
-        updateInspect(temp[id]);
+        activeData.set({ ...temp[id], neighborsStr: temp[id].neighbors ? temp[id].neighbors.join(', ') : '' });
+        updateInspect({ ...temp[id], neighborsStr: temp[id].neighbors ? temp[id].neighbors.join(', ') : '' });
       });
 
       // Show small markers for existing points? This corresponds to original logic line 61
@@ -167,6 +167,20 @@ function updateInspect(props) {
 
 export { updateInspect };
 
+export function updateLayerProperties(id, properties) {
+  layer.eachLayer(lyr => {
+    if (lyr.feature.properties.id === id) {
+      const props = lyr.feature.properties;
+      // Update the properties
+      Object.assign(props, properties);
+      // Update style
+      const fillColor = (props.prod < props.dem) ? 'red' : 'green';
+      const color = darkMode ? 'white' : 'black';
+      const fillOpacity = darkMode ? 0.2 : 0.5;
+      lyr.setStyle({ fillColor, color, fillOpacity });
+    }
+  });
+}
 
 export function sublines(graph) {
   let graphData = get(graph);

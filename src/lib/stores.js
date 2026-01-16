@@ -37,3 +37,58 @@ export const graph = writable({
 });
 
 export const chunks = writable({});
+
+export const powerSources = writable([]);
+export const powerIndicators = writable([]);
+
+export const initialPowerSources = [
+  {
+    id: 8304878670,
+    lat: 40.7162289,
+    lng: -74.014699,
+    info: { code: 'S', color: '#FFD700' },
+    name: 'Solar Generator'
+  },
+  {
+    id: 742054629,
+    lat: 40.712587,
+    lng: -74.0034475,
+    info: { code: 'S', color: '#FFD700' },
+    name: 'Solar Photovoltaic Panel'
+  },
+  {
+    id: 1006719175,
+    lat: 40.6921502,
+    lng: -74.0122472,
+    info: { code: 'D', color: '#00FF88' },
+    name: 'Diesel Generator'
+  },
+  {
+    id: 1389556294,
+    lat: 40.6912799,
+    lng: -74.0193638,
+    info: { code: 'S', color: '#FFD700' },
+    name: 'Solar Photovoltaic Panel'
+  },
+  {
+    id: 1389556295,
+    lat: 40.6913111,
+    lng: -74.0192412,
+    info: { code: 'S', color: '#FFD700' },
+    name: 'Solar Photovoltaic Panel'
+  },
+  {
+    id: 1457797800,
+    lat: 40.7128018,
+    lng: -74.0062233,
+    info: { code: 'S', color: '#FFD700' },
+    name: 'Solar Photovoltaic Panel'
+  },
+  {
+    id: 1457797801,
+    lat: 40.7126138,
+    lng: -74.005849,
+    info: { code: 'S', color: '#FFD700' },
+    name: 'Solar Photovoltaic Panel'
+  }
+];

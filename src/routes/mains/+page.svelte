@@ -4,20 +4,15 @@
   import { initial } from "$lib/initial.js";
   import "$lib/app.css";
   import "$lib/base.css";
-  import { chunks, graph, powerSources, powerIndicators, initialPowerSources } from "$lib/stores.js";
+  import { chunks, graph, powerSources, powerIndicators } from "$lib/stores.js";
 
-  import {
-    initMap,
-    toggleMode,
-    getL,
-    getGraphLayer,
-    getMarkerLayerGroup,
-    sublines,
-  } from "$lib/map.js";
+  import {initMap, toggleMode, getL, getGraphLayer, getMarkerLayerGroup, sublines, updateLayerProperties} from "$lib/map.js";
   import { place, draw, path, undo, applyTransfer } from "$lib/graph.js";
   import { optimize } from "$lib/optamize.js";
   import { activeModel, activeData } from "$lib/stores.js";
-  import { updateInspect, updateLayerProperties } from "$lib/map.js";
+  import { updateInspect } from "$lib/map.js";
+  import { validate } from "$lib/changes.js";
+  import { loadHighwaysAndPlaceMains, drawMains } from "$lib/mains.js";
 
   let powerNodesLayer;
 
@@ -27,71 +22,15 @@
       "https://overpass.openstreetmap.ru/api/interpreter"
   ];
 
-  const typeMap = {
-      'solar': { code: 'S', color: '#FFD700' },
-      'wind': { code: 'W', color: '#00BFFF' },
-      'hydro': { code: 'H', color: '#4169E1' },
-      'nuclear': { code: 'N', color: '#ADFF2F' }
-  };
 
-  async function loadPowerData() {
-      if (!map) return;
-
-      const b = map.getBounds();
-      const bbox = `${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`;
-
-      // ADDED "way" with "out center" to catch plants drawn as areas
-      const query = `[out:json][timeout:15];(node["power"~"generator|plant"](${bbox});way["power"~"generator|plant"](${bbox}););out center;`;
-
-      for (let url of endpoints) {
-          try {
-              const res = await fetch(url, { method: "POST", body: query });
-              if (!res.ok) continue;
-
-              const data = await res.json();
-
-              // Check if we actually got elements
-              if (!data.elements || data.elements.length === 0) {
-                  console.warn("No power sources found in this view. Try zooming out.");
-                  continue;
-              }
-              powerNodesLayer.clearLayers();
-
-              const newSources = data.elements.map(el => {
-                  const tags = el.tags || {};
-                  const rawType = (tags['generator:source'] || tags['fuel'] || tags['power:source'] || '').toLowerCase();
-                  const info = typeMap[rawType] || {
-                      code: tags.name ? tags.name.charAt(0).toUpperCase() : 'P',
-                      color: '#00FF88'
-                  };
-
-                  // Coordinates for nodes use el.lat/lon; for ways they use el.center.lat/lon
-                  const lat = el.lat || el.center.lat;
-                  const lon = el.lon || el.center.lon;
-
-                  L.circleMarker([lat, lon], {
-                      radius: 10, fillColor: info.color, color: '#000', weight: 2, fillOpacity: 1
-                  }).bindPopup(tags.name || "Station").addTo(powerNodesLayer);
-
-                  return { id: el.id, lat, lng: lon, info, name: tags.name || "STATION" };
-              });
-
-              powerSources.set(newSources);
-              updateIndicators();
-              return;
-          } catch (e) {
-              console.error(`Mirror ${url} failed.`);
-          }
-      }
-  }
 
   function updateIndicators() {
       if (!map) return;
       const size = map.getSize();
       const center = map.latLngToContainerPoint(map.getCenter());
+      const sources = get(powerSources);
 
-      const currentSources = get(powerSources);
-      const inds = currentSources.map(source => {
+      const inds = sources.map(source => {
           const targetPoint = map.latLngToContainerPoint([source.lat, source.lng]);
           const isOffScreen = targetPoint.x < 0 || targetPoint.x > size.x ||
                              targetPoint.y < 0 || targetPoint.y > size.y;
@@ -132,46 +71,57 @@
     if (data) updateInspect(data);
   });
 
-  function updateProp(prop, value) {
-    graph.update(g => {
-      const id = $activeData.id;
-      if (g.loc[id]) {
-        g.loc[id][prop] = value;
-        if (prop === 'prod' || prop === 'dem') {
-          updateLayerProperties(id, { [prop]: value });
-        }
-      }
-      return g;
-    });
-    if (prop === 'neighbors') {
-      activeData.update(current => { current.neighborsStr = value.join(', '); return current; });
-    }
-    ledger = optimize(graph) || [];
-  }
-
   onMount(async () => {
     try {
       await import("leaflet/dist/leaflet.css");
       map = await initMap("map", "../data.geojson");
       g = get(graph);
       L = getL();
+      await loadHighwaysAndPlaceMains(map, L, graph, sublines, draw, getGraphLayer, drawMains);
+      sublines(graph);
       draw(map, get(graph), L, getGraphLayer());
-      ledger = optimize(graph) || [];
+      console.log(g.loc[27].prod , g.loc[27].dem);
+      ledger = optimize() || [];
+      console.log(g.loc[27].prod , g.loc[27].dem);
       powerNodesLayer = L.layerGroup().addTo(map);
-      powerSources.set(initialPowerSources);
-      initialPowerSources.forEach(source => {
-        L.circleMarker([source.lat, source.lng], {
-          radius: 10, fillColor: source.info.color, color: '#000', weight: 2, fillOpacity: 1
-        }).bindPopup(source.name).addTo(powerNodesLayer);
-      });
-      updateIndicators();
       map.on('move', updateIndicators);
-
 
     } catch (err) {
       console.error("Error initializing map:", err);
     }
   });
+
+  function handlePriorityChange(event) {
+    const result = validate('priority', event.target.value, $activeData);
+    if (result) {
+      ledger = result.newLedger;
+      active_index = -1;
+    }
+  }
+
+  function handleStoreChange(event) {
+    const result = validate('store', event.target.value, $activeData);
+    if (result) {
+      ledger = result.newLedger;
+      active_index = -1;
+    }
+  }
+
+  function handleProdChange(event) {
+    const result = validate('prod', event.target.value, $activeData);
+    if (result) {
+      ledger = result.newLedger;
+      active_index = -1;
+    }
+  }
+
+  function handleDemChange(event) {
+    const result = validate('dem', event.target.value, $activeData);
+    if (result) {
+      ledger = result.newLedger;
+      active_index = -1;
+    }
+  }
 
   function toggle(func) {
     if (func === "Dev") {
@@ -237,7 +187,7 @@
         return g;
       });
     } else if (func === "optimize") {
-      optimize(graph);
+      ledger = optimize() || [];
       draw(map, get(graph), L, getGraphLayer());
     } else if (func === "draw") {
       draw(map, get(graph), L, getGraphLayer());
@@ -256,7 +206,7 @@
   {/if}
 {/each}
 
-<button class="search-btn" on:click={loadPowerData}>📡 PULSE SCAN</button>
+<button id="search" class="search-btn" on:click={() => loadHighwaysAndPlaceMains(map, L, graph, sublines, draw, getGraphLayer, drawMains)}>LOAD MAINS</button>
 
 <div id="ui">
   <div id="drop">
@@ -300,6 +250,7 @@
 
   <div id="inspect">
     <h1 id="name">{"Click on a tiles"}</h1>
+    <h2 id="id">id</h2>
     <button
       id="copy"
       on:click={() =>
@@ -311,32 +262,11 @@
       </svg>
     </button>
     <div id="subinspect">
-      {#if $activeData}
-        <div>
-          <label>ID:</label>
-          <input id="id" type="number" bind:value={$activeData.id} on:input={() => updateProp('id', $activeData.id)} />
-        </div>
-        <div>
-          <label>Priority:</label>
-          <input id="priority" type="number" bind:value={$activeData.priority} on:input={() => updateProp('priority', $activeData.priority)} />
-        </div>
-        <div>
-          <label>Store:</label>
-          <input id="store" type="number" bind:value={$activeData.store} on:input={() => updateProp('store', $activeData.store)} />
-        </div>
-        <div>
-          <label>Production:</label>
-          <input id="prod" type="number" bind:value={$activeData.prod} on:input={() => updateProp('prod', $activeData.prod)} />
-        </div>
-        <div>
-          <label>Demand:</label>
-          <input id="dem" type="number" bind:value={$activeData.dem} on:input={() => updateProp('dem', $activeData.dem)} />
-        </div>
-        <div>
-          <label>Neighbours:</label>
-          <input id="neighbours" bind:value={$activeData.neighborsStr} on:input={() => updateProp('neighbors', $activeData.neighborsStr.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n)))} />
-        </div>
-      {/if}
+    <div><h2>Priority:</h2><input id="priority-input" type="number" min="0" step="any" on:input={handlePriorityChange} placeholder="priority" /></div>
+    <div><h2>Store:</h2><input id="store-input" type="number" min="0" step="any" on:input={handleStoreChange} placeholder="store" /></div>
+    <div><h2>Production:</h2><input id="prod-input" type="number" min="0" step="any" on:input={handleProdChange} placeholder="production" /></div>
+    <div><h2>Demand:</h2><input id="dem-input" type="number" min="0" step="any" on:input={handleDemChange} placeholder="demand" /></div>
+      <h2 id="neighbours">neighbours</h2>
     </div>
 
     <h2 id="pos" class="visible">position</h2>
@@ -377,7 +307,7 @@
         }
       }}
       aria-label="Next step">
-      &gt;
+      >
     </button>
   </div>
 </div>
@@ -391,24 +321,18 @@
   }
   .active {
     background-color: #ff3e00;
-  } /* Visual feedback for active state */
-
-  .search-btn {
-    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-    z-index: 1000; background: #000; color: #0f8; border: 2px solid #0f8;
-    padding: 10px 25px; cursor: pointer; font-family: monospace; font-size: 16px;
   }
+
+
 
   .hud {
     position: absolute; width: 40px; height: 40px; background: rgba(0,0,0,0.8);
     border: 2px solid; border-radius: 50%; display: flex; align-items: center;
     justify-content: center; z-index: 2000; transform: translate(-50%, -50%);
   }
-
   .arrow {
     width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent;
     border-left: 10px solid; position: absolute; right: -13px;
   }
-
   .sym { font-weight: bold; }
 </style>
