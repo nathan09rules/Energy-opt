@@ -22,7 +22,10 @@
     darkMode,
   } from "$lib/map.js";
   import { place, draw, path, autoConnect } from "$lib/graph.js";
-  import { optimize, minimizeLoss } from "$lib/optamize.js";
+  import { optimize } from "$lib/optamize.js";
+
+  // Reactive statement to redraw when activeData changes
+  $: if ($activeData && map && L) draw(map, get(graph), L, getGraphLayer());
 
   let map, L;
   let isDashboardOpen = false;
@@ -37,10 +40,15 @@
   // Predict: Future usage analysis
   let currentMode = "standard";
 
+  let optimizedData = null;
+
   async function reoptimize() {
     autoConnect(graph);
-    ledger = optimize() || [];
-    if (map) draw(map, get(graph), L, getGraphLayer());
+    const result = optimize();
+    ledger = result.ledger || [];
+    optimizedData = result.data;
+
+    console.log("Optimization Result:", result);
   }
 
   async function loadPowerData() {
@@ -224,8 +232,9 @@
         {#if !showAdvanced}
           <!-- Simple Mode -->
           <div class="inspect-row">
-            <label>Net Energy:</label>
+            <label for="net-energy">Net Energy:</label>
             <span
+              id="net-energy"
               style="color: {$activeData.prod - $activeData.dem >= 0
                 ? 'green'
                 : 'red'}; font-weight: bold;"
@@ -234,34 +243,40 @@
             </span>
           </div>
           <div class="inspect-row">
-            <label>Storage:</label>
-            <span>{($activeData.store || 0).toFixed(0)} / 1000</span>
+            <label for="storage">Storage:</label>
+            <span id="storage"
+              >{($activeData.store || 0).toFixed(0)} / 1000</span
+            >
           </div>
         {:else}
           <!-- Advanced Mode (Full Access) -->
           <div class="inspect-row">
-            <label>Prod:</label><input
+            <label for="prod">Prod:</label><input
+              id="prod"
               type="number"
               bind:value={$activeData.prod}
               on:change={reoptimize}
             />
           </div>
           <div class="inspect-row">
-            <label>Dem:</label><input
+            <label for="dem">Dem:</label><input
+              id="dem"
               type="number"
               bind:value={$activeData.dem}
               on:change={reoptimize}
             />
           </div>
           <div class="inspect-row">
-            <label>Store:</label><input
+            <label for="store">Store:</label><input
+              id="store"
               type="number"
               bind:value={$activeData.store}
               on:change={reoptimize}
             />
           </div>
           <div class="inspect-row">
-            <label>Priority:</label><input
+            <label for="priority">Priority:</label><input
+              id="priority"
               type="number"
               bind:value={$activeData.priority}
               on:change={reoptimize}
@@ -271,7 +286,9 @@
           {#if currentMode === "predict"}
             <hr />
             <div class="inspect-row">
-              <label>Future Use:</label><span>Expected +12%</span>
+              <label for="future-use">Future Use:</label><span id="future-use"
+                >Expected +12%</span
+              >
             </div>
           {/if}
         {/if}
@@ -287,30 +304,41 @@
   <div id="timeline">
     <button
       on:click={() => {
-        if (activeIndex > -1) {
-          activeIndex--;
-          reoptimize();
-          if (activeIndex >= 0)
-            path(map, get(graph), L, getGraphLayer(), ledger[activeIndex]);
-        }
-      }}>PREV</button
+        activeIndex = -1;
+        if (map) draw(map, get(graph), L, getGraphLayer());
+      }}>RESET</button
     >
     <div style="text-align: center; min-width: 100px;">
-      <span style="font-weight: bold;">STEP {activeIndex + 1}</span>
+      <span style="font-weight: bold;"
+        >STEP {activeIndex + 1} / {ledger.length}</span
+      >
     </div>
     <button
       on:click={() => {
+        if (activeIndex === -1 && map)
+          draw(map, get(graph), L, getGraphLayer());
         if (activeIndex < ledger.length - 1) {
           activeIndex++;
           path(map, get(graph), L, getGraphLayer(), ledger[activeIndex]);
         }
       }}>NEXT</button
     >
+    <button
+      on:click={() => {
+        activeIndex = -1;
+        draw(map, get(graph), L, getGraphLayer());
+        for (let i = 0; i < ledger.length; i++) {
+          setTimeout(() => {
+            path(map, get(graph), L, getGraphLayer(), ledger[i]);
+            activeIndex = i;
+          }, 1); // Staggered delay
+        }
+      }}>PLAY ALL</button
+    >
 
     {#if currentMode === "predict"}
       <button
         on:click={() => {
-          minimizeLoss(graph);
           reoptimize();
         }}
         style="background: yellow; color: black; font-weight: bold;"
@@ -333,10 +361,11 @@
 
   <div style="overflow-y: auto; flex: 1;">
     <h3 style="font-size: 0.9rem;">Grid Constants</h3>
-    {#each Object.entries(CONFIGS) as [key, value]}
+    {#each Object.entries(CONFIGS) as [key, value], i}
       <div style="display: flex; flex-direction: column; margin-bottom: 10px;">
-        <label style="font-size: 0.7rem;">{key}</label>
+        <label for="config-{i}" style="font-size: 0.7rem;">{key}</label>
         <input
+          id="config-{i}"
           type="number"
           step="0.1"
           bind:value={CONFIGS[key]}

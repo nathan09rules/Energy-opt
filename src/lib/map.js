@@ -78,17 +78,39 @@ export function syncPowerSources() {
   const currentGraph = get(graph);
   let updated = false;
 
+  const mains = Object.values(currentGraph.mains);
+
   sources.forEach(source => {
     if (!currentGraph.loc[source.id]) {
+      // Find nearest main to connect to
+      let nearestMainId = null;
+      let minDistance = Infinity;
+
+      mains.forEach(m => {
+        const d = Math.sqrt(Math.pow(source.lat - m.lat, 2) + Math.pow(source.lng - m.lng, 2));
+        if (d < minDistance) {
+          minDistance = d;
+          nearestMainId = m.id;
+        }
+      });
+
       currentGraph.loc[source.id] = {
         ...source,
-        prod: 2000,
+        prod: 5000, // High production for stations
         dem: 0,
         priority: 1,
-        store: 500,
-        neighbors: [],
+        store: 1000,
+        neighbors: nearestMainId !== null ? [nearestMainId] : [],
         type: 'loc'
       };
+
+      // Also add backward link from main to station
+      if (nearestMainId !== null) {
+        if (!currentGraph.mains[nearestMainId].neighbors.includes(source.id)) {
+          currentGraph.mains[nearestMainId].neighbors.push(source.id);
+        }
+      }
+
       updated = true;
     }
   });

@@ -6,7 +6,15 @@
   import "$lib/base.css";
   import { chunks, graph, powerSources, powerIndicators } from "$lib/stores.js";
 
-  import {initMap, toggleMode, getL, getGraphLayer, getMarkerLayerGroup, sublines, updateLayerProperties} from "$lib/map.js";
+  import {
+    initMap,
+    toggleMode,
+    getL,
+    getGraphLayer,
+    getMarkerLayerGroup,
+    sublines,
+    updateLayerProperties,
+  } from "$lib/map.js";
   import { place, draw, path, undo, applyTransfer } from "$lib/graph.js";
   import { optimize } from "$lib/optamize.js";
   import { activeModel, activeData } from "$lib/stores.js";
@@ -17,45 +25,52 @@
   let powerNodesLayer;
 
   const endpoints = [
-      "https://overpass.kumi.systems/api/interpreter",
-      "https://overpass-api.de/api/interpreter",
-      "https://overpass.openstreetmap.ru/api/interpreter"
+    "https://overpass.kumi.systems/api/interpreter",
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.openstreetmap.ru/api/interpreter",
   ];
 
-
-
   function updateIndicators() {
-      if (!map) return;
-      const size = map.getSize();
-      const center = map.latLngToContainerPoint(map.getCenter());
-      const sources = get(powerSources);
+    if (!map) return;
+    const size = map.getSize();
+    const center = map.latLngToContainerPoint(map.getCenter());
+    const sources = get(powerSources);
 
-      const inds = sources.map(source => {
-          const targetPoint = map.latLngToContainerPoint([source.lat, source.lng]);
-          const isOffScreen = targetPoint.x < 0 || targetPoint.x > size.x ||
-                             targetPoint.y < 0 || targetPoint.y > size.y;
+    const inds = sources.map((source) => {
+      const targetPoint = map.latLngToContainerPoint([source.lat, source.lng]);
+      const isOffScreen =
+        targetPoint.x < 0 ||
+        targetPoint.x > size.x ||
+        targetPoint.y < 0 ||
+        targetPoint.y > size.y;
 
-          if (!isOffScreen) return { ...source, visible: false };
+      if (!isOffScreen) return { ...source, visible: false };
 
-          const dx = targetPoint.x - center.x;
-          const dy = targetPoint.y - center.y;
-          const angle = Math.atan2(dy, dx);
+      const dx = targetPoint.x - center.x;
+      const dy = targetPoint.y - center.y;
+      const angle = Math.atan2(dy, dx);
 
-          const padding = 40;
-          let x, y;
-          const slope = dy / dx;
+      const padding = 40;
+      let x, y;
+      const slope = dy / dx;
 
-          if (Math.abs(slope) < (size.y / size.x)) {
-              x = dx > 0 ? size.x - padding : padding;
-              y = center.y + (x - center.x) * slope;
-          } else {
-              y = dy > 0 ? size.y - padding : padding;
-              x = center.x + (y - center.y) / slope;
-          }
+      if (Math.abs(slope) < size.y / size.x) {
+        x = dx > 0 ? size.x - padding : padding;
+        y = center.y + (x - center.x) * slope;
+      } else {
+        y = dy > 0 ? size.y - padding : padding;
+        x = center.x + (y - center.y) / slope;
+      }
 
-          return { ...source, visible: true, x, y, rotation: angle * (180 / Math.PI) };
-      });
-      powerIndicators.set(inds);
+      return {
+        ...source,
+        visible: true,
+        x,
+        y,
+        rotation: angle * (180 / Math.PI),
+      };
+    });
+    powerIndicators.set(inds);
   }
 
   let map;
@@ -77,22 +92,28 @@
       map = await initMap("map", "../data.geojson");
       g = get(graph);
       L = getL();
-      await loadHighwaysAndPlaceMains(map, L, graph, sublines, draw, getGraphLayer, drawMains);
+      await loadHighwaysAndPlaceMains(
+        map,
+        L,
+        graph,
+        sublines,
+        draw,
+        getGraphLayer,
+        drawMains,
+      );
       sublines(graph);
-      draw(map, get(graph), L, getGraphLayer());
-      console.log(g.loc[27].prod , g.loc[27].dem);
+      console.log(g.loc[27].prod, g.loc[27].dem);
       ledger = optimize() || [];
-      console.log(g.loc[27].prod , g.loc[27].dem);
+      console.log(g.loc[27].prod, g.loc[27].dem);
       powerNodesLayer = L.layerGroup().addTo(map);
-      map.on('move', updateIndicators);
-
+      map.on("move", updateIndicators);
     } catch (err) {
       console.error("Error initializing map:", err);
     }
   });
 
   function handlePriorityChange(event) {
-    const result = validate('priority', event.target.value, $activeData);
+    const result = validate("priority", event.target.value, $activeData);
     if (result) {
       ledger = result.newLedger;
       active_index = -1;
@@ -100,7 +121,7 @@
   }
 
   function handleStoreChange(event) {
-    const result = validate('store', event.target.value, $activeData);
+    const result = validate("store", event.target.value, $activeData);
     if (result) {
       ledger = result.newLedger;
       active_index = -1;
@@ -108,7 +129,7 @@
   }
 
   function handleProdChange(event) {
-    const result = validate('prod', event.target.value, $activeData);
+    const result = validate("prod", event.target.value, $activeData);
     if (result) {
       ledger = result.newLedger;
       active_index = -1;
@@ -116,7 +137,7 @@
   }
 
   function handleDemChange(event) {
-    const result = validate('dem', event.target.value, $activeData);
+    const result = validate("dem", event.target.value, $activeData);
     if (result) {
       ledger = result.newLedger;
       active_index = -1;
@@ -199,14 +220,34 @@
 
 {#each $powerIndicators as ind (ind.id)}
   {#if ind.visible}
-    <div class="hud" style="left: {ind.x}px; top: {ind.y}px; border-color: {ind.info.color};">
-      <div class="arrow" style="transform: rotate({ind.rotation}deg); border-left-color: {ind.info.color}"></div>
+    <div
+      class="hud"
+      style="left: {ind.x}px; top: {ind.y}px; border-color: {ind.info.color};"
+    >
+      <div
+        class="arrow"
+        style="transform: rotate({ind.rotation}deg); border-left-color: {ind
+          .info.color}"
+      ></div>
       <div class="sym" style="color: {ind.info.color}">{ind.info.code}</div>
     </div>
   {/if}
 {/each}
 
-<button id="search" class="search-btn" on:click={() => loadHighwaysAndPlaceMains(map, L, graph, sublines, draw, getGraphLayer, drawMains)}>LOAD MAINS</button>
+<button
+  id="search"
+  class="search-btn"
+  on:click={() =>
+    loadHighwaysAndPlaceMains(
+      map,
+      L,
+      graph,
+      sublines,
+      draw,
+      getGraphLayer,
+      drawMains,
+    )}>LOAD MAINS</button
+>
 
 <div id="ui">
   <div id="drop">
@@ -217,13 +258,16 @@
     <button on:click={() => toggle("Dev")} class="toggle">
       <div class="in">||</div>
     </button>
-    <button class="toggle" on:click={async () => {
+    <button
+      class="toggle"
+      on:click={async () => {
         if (!map || !L) return;
         const bounds = map.getBounds(); // get current viewport
         map = await initial(map, L, bounds); // pass bounds to load only current area
-    }}>
-        <div class="in">I</div>
-    </button>  
+      }}
+    >
+      <div class="in">I</div>
+    </button>
   </div>
 
   <div id="dev" class="hidden">
@@ -256,16 +300,67 @@
       on:click={() =>
         navigator.clipboard.writeText(
           document.getElementById("name").textContent,
-        )} aria-label="Copy to clipboard">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM15 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V11C21 9.9 20.1 9 19 9H18V7C18 5.9 17.1 5 16 5ZM8 21H19V11H8V21Z" fill="currentColor"/>
+        )}
+      aria-label="Copy to clipboard"
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM15 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V11C21 9.9 20.1 9 19 9H18V7C18 5.9 17.1 5 16 5ZM8 21H19V11H8V21Z"
+          fill="currentColor"
+        />
       </svg>
     </button>
     <div id="subinspect">
-    <div><h2>Priority:</h2><input id="priority-input" type="number" min="0" step="any" on:input={handlePriorityChange} placeholder="priority" /></div>
-    <div><h2>Store:</h2><input id="store-input" type="number" min="0" step="any" on:input={handleStoreChange} placeholder="store" /></div>
-    <div><h2>Production:</h2><input id="prod-input" type="number" min="0" step="any" on:input={handleProdChange} placeholder="production" /></div>
-    <div><h2>Demand:</h2><input id="dem-input" type="number" min="0" step="any" on:input={handleDemChange} placeholder="demand" /></div>
+      <div>
+        <h2>Priority:</h2>
+        <input
+          id="priority-input"
+          type="number"
+          min="0"
+          step="any"
+          on:input={handlePriorityChange}
+          placeholder="priority"
+        />
+      </div>
+      <div>
+        <h2>Store:</h2>
+        <input
+          id="store-input"
+          type="number"
+          min="0"
+          step="any"
+          on:input={handleStoreChange}
+          placeholder="store"
+        />
+      </div>
+      <div>
+        <h2>Production:</h2>
+        <input
+          id="prod-input"
+          type="number"
+          min="0"
+          step="any"
+          on:input={handleProdChange}
+          placeholder="production"
+        />
+      </div>
+      <div>
+        <h2>Demand:</h2>
+        <input
+          id="dem-input"
+          type="number"
+          min="0"
+          step="any"
+          on:input={handleDemChange}
+          placeholder="demand"
+        />
+      </div>
       <h2 id="neighbours">neighbours</h2>
     </div>
 
@@ -280,7 +375,8 @@
           undo(ledger[active_index]);
           active_index--;
           draw(map, get(graph), L, getGraphLayer());
-          if (active_index >= 0) path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
+          if (active_index >= 0)
+            path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
         }
       }}
       aria-label="Previous step"
@@ -295,7 +391,8 @@
         draw(map, get(graph), L, getGraphLayer());
         active_index = ledger.length - 1;
       }}
-      aria-label="Final step">
+      aria-label="Final step"
+    >
       FINAL
     </button>
     <button
@@ -306,7 +403,8 @@
           path(map, get(graph), L, getGraphLayer(), ledger[active_index]);
         }
       }}
-      aria-label="Next step">
+      aria-label="Next step"
+    >
       >
     </button>
   </div>
@@ -323,16 +421,29 @@
     background-color: #ff3e00;
   }
 
-
-
   .hud {
-    position: absolute; width: 40px; height: 40px; background: rgba(0,0,0,0.8);
-    border: 2px solid; border-radius: 50%; display: flex; align-items: center;
-    justify-content: center; z-index: 2000; transform: translate(-50%, -50%);
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    transform: translate(-50%, -50%);
   }
   .arrow {
-    width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent;
-    border-left: 10px solid; position: absolute; right: -13px;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 10px solid;
+    position: absolute;
+    right: -13px;
   }
-  .sym { font-weight: bold; }
+  .sym {
+    font-weight: bold;
+  }
 </style>

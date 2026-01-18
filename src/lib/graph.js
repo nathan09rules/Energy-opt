@@ -7,7 +7,10 @@ import { CONFIGS } from './configs.js';
 export const is_running = writable(false);
 
 function distance(lat1, lng1, lat2, lng2) {
-    return Math.sqrt(Math.pow(lat1 - lat2, 2) + Math.pow(lng1 - lng2, 2));
+    if (!lat1 || !lng1 || !lat2 || !lng2) return 1000;
+    const dx = lat1 - lat2;
+    const dy = lng1 - lng2;
+    return Math.sqrt(dx * dx + dy * dy) * 111;
 }
 
 /**
@@ -17,30 +20,38 @@ export function autoConnect(graphStore) {
     const data = get(graphStore);
     const locs = Object.values(data.loc);
     const mains = Object.values(data.mains);
+    const maxN = CONFIGS["max neighbors"] || 5; // Increased default from 3
 
     locs.forEach(node => {
-        if (node.neighbors && node.neighbors.length >= (CONFIGS["max neighbors"] || 3)) return;
         node.neighbors = node.neighbors || [];
 
-        let nearestMain = null;
-        let minDistM = Infinity;
+        // Find potential neighbors
+        const candidates = [];
         mains.forEach(m => {
-            const d = distance(node.lat, node.lng, m.lat, m.lng);
-            if (d < minDistM) { minDistM = d; nearestMain = m; }
+            candidates.push({ id: m.id, dist: distance(node.lat, node.lng, m.lat, m.lng) * (CONFIGS["main resistance"] || 0.5) });
         });
-
-        let nearestLoc = null;
-        let minDistL = Infinity;
         locs.forEach(l => {
             if (l.id === node.id) return;
-            const d = distance(node.lat, node.lng, l.lat, l.lng);
-            if (d < minDistL) { minDistL = d; nearestLoc = l; }
+            candidates.push({ id: l.id, dist: distance(node.lat, node.lng, l.lat, l.lng) * (CONFIGS["location resistance"] || 1.5) });
         });
 
-        if (nearestMain && (minDistM * CONFIGS["main resistance"] < minDistL * CONFIGS["location resistance"])) {
-            if (!node.neighbors.includes(nearestMain.id)) node.neighbors.push(nearestMain.id);
-        } else if (nearestLoc) {
-            if (!node.neighbors.includes(nearestLoc.id)) node.neighbors.push(nearestLoc.id);
+        candidates.sort((a, b) => a.dist - b.dist);
+
+        // Always ensure at least 2 neighbors if available, even if maxN is reached by some other logic
+        const targetN = Math.max(maxN, node.neighbors.length);
+
+        for (let i = 0; i < candidates.length && node.neighbors.length < targetN; i++) {
+            if (!node.neighbors.includes(candidates[i].id)) {
+                node.neighbors.push(candidates[i].id);
+
+                // Also add reciprocal connection if it's a loc
+                const other = data.loc[candidates[i].id] || data.mains[candidates[i].id];
+                if (other && other.neighbors && !other.neighbors.includes(node.id)) {
+                    if (other.type === 'loc' && other.neighbors.length < targetN) {
+                        other.neighbors.push(node.id);
+                    }
+                }
+            }
         }
     });
 
@@ -73,6 +84,7 @@ export function draw(map, graphData, L, layerGroup) {
     const locs = Object.values(graphData.loc);
 
     const isDark = get(darkMode);
+    const active = get(activeData);
 
     // Draw grid wires
     [...mains, ...locs].forEach(node => {
@@ -92,7 +104,7 @@ export function draw(map, graphData, L, layerGroup) {
     // Draw main junction points
     mains.forEach(node => {
         L.circleMarker([node.lat, node.lng], {
-            radius: 5, color: isDark ? "white" : "black", fillColor: "red", fillOpacity: 1, weight: 1
+            radius: 5, color: isDark ? "white" : "black", fillColor: node.id === active?.id ? "#add8e6" : "red", fillOpacity: 1, weight: 1
         }).addTo(layerGroup).on('click', (e) => {
             L.DomEvent.stopPropagation(e);
             activeData.set(node);
@@ -100,17 +112,46 @@ export function draw(map, graphData, L, layerGroup) {
         });
     });
 
+    // Draw loc nodes (like Power Stations) that are not in the GeoJSON layer
+    const buildingIds = new Set();
+    layer.eachLayer(l => {
+        if (l.feature && l.feature.properties) buildingIds.add(l.feature.properties.id);
+    });
+
+    locs.forEach(node => {
+        if (!buildingIds.has(node.id)) {
+            L.circleMarker([node.lat, node.lng], {
+                radius: 8, color: "black", fillColor: "#00ff88", fillOpacity: 1, weight: 1
+            }).addTo(layerGroup).on('click', (e) => {
+                L.DomEvent.stopPropagation(e);
+                activeData.set(node);
+                activeModel.set(node);
+            });
+
+            if (node.info?.code) {
+                L.marker([node.lat, node.lng], {
+                    icon: L.divIcon({
+                        className: 'station-icon',
+                        html: `<div style="color: black; font-weight: bold; font-size: 10px; margin-top: -2px; margin-left: -1px;">${node.info.code}</div>`,
+                        iconSize: [12, 12]
+                    })
+                }).addTo(layerGroup);
+            }
+        }
+    });
+
     // Color code buildings
     layer.eachLayer(lyr => {
         const d = graphData.loc[lyr.feature.properties.id];
         if (!d) return;
         const net = d.prod - d.dem;
-        const color = net >= 0 ? '#00ff88' : (net > -20 ? '#ffd700' : '#ff3e3e');
+        const color = d.id === active?.id ? "#add8e6" : (net >= 0 ? '#00ff88' : (net > -20 ? '#ffd700' : '#ff3e3e'));
+        const fillOpacity = d.id === active?.id ? 0.8 : (isDark ? 0.3 : 0.6);
         lyr.setStyle({
             fillColor: color,
-            fillOpacity: isDark ? 0.3 : 0.6,
+            fillOpacity: fillOpacity,
             color: isDark ? 'white' : 'black',
-            weight: 1
+            weight: d.id === active?.id ? 3 : 1
         });
     });
 }
@@ -122,27 +163,48 @@ export function path(map, graphData, L, layerGroup, entry) {
 
     const pts = entry.path.map(id => {
         const n = graphData.loc[id] || graphData.mains[id];
-        return [n.lat, n.lng];
-    });
+        return n ? [n.lat, n.lng] : null;
+    }).filter(p => p !== null);
 
     const p = L.polyline(pts, {
-        color: '#00ccff',
-        weight: 5,
+        color: entry.type === 'grid-injection' ? '#add8e6' : '#00ff88',
+        weight: 12,
         opacity: 0.9,
-        lineCap: 'round'
+        lineCap: 'round',
+        dashArray: '15, 15',
+        className: 'energy-flow-path'
     }).addTo(layerGroup);
 
-    let o = 0;
-    const interval = setInterval(() => {
-        o++;
-        p.setStyle({ dashArray: '10,15', dashOffset: -o });
-    }, 30);
+    // Apply the transfer visually to the building or main
+    if (layer) {
+        layer.eachLayer(lyr => {
+            const props = lyr.feature.properties;
+            if (props.id == entry.end) {
+                props.prod = (props.prod || 0) + entry.recieved;
+                const net = props.prod - props.dem;
+                const color = net >= 0 ? '#00ff88' : (net > -20 ? '#ffd700' : '#ff3e3e');
+                lyr.setStyle({ fillColor: color, fillOpacity: 0.9, weight: 5 });
+            }
+            if (props.id == entry.start) {
+                props.prod = (props.prod || 0) - entry.transfered;
+                const net = props.prod - props.dem;
+                const color = net >= 0 ? '#00ff88' : (net > -20 ? '#ffd700' : '#ff3e3e');
+                lyr.setStyle({ fillColor: color, fillOpacity: 0.4 });
+            }
+        });
+    }
 
-    pathIntervals.push(interval);
+    // Also highlight main junction if it's an endpoint
+    if (graphData.mains[entry.end]) {
+        const m = graphData.mains[entry.end];
+        const pulse = L.circleMarker([m.lat, m.lng], {
+            radius: 12, color: '#add8e6', weight: 4, fillOpacity: 0.5, fillColor: 'white'
+        }).addTo(layerGroup);
+        setTimeout(() => layerGroup.removeLayer(pulse), 2000);
+    }
 
-    // Clear after some time to avoid clutter
+    // Clear the path line after 4 seconds
     setTimeout(() => {
-        clearInterval(interval);
         if (layerGroup.hasLayer(p)) layerGroup.removeLayer(p);
     }, 4000);
 }
