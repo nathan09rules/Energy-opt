@@ -157,56 +157,76 @@ export function draw(map, graphData, L, layerGroup) {
 }
 
 let pathIntervals = [];
-
 export function path(map, graphData, L, layerGroup, entry) {
     if (!layerGroup || !entry) return;
 
+    // 1. Force Integer Math (Same as Optimizer)
+    const amountReceived = Math.trunc(Number(entry.received || 0));
+    const amountTransfered = Math.trunc(Number(entry.transfered || 0));
+
+    // 2. Draw the Path
     const pts = entry.path.map(id => {
         const n = graphData.loc[id] || graphData.mains[id];
         return n ? [n.lat, n.lng] : null;
     }).filter(p => p !== null);
 
+    if (pts.length < 2) return;
+
     const p = L.polyline(pts, {
         color: entry.type === 'grid-injection' ? '#add8e6' : '#00ff88',
-        weight: 12,
-        opacity: 0.9,
-        lineCap: 'round',
-        dashArray: '15, 15',
+        weight: 8,
+        opacity: 0.8,
+        dashArray: '10, 10',
         className: 'energy-flow-path'
     }).addTo(layerGroup);
 
-    // Apply the transfer visually to the building or main
+    // 3. Update the Data and the Visuals in one sync block
     if (layer) {
         layer.eachLayer(lyr => {
             const props = lyr.feature.properties;
+            if (!props) return;
+
+            // Ensure properties are numbers before doing math
+            props.prod = Math.trunc(Number(props.prod || 0));
+            props.dem = Math.trunc(Number(props.dem || 0));
+
+            // UPDATE END NODE (Receiver)
             if (props.id == entry.end) {
-                props.prod = (props.prod || 0) + entry.recieved;
-                const net = props.prod - props.dem;
-                const color = net >= 0 ? '#00ff88' : (net > -20 ? '#ffd700' : '#ff3e3e');
-                lyr.setStyle({ fillColor: color, fillOpacity: 0.9, weight: 5 });
+                props.prod += amountReceived;
+                updateLayerStyle(lyr, props);
             }
+
+            // UPDATE START NODE (Donor)
             if (props.id == entry.start) {
-                props.prod = (props.prod || 0) - entry.transfered;
-                const net = props.prod - props.dem;
-                const color = net >= 0 ? '#00ff88' : (net > -20 ? '#ffd700' : '#ff3e3e');
-                lyr.setStyle({ fillColor: color, fillOpacity: 0.4 });
+                // THE FIX: We subtract, but we clamp to 0 so it NEVER goes negative
+                // Even if the visualization overlaps, this safety keeps it at 0
+                props.prod = Math.max(0, props.prod - amountTransfered);
+                updateLayerStyle(lyr, props);
             }
         });
     }
 
-    // Also highlight main junction if it's an endpoint
-    if (graphData.mains[entry.end]) {
-        const m = graphData.mains[entry.end];
-        const pulse = L.circleMarker([m.lat, m.lng], {
-            radius: 12, color: '#add8e6', weight: 4, fillOpacity: 0.5, fillColor: 'white'
-        }).addTo(layerGroup);
-        setTimeout(() => layerGroup.removeLayer(pulse), 2000);
-    }
-
-    // Clear the path line after 4 seconds
+    // Cleanup line
     setTimeout(() => {
-        if (layerGroup.hasLayer(p)) layerGroup.removeLayer(p);
+        if (layerGroup && layerGroup.hasLayer(p)) layerGroup.removeLayer(p);
     }, 4000);
+}
+
+/**
+ * Helper to keep styling logic consistent
+ */
+function updateLayerStyle(lyr, props) {
+    const net = props.prod - props.dem;
+    const color = net >= 0 ? '#00ff88' : (net > -20 ? '#ffd700' : '#ff3e3e');
+
+    // Check if this node is currently the active selection to maintain highlight
+    const isActive = false; // You can pull this from your Svelte store if needed
+
+    lyr.setStyle({
+        fillColor: color,
+        fillOpacity: net >= 0 ? 0.7 : 0.9,
+        weight: net < 0 ? 2 : 1
+    });
 }
 
 export function clearPaths() {

@@ -24,8 +24,8 @@
   import { place, draw, path, autoConnect } from "$lib/graph.js";
   import { optimize } from "$lib/optamize.js";
 
-  // Reactive statement to redraw when activeData changes
-  $: if ($activeData && map && L) draw(map, get(graph), L, getGraphLayer());
+  // Reactive statement to redraw when graph changes
+  $: if ($graph && map && L) draw(map, get(graph), L, getGraphLayer());
 
   let map, L;
   let isDashboardOpen = false;
@@ -99,6 +99,7 @@
       map.on("moveend", () => {
         // Optional: Auto fetch on move?
       });
+      map.on("move", updateIndicators);
     } catch (e) {
       console.error("Initialization error:", e);
     }
@@ -140,9 +141,72 @@
       if (clickHandler) map.off("click", clickHandler);
     }
   }
+
+  let indicators = [];
+
+  function updateIndicators() {
+    if (!map) return;
+    const size = map.getSize();
+    const center = map.latLngToContainerPoint(map.getCenter());
+    const sources = get(powerSources);
+
+    indicators = sources.map((source) => {
+      const targetPoint = map.latLngToContainerPoint([source.lat, source.lng]);
+      const isOffScreen =
+        targetPoint.x < 0 ||
+        targetPoint.x > size.x ||
+        targetPoint.y < 0 ||
+        targetPoint.y > size.y;
+
+      if (!isOffScreen) return { ...source, visible: false };
+
+      const dx = targetPoint.x - center.x;
+      const dy = targetPoint.y - center.y;
+      const angle = Math.atan2(dy, dx);
+
+      const padding = 60;
+      let x, y;
+      const slope = dy / dx;
+
+      if (Math.abs(slope) < size.y / size.x) {
+        x = dx > 0 ? size.x - padding : padding;
+        y = center.y + (x - center.x) * slope;
+      } else {
+        y = dy > 0 ? size.y - padding : padding;
+        x = center.x + (y - center.y) / slope;
+      }
+
+      return {
+        ...source,
+        visible: true,
+        x,
+        y,
+        rotation: angle * (180 / Math.PI),
+      };
+    });
+  }
+
+  // Reactive station indicators
+  $: if ($powerSources && map) updateIndicators();
 </script>
 
 <div id="map"></div>
+
+{#each indicators as ind (ind.id)}
+  {#if ind.visible}
+    <div
+      class="hud"
+      style="left: {ind.x}px; top: {ind.y}px; border-color: {ind.info.color};"
+    >
+      <div
+        class="arrow"
+        style="transform: rotate({ind.rotation}deg); border-left-color: {ind
+          .info.color}"
+      ></div>
+      <div class="sym" style="color: {ind.info.color}">{ind.info.code}</div>
+    </div>
+  {/if}
+{/each}
 
 <div class="mode-badge">MODE: {currentMode.toUpperCase()}</div>
 
@@ -232,7 +296,7 @@
         {#if !showAdvanced}
           <!-- Simple Mode -->
           <div class="inspect-row">
-            <label for="net-energy">Net Energy:</label>
+            <span class="label">Net Energy:</span>
             <span
               id="net-energy"
               style="color: {$activeData.prod - $activeData.dem >= 0
@@ -243,7 +307,7 @@
             </span>
           </div>
           <div class="inspect-row">
-            <label for="storage">Storage:</label>
+            <span class="label">Storage:</span>
             <span id="storage"
               >{($activeData.store || 0).toFixed(0)} / 1000</span
             >
