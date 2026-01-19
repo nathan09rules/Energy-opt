@@ -1,10 +1,10 @@
 // map.js
-import { graph, activeData, activeModel, powerSources } from './stores.js';
+import { graph, activeData, activeModel, powerSources, regions } from './regions.js';
 import { get, writable } from 'svelte/store';
 import { CONFIGS } from './configs.js';
 
 export let map, Light, Dark, layer, markerLayerGroup;
-export let darkMode = writable(false); // Default to LIGHT mode for better visibility
+export let darkMode = writable(true); // Default to DARK mode for premium look
 
 let L;
 let graphLayer;
@@ -14,8 +14,8 @@ export async function initMap(containerId, geojsonUrl) {
 
   map = L.map(containerId, { zoomControl: false });
 
-  Light = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-  Dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png');
+  Light = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png');
+  Dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
 
   graphLayer = L.layerGroup().addTo(map);
   markerLayerGroup = L.layerGroup().addTo(map);
@@ -23,20 +23,23 @@ export async function initMap(containerId, geojsonUrl) {
   if (geojsonUrl) {
     const res = await fetch(geojsonUrl);
     const geojson = await res.json();
-
-    let nextId = 1000;
+    regions.set(geojson);
 
     layer = L.geoJSON(geojson, {
-      style: { color: 'black', weight: 1, fillOpacity: 0.5, fillColor: '#00ff88' },
+      style: (feature) => ({
+        color: '#00ccff',
+        weight: 1,
+        fillOpacity: 0.3,
+        fillColor: feature.properties.prod > feature.properties.dem ? '#00ffa2' : '#ff4444'
+      }),
       onEachFeature: (feature, lyr) => {
-        const id = nextId++;
-        const props = { ...feature.properties, id, type: 'loc', neighbors: [] };
+        const props = feature.properties;
 
-        const coords = props.pos.slice(1, -1).split(',').map(Number);
-        props.lat = coords[1];
-        props.lng = coords[0];
-
-        lyr.feature.properties = props;
+        // Ensure standard properties exist
+        props.neighbors = props.neighbors || [];
+        props.type = props.type || 'loc';
+        props.priority = props.priority || 3;
+        props.store = props.store || 0;
 
         lyr.on('click', (e) => {
           L.DomEvent.stopPropagation(e);
@@ -53,7 +56,7 @@ export async function initMap(containerId, geojsonUrl) {
 
     map.fitBounds(layer.getBounds());
   }
-  document.documentElement.setAttribute('data-theme', 'light');
+  document.documentElement.setAttribute('data-theme', 'dark');
 
   return map;
 }
