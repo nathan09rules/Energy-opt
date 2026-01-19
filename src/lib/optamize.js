@@ -12,22 +12,22 @@ export function optimize() {
     const ledger = [];
     const lossPerStep = parseFloat(CONFIGS["transmission loss factor"]) || 0.05;
 
-    // Surplus and Deficit are only in data.loc
-    const getSurplusNodes = () => Object.keys(data.loc).filter(id => (data.loc[id].prod - data.loc[id].dem) > 0);
-    const getDeficitNodes = () => Object.keys(data.loc).filter(id => (data.loc[id].dem - data.loc[id].prod) > 0);
+    // Surplus and Deficit func
+    const getSurplus = () => Object.keys(data.loc).filter(id => (data.loc[id].prod - data.loc[id].dem) > 0);
+    const getDeficit = () => Object.keys(data.loc).filter(id => (data.loc[id].dem - data.loc[id].prod) > 0);
 
-    let surplusPool = getSurplusNodes();
-    let deficitPool = getDeficitNodes();
+    let surplusPool = getSurplus();
+    let deficitPool = getDeficit();
 
     let globalIteration = 0;
     while (deficitPool.length > 0 && surplusPool.length > 0 && globalIteration < 1500) {
 
-        // Sort deficits by priority
+        // Sort deficits by priority, then by deficit size ascending (small deficits first)
         deficitPool.sort((a, b) => {
             const pA = toInt(data.loc[a].priority) || 1;
             const pB = toInt(data.loc[b].priority) || 1;
             if (pB !== pA) return pB - pA;
-            return (data.loc[b].dem - data.loc[b].prod) - (data.loc[a].dem - data.loc[a].prod);
+            return (data.loc[a].dem - data.loc[a].prod) - (data.loc[b].dem - data.loc[b].prod);
         });
 
         const targetId = deficitPool[0];
@@ -42,10 +42,12 @@ export function optimize() {
 
             // Loss based on actual wire steps found in BFS
             const steps = donorMatch.path.length;
-            const totalLossPct = Math.min(0.95, steps * lossPerStep);
+            const baseLossPct = Math.min(0.95, steps * lossPerStep);
+            // No loss for small transfers to allow filling small deficits
+            const totalLossPct = amountGiven <= 1 ? 0 : baseLossPct;
 
-            // Calculate received (using ceil for small packets to avoid 0-unit traps)
-            let received = amountGiven < 5 ? Math.ceil(amountGiven * (1 - totalLossPct)) : Math.floor(amountGiven * (1 - totalLossPct));
+            // Calculate received (rounding to nearest to avoid small deficits)
+            let received = Math.round(amountGiven * (1 - totalLossPct));
             const finalReceived = Math.max(0, received);
 
             // Update state
@@ -62,8 +64,8 @@ export function optimize() {
                 steps: steps
             });
 
-            surplusPool = getSurplusNodes();
-            deficitPool = getDeficitNodes();
+            surplusPool = getSurplus();
+            deficitPool = getDeficit();
         } else {
             // Target cannot reach any surplus node through the current wire config
             deficitPool.shift();
@@ -71,7 +73,7 @@ export function optimize() {
         globalIteration++;
     }
 
-    console.log(`✅ Grid Optimization Complete. Remaining Surplus: ${getSurplusNodes().length}`);
+    console.log(`✅ Grid Optimization Complete. Remaining Surplus: ${getSurplus().length}`);
     return { ledger, data };
 }
 

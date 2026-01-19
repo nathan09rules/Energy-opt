@@ -120,8 +120,9 @@ export function draw(map, graphData, L, layerGroup) {
 
     locs.forEach(node => {
         if (!buildingIds.has(node.id)) {
+            const stationColor = node.info?.color || "#ff8800";
             L.circleMarker([node.lat, node.lng], {
-                radius: 8, color: "black", fillColor: "#00ff88", fillOpacity: 1, weight: 1
+                radius: 10, fillColor: stationColor, color: '#fff', weight: 2, fillOpacity: 1
             }).addTo(layerGroup).on('click', (e) => {
                 L.DomEvent.stopPropagation(e);
                 activeData.set(node);
@@ -172,11 +173,22 @@ export function path(map, graphData, L, layerGroup, entry) {
 
     if (pts.length < 2) return;
 
+    // Determine path color based on source type
+    const sourceNode = graphData.loc[entry.start];
+    let pathColor = sourceNode.prod > 50 ? '#ff8800' : '#00ff88'; // Default renewable green
+    if (entry.type === 'grid-injection' || entry.type === 'grid_injection') {
+        pathColor = '#add8e6';
+    } else if (sourceNode) {
+        if (sourceNode.info?.renewable === false) {
+            pathColor = '#ff8800'; // Non-renewable orange
+        }
+    }
+
     const p = L.polyline(pts, {
-        color: entry.type === 'grid-injection' ? '#add8e6' : '#00ff88',
+        color: pathColor,
         weight: 8,
         opacity: 0.8,
-        dashArray: '10, 10',
+        dashArray: '10, 20',
         className: 'energy-flow-path'
     }).addTo(layerGroup);
 

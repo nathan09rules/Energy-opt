@@ -20,37 +20,39 @@ export async function initMap(containerId, geojsonUrl) {
   graphLayer = L.layerGroup().addTo(map);
   markerLayerGroup = L.layerGroup().addTo(map);
 
-  const res = await fetch(geojsonUrl);
-  const geojson = await res.json();
+  if (geojsonUrl) {
+    const res = await fetch(geojsonUrl);
+    const geojson = await res.json();
 
-  let nextId = 1000;
+    let nextId = 1000;
 
-  layer = L.geoJSON(geojson, {
-    style: { color: 'black', weight: 1, fillOpacity: 0.5, fillColor: '#00ff88' },
-    onEachFeature: (feature, lyr) => {
-      const id = nextId++;
-      const props = { ...feature.properties, id, type: 'loc', neighbors: [] };
+    layer = L.geoJSON(geojson, {
+      style: { color: 'black', weight: 1, fillOpacity: 0.5, fillColor: '#00ff88' },
+      onEachFeature: (feature, lyr) => {
+        const id = nextId++;
+        const props = { ...feature.properties, id, type: 'loc', neighbors: [] };
 
-      const coords = props.pos.slice(1, -1).split(',').map(Number);
-      props.lat = coords[1];
-      props.lng = coords[0];
+        const coords = props.pos.slice(1, -1).split(',').map(Number);
+        props.lat = coords[1];
+        props.lng = coords[0];
 
-      lyr.feature.properties = props;
+        lyr.feature.properties = props;
 
-      lyr.on('click', (e) => {
-        L.DomEvent.stopPropagation(e);
-        activeData.set(props);
-      });
-    }
-  }).addTo(map);
+        lyr.on('click', (e) => {
+          L.DomEvent.stopPropagation(e);
+          activeData.set(props);
+        });
+      }
+    }).addTo(map);
 
-  const tempLocs = {};
-  layer.eachLayer(l => {
-    tempLocs[l.feature.properties.id] = l.feature.properties;
-  });
-  graph.update(g => ({ ...g, loc: tempLocs }));
+    const tempLocs = {};
+    layer.eachLayer(l => {
+      tempLocs[l.feature.properties.id] = l.feature.properties;
+    });
+    graph.update(g => ({ ...g, loc: tempLocs }));
 
-  map.fitBounds(layer.getBounds());
+    map.fitBounds(layer.getBounds());
+  }
   document.documentElement.setAttribute('data-theme', 'light');
 
   return map;
@@ -72,6 +74,16 @@ export function toggleMode() {
 
 export function getL() { return L; }
 export function getGraphLayer() { return graphLayer; }
+
+export function updateLayerProperties(id, updates) {
+  if (layer) {
+    layer.eachLayer(l => {
+      if (l.feature.properties.id === id) {
+        Object.assign(l.feature.properties, updates);
+      }
+    });
+  }
+}
 
 export function syncPowerSources() {
   const sources = get(powerSources);
@@ -116,4 +128,33 @@ export function syncPowerSources() {
   });
 
   if (updated) graph.set(currentGraph);
+}
+
+export function getMarkerLayerGroup() { return markerLayerGroup; }
+
+export function sublines(graph) {
+  // TODO: Implement sublines function to update connections
+  // Probably connects locs to mains or updates neighbors
+}
+
+export function updateInspect(data) {
+  if (!data) return;
+
+  const nameEl = document.getElementById('name');
+  const idEl = document.getElementById('id');
+  const priorityInput = document.getElementById('priority-input');
+  const storeInput = document.getElementById('store-input');
+  const prodInput = document.getElementById('prod-input');
+  const demInput = document.getElementById('dem-input');
+  const neighboursEl = document.getElementById('neighbours');
+  const posEl = document.getElementById('pos');
+
+  if (nameEl) nameEl.textContent = data.name || `ID: ${data.id}`;
+  if (idEl) idEl.textContent = data.id;
+  if (priorityInput) priorityInput.value = data.priority || 1;
+  if (storeInput) storeInput.value = data.store || 0;
+  if (prodInput) prodInput.value = data.prod || 0;
+  if (demInput) demInput.value = data.dem || 0;
+  if (neighboursEl) neighboursEl.textContent = data.neighbors ? data.neighbors.join(', ') : '';
+  if (posEl) posEl.textContent = data.pos || `${data.lat}, ${data.lng}`;
 }

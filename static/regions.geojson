@@ -1,0 +1,6077 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Musaffah Police Station",
+        "type": "emergency",
+        "osm_id": 566746719,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 782,
+        "store": 207,
+        "priority": 1,
+        "pos": "[54.5253893,24.3392134]",
+        "lat": 24.3392134,
+        "lng": 54.5253893
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5253893,
+          24.3392134
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lifeline Hospital",
+        "type": "emergency",
+        "osm_id": 626423070,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 405,
+        "store": 348,
+        "priority": 1,
+        "pos": "[55.1147026,25.0292611]",
+        "lat": 25.0292611,
+        "lng": 55.1147026
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.1147026,
+          25.0292611
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 840555513,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 723,
+        "store": 140,
+        "priority": 1,
+        "pos": "[54.3677488,24.4630356]",
+        "lat": 24.4630356,
+        "lng": 54.3677488
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3677488,
+          24.4630356
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Noor Hospital",
+        "type": "emergency",
+        "osm_id": 916327476,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 530,
+        "store": 182,
+        "priority": 1,
+        "pos": "[54.4615873,24.4172257]",
+        "lat": 24.4172257,
+        "lng": 54.4615873
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4615873,
+          24.4172257
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Franco Emirien",
+        "type": "emergency",
+        "osm_id": 1069810626,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 258,
+        "store": 309,
+        "priority": 1,
+        "pos": "[54.3600568,24.4929813]",
+        "lat": 24.4929813,
+        "lng": 54.3600568
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3600568,
+          24.4929813
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u062a\u0645\u062a \u0627\u0632\u0627\u0644\u062a\u0647",
+        "type": "emergency",
+        "osm_id": 1108918873,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 423,
+        "store": 374,
+        "priority": 1,
+        "pos": "[55.3025801,25.2389325]",
+        "lat": 25.2389325,
+        "lng": 55.3025801
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3025801,
+          25.2389325
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Specialised Medical Care Hospital",
+        "type": "emergency",
+        "osm_id": 1187237858,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 899,
+        "store": 451,
+        "priority": 1,
+        "pos": "[55.7577996,24.2145803]",
+        "lat": 24.2145803,
+        "lng": 55.7577996
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7577996,
+          24.2145803
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 1187330897,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 909,
+        "store": 235,
+        "priority": 1,
+        "pos": "[54.3348436,24.4634738]",
+        "lat": 24.4634738,
+        "lng": 54.3348436
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3348436,
+          24.4634738
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 1187364271,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 597,
+        "store": 255,
+        "priority": 1,
+        "pos": "[54.5048048,24.4237461]",
+        "lat": 24.4237461,
+        "lng": 54.5048048
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5048048,
+          24.4237461
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Samaa Medical Centre",
+        "type": "emergency",
+        "osm_id": 1187652402,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 844,
+        "store": 458,
+        "priority": 1,
+        "pos": "[55.2356582,25.1820685]",
+        "lat": 25.1820685,
+        "lng": 55.2356582
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2356582,
+          25.1820685
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Welcare Hospital",
+        "type": "emergency",
+        "osm_id": 1187656221,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 889,
+        "store": 252,
+        "priority": 1,
+        "pos": "[55.1608675,25.1013394]",
+        "lat": 25.1013394,
+        "lng": 55.1608675
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.1608675,
+          25.1013394
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Maktoum Hospital",
+        "type": "emergency",
+        "osm_id": 1198273499,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 848,
+        "store": 220,
+        "priority": 1,
+        "pos": "[55.3145494,25.2703474]",
+        "lat": 25.2703474,
+        "lng": 55.3145494
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3145494,
+          25.2703474
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NMC Specialty Hospital Al Ain",
+        "type": "emergency",
+        "osm_id": 1198282901,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 448,
+        "store": 390,
+        "priority": 1,
+        "pos": "[55.7427619,24.2301282]",
+        "lat": 24.2301282,
+        "lng": 55.7427619
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7427619,
+          24.2301282
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NMC Royal Hospital - Block B",
+        "type": "emergency",
+        "osm_id": 1275858978,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 973,
+        "store": 234,
+        "priority": 1,
+        "pos": "[55.3947163,25.3601607]",
+        "lat": 25.3601607,
+        "lng": 55.3947163
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3947163,
+          25.3601607
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sunny Medical Centre",
+        "type": "emergency",
+        "osm_id": 1354710123,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 865,
+        "store": 345,
+        "priority": 1,
+        "pos": "[55.3730205,25.3012605]",
+        "lat": 25.3012605,
+        "lng": 55.3730205
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3730205,
+          25.3012605
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sahara Medical Centre",
+        "type": "emergency",
+        "osm_id": 1357692409,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 627,
+        "store": 426,
+        "priority": 1,
+        "pos": "[55.3751321,25.3014024]",
+        "lat": 25.3014024,
+        "lng": 55.3751321
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3751321,
+          25.3014024
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "New Medical Centre",
+        "type": "emergency",
+        "osm_id": 1368754888,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 675,
+        "store": 390,
+        "priority": 1,
+        "pos": "[55.3460688,25.2765957]",
+        "lat": 25.2765957,
+        "lng": 55.3460688
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3460688,
+          25.2765957
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "National Hospital",
+        "type": "emergency",
+        "osm_id": 1376019586,
+        "country": "AE",
+        "prod": 0,
+        "dem": 402,
+        "store": 494,
+        "priority": 1,
+        "pos": "[54.3731241,24.4900929]",
+        "lat": 24.4900929,
+        "lng": 54.3731241
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3731241,
+          24.4900929
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ras al-Khaimah Police General Headquarter",
+        "type": "emergency",
+        "osm_id": 1500230244,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 522,
+        "store": 138,
+        "priority": 1,
+        "pos": "[55.8950078,25.7392249]",
+        "lat": 25.7392249,
+        "lng": 55.8950078
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.8950078,
+          25.7392249
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hor-Al-Anz Primary Health Centre",
+        "type": "emergency",
+        "osm_id": 1502792363,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 863,
+        "store": 415,
+        "priority": 1,
+        "pos": "[55.3484865,25.2833757]",
+        "lat": 25.2833757,
+        "lng": 55.3484865
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3484865,
+          25.2833757
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Aster Medical Centre",
+        "type": "emergency",
+        "osm_id": 1509507965,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 415,
+        "store": 134,
+        "priority": 1,
+        "pos": "[55.3370717,25.2764609]",
+        "lat": 25.2764609,
+        "lng": 55.3370717
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3370717,
+          25.2764609
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rashid Hospital",
+        "type": "emergency",
+        "osm_id": 1532270489,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 492,
+        "store": 392,
+        "priority": 1,
+        "pos": "[55.318893,25.2441836]",
+        "lat": 25.2441836,
+        "lng": 55.318893
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.318893,
+          25.2441836
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "University Hospital Sharjah",
+        "type": "emergency",
+        "osm_id": 1754891297,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 878,
+        "store": 447,
+        "priority": 1,
+        "pos": "[55.489687,25.2995965]",
+        "lat": 25.2995965,
+        "lng": 55.489687
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.489687,
+          25.2995965
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ajman Police Station, Bustan",
+        "type": "emergency",
+        "osm_id": 1786980240,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 217,
+        "store": 342,
+        "priority": 1,
+        "pos": "[55.446489,25.4091258]",
+        "lat": 25.4091258,
+        "lng": 55.446489
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.446489,
+          25.4091258
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ajman Police, Naymiyah",
+        "type": "emergency",
+        "osm_id": 1786995951,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 716,
+        "store": 177,
+        "priority": 1,
+        "pos": "[55.4503803,25.38421]",
+        "lat": 25.38421,
+        "lng": 55.4503803
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4503803,
+          25.38421
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 1812604247,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 523,
+        "store": 491,
+        "priority": 1,
+        "pos": "[54.3742267,24.5189117]",
+        "lat": 24.5189117,
+        "lng": 54.3742267
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3742267,
+          24.5189117
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Burjeel MHPC",
+        "type": "emergency",
+        "osm_id": 1876498389,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 451,
+        "store": 434,
+        "priority": 1,
+        "pos": "[54.3188383,24.4735767]",
+        "lat": 24.4735767,
+        "lng": 54.3188383
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3188383,
+          24.4735767
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "police",
+        "type": "emergency",
+        "osm_id": 1925908269,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 901,
+        "store": 382,
+        "priority": 1,
+        "pos": "[55.4241623,25.2245282]",
+        "lat": 25.2245282,
+        "lng": 55.4241623
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4241623,
+          25.2245282
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 1931787342,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 609,
+        "store": 315,
+        "priority": 1,
+        "pos": "[52.7352647,24.0999065]",
+        "lat": 24.0999065,
+        "lng": 52.7352647
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.7352647,
+          24.0999065
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 2147111352,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 316,
+        "store": 130,
+        "priority": 1,
+        "pos": "[54.3785749,24.5140915]",
+        "lat": 24.5140915,
+        "lng": 54.3785749
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3785749,
+          24.5140915
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Check point",
+        "type": "emergency",
+        "osm_id": 2168408818,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 526,
+        "store": 316,
+        "priority": 1,
+        "pos": "[52.7086974,24.112696]",
+        "lat": 24.112696,
+        "lng": 52.7086974
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.7086974,
+          24.112696
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Aster Medical",
+        "type": "emergency",
+        "osm_id": 2375621534,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 801,
+        "store": 180,
+        "priority": 1,
+        "pos": "[55.1299784,25.0490227]",
+        "lat": 25.0490227,
+        "lng": 55.1299784
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.1299784,
+          25.0490227
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Dhafra Hospital",
+        "type": "emergency",
+        "osm_id": 2411234720,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 964,
+        "store": 379,
+        "priority": 1,
+        "pos": "[54.5531307,24.256247]",
+        "lat": 24.256247,
+        "lng": 54.5531307
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5531307,
+          24.256247
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Umm Al Quwain Hospital",
+        "type": "emergency",
+        "osm_id": 2479728849,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 630,
+        "store": 150,
+        "priority": 1,
+        "pos": "[55.5602055,25.5738649]",
+        "lat": 25.5738649,
+        "lng": 55.5602055
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.5602055,
+          25.5738649
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Aster Medical Centre (Aster Jubilee Medical Complex)",
+        "type": "emergency",
+        "osm_id": 2485941511,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 620,
+        "store": 171,
+        "priority": 1,
+        "pos": "[55.2938072,25.2600165]",
+        "lat": 25.2600165,
+        "lng": 55.2938072
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2938072,
+          25.2600165
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ansari Medical Centre",
+        "type": "emergency",
+        "osm_id": 2493075567,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 322,
+        "store": 226,
+        "priority": 1,
+        "pos": "[54.3561478,24.4852257]",
+        "lat": 24.4852257,
+        "lng": 54.3561478
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3561478,
+          24.4852257
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dubai Herbal And Treatment Centre",
+        "type": "emergency",
+        "osm_id": 2499040284,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 457,
+        "store": 150,
+        "priority": 1,
+        "pos": "[55.3115743,25.21074]",
+        "lat": 25.21074,
+        "lng": 55.3115743
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3115743,
+          25.21074
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Naif Police Station",
+        "type": "emergency",
+        "osm_id": 2501412648,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 641,
+        "store": 498,
+        "priority": 1,
+        "pos": "[55.3053922,25.2724301]",
+        "lat": 25.2724301,
+        "lng": 55.3053922
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3053922,
+          25.2724301
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 2565714086,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 278,
+        "store": 344,
+        "priority": 1,
+        "pos": "[55.8774424,25.2817625]",
+        "lat": 25.2817625,
+        "lng": 55.8774424
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.8774424,
+          25.2817625
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0645\u0631\u0643\u0632 \u0634\u0631\u0637\u0629 \u0644\u064a\u0645\u0627\u0621",
+        "type": "emergency",
+        "osm_id": 2625327726,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 221,
+        "store": 232,
+        "priority": 1,
+        "pos": "[56.0472183,25.9427776]",
+        "lat": 25.9427776,
+        "lng": 56.0472183
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.0472183,
+          25.9427776
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jebel Ali Police Station",
+        "type": "emergency",
+        "osm_id": 2626890881,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 515,
+        "store": 437,
+        "priority": 1,
+        "pos": "[55.0878277,25.0102931]",
+        "lat": 25.0102931,
+        "lng": 55.0878277
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.0878277,
+          25.0102931
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Smilecare Medical Center LLC 042855066",
+        "type": "emergency",
+        "osm_id": 2690813035,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 763,
+        "store": 197,
+        "priority": 1,
+        "pos": "[55.4364185,25.2347853]",
+        "lat": 25.2347853,
+        "lng": 55.4364185
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4364185,
+          25.2347853
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Health Avenue Polyclinics",
+        "type": "emergency",
+        "osm_id": 2712775153,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 969,
+        "store": 300,
+        "priority": 1,
+        "pos": "[55.1438855,25.0855127]",
+        "lat": 25.0855127,
+        "lng": 55.1438855
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.1438855,
+          25.0855127
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emirates Hospital",
+        "type": "emergency",
+        "osm_id": 2719215767,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 493,
+        "store": 426,
+        "priority": 1,
+        "pos": "[55.1417994,25.085336]",
+        "lat": 25.085336,
+        "lng": 55.1417994
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.1417994,
+          25.085336
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Prime Health centre Ekka's office",
+        "type": "emergency",
+        "osm_id": 2805359250,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 912,
+        "store": 289,
+        "priority": 1,
+        "pos": "[55.3219753,25.2706444]",
+        "lat": 25.2706444,
+        "lng": 55.3219753
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3219753,
+          25.2706444
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Khaldiah police station",
+        "type": "emergency",
+        "osm_id": 3020447367,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 311,
+        "store": 483,
+        "priority": 1,
+        "pos": "[54.359412,24.4611583]",
+        "lat": 24.4611583,
+        "lng": 54.359412
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.359412,
+          24.4611583
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Premier Diagnostic Centre",
+        "type": "emergency",
+        "osm_id": 3024705700,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 254,
+        "store": 184,
+        "priority": 1,
+        "pos": "[55.3236185,25.2706183]",
+        "lat": 25.2706183,
+        "lng": 55.3236185
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3236185,
+          25.2706183
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Aster Clinic",
+        "type": "emergency",
+        "osm_id": 3125922756,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 384,
+        "store": 401,
+        "priority": 1,
+        "pos": "[55.3217412,25.2734847]",
+        "lat": 25.2734847,
+        "lng": 55.3217412
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3217412,
+          25.2734847
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Abu Dhabi Police Kiosk",
+        "type": "emergency",
+        "osm_id": 3210867746,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 717,
+        "store": 128,
+        "priority": 1,
+        "pos": "[54.3207951,24.4761931]",
+        "lat": 24.4761931,
+        "lng": 54.3207951
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3207951,
+          24.4761931
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kottakal Ayurvedic Centre",
+        "type": "emergency",
+        "osm_id": 3337958523,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 730,
+        "store": 139,
+        "priority": 1,
+        "pos": "[55.3054415,25.244127]",
+        "lat": 25.244127,
+        "lng": 55.3054415
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3054415,
+          25.244127
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Check point",
+        "type": "emergency",
+        "osm_id": 3394949855,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 637,
+        "store": 237,
+        "priority": 1,
+        "pos": "[52.7349285,24.1024178]",
+        "lat": 24.1024178,
+        "lng": 52.7349285
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.7349285,
+          24.1024178
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "American British Surgical & Medical Centre",
+        "type": "emergency",
+        "osm_id": 3478788984,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 531,
+        "store": 120,
+        "priority": 1,
+        "pos": "[55.3298837,25.2653833]",
+        "lat": 25.2653833,
+        "lng": 55.3298837
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3298837,
+          25.2653833
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ruwais Medical Center",
+        "type": "emergency",
+        "osm_id": 3687765311,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 477,
+        "store": 300,
+        "priority": 1,
+        "pos": "[52.6467257,24.0841215]",
+        "lat": 24.0841215,
+        "lng": 52.6467257
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.6467257,
+          24.0841215
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RAK Hospital",
+        "type": "emergency",
+        "osm_id": 3830464334,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 207,
+        "store": 131,
+        "priority": 1,
+        "pos": "[55.9768842,25.7682628]",
+        "lat": 25.7682628,
+        "lng": 55.9768842
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.9768842,
+          25.7682628
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 3901628108,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 822,
+        "store": 120,
+        "priority": 1,
+        "pos": "[55.6732506,24.2625958]",
+        "lat": 24.2625958,
+        "lng": 55.6732506
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.6732506,
+          24.2625958
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 3901628663,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 865,
+        "store": 189,
+        "priority": 1,
+        "pos": "[55.6806401,24.2641351]",
+        "lat": 24.2641351,
+        "lng": 55.6806401
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.6806401,
+          24.2641351
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Drugs Enforcement Section",
+        "type": "emergency",
+        "osm_id": 3937329642,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 768,
+        "store": 352,
+        "priority": 1,
+        "pos": "[54.48906,24.4197904]",
+        "lat": 24.4197904,
+        "lng": 54.48906
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.48906,
+          24.4197904
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Noor Hospital",
+        "type": "emergency",
+        "osm_id": 3980326962,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 704,
+        "store": 111,
+        "priority": 1,
+        "pos": "[54.3604589,24.4909052]",
+        "lat": 24.4909052,
+        "lng": 54.3604589
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3604589,
+          24.4909052
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Department Force 7",
+        "type": "emergency",
+        "osm_id": 4052753203,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 791,
+        "store": 489,
+        "priority": 1,
+        "pos": "[54.4912513,24.4187576]",
+        "lat": 24.4187576,
+        "lng": 54.4912513
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4912513,
+          24.4187576
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Transport Police Department",
+        "type": "emergency",
+        "osm_id": 4066073285,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 890,
+        "store": 250,
+        "priority": 1,
+        "pos": "[54.4491585,24.4262463]",
+        "lat": 24.4262463,
+        "lng": 54.4491585
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4491585,
+          24.4262463
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Canadian Medical Centre",
+        "type": "emergency",
+        "osm_id": 4114728295,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 972,
+        "store": 110,
+        "priority": 1,
+        "pos": "[54.3772188,24.4619997]",
+        "lat": 24.4619997,
+        "lng": 54.3772188
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3772188,
+          24.4619997
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "LLH Hospital",
+        "type": "emergency",
+        "osm_id": 4122500690,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 623,
+        "store": 165,
+        "priority": 1,
+        "pos": "[54.364913,24.487681]",
+        "lat": 24.487681,
+        "lng": 54.364913
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.364913,
+          24.487681
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Danat Al Emarat",
+        "type": "emergency",
+        "osm_id": 4128424723,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 608,
+        "store": 153,
+        "priority": 1,
+        "pos": "[54.5011017,24.3967367]",
+        "lat": 24.3967367,
+        "lng": 54.5011017
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5011017,
+          24.3967367
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Enwan medical center",
+        "type": "emergency",
+        "osm_id": 4140871089,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 632,
+        "store": 415,
+        "priority": 1,
+        "pos": "[56.3489754,25.3413596]",
+        "lat": 25.3413596,
+        "lng": 56.3489754
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.3489754,
+          25.3413596
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Beverly Hills",
+        "type": "emergency",
+        "osm_id": 4146391989,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 904,
+        "store": 331,
+        "priority": 1,
+        "pos": "[54.3808515,24.4570849]",
+        "lat": 24.4570849,
+        "lng": 54.3808515
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3808515,
+          24.4570849
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "HLG Umar",
+        "type": "emergency",
+        "osm_id": 4157358790,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 377,
+        "store": 312,
+        "priority": 1,
+        "pos": "[55.3863219,25.1216867]",
+        "lat": 25.1216867,
+        "lng": 55.3863219
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3863219,
+          25.1216867
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0648\u0632\u0627\u0631\u0629 \u0627\u0644\u062f\u0627\u062e\u0644\u064a\u0629",
+        "type": "emergency",
+        "osm_id": 4162580890,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 866,
+        "store": 264,
+        "priority": 1,
+        "pos": "[54.4256483,24.4222473]",
+        "lat": 24.4222473,
+        "lng": 54.4256483
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4256483,
+          24.4222473
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Beauty Trick Medical Centre",
+        "type": "emergency",
+        "osm_id": 4166686891,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 270,
+        "store": 112,
+        "priority": 1,
+        "pos": "[54.3733245,24.4590859]",
+        "lat": 24.4590859,
+        "lng": 54.3733245
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3733245,
+          24.4590859
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Life Line Hospital",
+        "type": "emergency",
+        "osm_id": 4166814589,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 962,
+        "store": 103,
+        "priority": 1,
+        "pos": "[54.3649336,24.487668]",
+        "lat": 24.487668,
+        "lng": 54.3649336
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3649336,
+          24.487668
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "IBN SINA MEDICAL CENTRE",
+        "type": "emergency",
+        "osm_id": 4180042190,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 206,
+        "store": 404,
+        "priority": 1,
+        "pos": "[54.3426642,24.4697142]",
+        "lat": 24.4697142,
+        "lng": 54.3426642
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3426642,
+          24.4697142
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Rahba Hospital",
+        "type": "emergency",
+        "osm_id": 4189719989,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 209,
+        "store": 282,
+        "priority": 1,
+        "pos": "[54.6946752,24.572759]",
+        "lat": 24.572759,
+        "lng": 54.6946752
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.6946752,
+          24.572759
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Well Care Medical Center",
+        "type": "emergency",
+        "osm_id": 4193561321,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 779,
+        "store": 130,
+        "priority": 1,
+        "pos": "[54.3719013,24.4906355]",
+        "lat": 24.4906355,
+        "lng": 54.3719013
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3719013,
+          24.4906355
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Talat Medical Center",
+        "type": "emergency",
+        "osm_id": 4215810191,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 459,
+        "store": 477,
+        "priority": 1,
+        "pos": "[54.3715106,24.4794426]",
+        "lat": 24.4794426,
+        "lng": 54.3715106
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3715106,
+          24.4794426
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Prime Medical Center",
+        "type": "emergency",
+        "osm_id": 4215913290,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 499,
+        "store": 213,
+        "priority": 1,
+        "pos": "[55.3934214,25.3446807]",
+        "lat": 25.3446807,
+        "lng": 55.3934214
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3934214,
+          25.3446807
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 4225390396,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 547,
+        "store": 130,
+        "priority": 1,
+        "pos": "[54.3982386,24.4432644]",
+        "lat": 24.4432644,
+        "lng": 54.3982386
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3982386,
+          24.4432644
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Solanki Dental Center",
+        "type": "emergency",
+        "osm_id": 4227940889,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 610,
+        "store": 334,
+        "priority": 1,
+        "pos": "[55.430538,25.3548763]",
+        "lat": 25.3548763,
+        "lng": 55.430538
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.430538,
+          25.3548763
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Police medical services",
+        "type": "emergency",
+        "osm_id": 4231686189,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 879,
+        "store": 485,
+        "priority": 1,
+        "pos": "[55.4508053,25.3549936]",
+        "lat": 25.3549936,
+        "lng": 55.4508053
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4508053,
+          25.3549936
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Madina Medical Centre",
+        "type": "emergency",
+        "osm_id": 4268484197,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 486,
+        "store": 150,
+        "priority": 1,
+        "pos": "[54.3891054,24.4513524]",
+        "lat": 24.4513524,
+        "lng": 54.3891054
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3891054,
+          24.4513524
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Mushrif Children's Specialty Center",
+        "type": "emergency",
+        "osm_id": 4270149190,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 218,
+        "store": 385,
+        "priority": 1,
+        "pos": "[54.4031186,24.4351637]",
+        "lat": 24.4351637,
+        "lng": 54.4031186
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4031186,
+          24.4351637
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Rams Police Station",
+        "type": "emergency",
+        "osm_id": 4278776538,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 537,
+        "store": 153,
+        "priority": 1,
+        "pos": "[56.0237786,25.8725949]",
+        "lat": 25.8725949,
+        "lng": 56.0237786
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.0237786,
+          25.8725949
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Noor Hospital",
+        "type": "emergency",
+        "osm_id": 4282463790,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 657,
+        "store": 386,
+        "priority": 1,
+        "pos": "[55.7684195,24.2244461]",
+        "lat": 24.2244461,
+        "lng": 55.7684195
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7684195,
+          24.2244461
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "All Care Medical",
+        "type": "emergency",
+        "osm_id": 4286602291,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 881,
+        "store": 130,
+        "priority": 1,
+        "pos": "[54.3794642,24.4640874]",
+        "lat": 24.4640874,
+        "lng": 54.3794642
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3794642,
+          24.4640874
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NMC Specialty Hospital",
+        "type": "emergency",
+        "osm_id": 4295682494,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 594,
+        "store": 133,
+        "priority": 1,
+        "pos": "[54.3611005,24.4837894]",
+        "lat": 24.4837894,
+        "lng": 54.3611005
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3611005,
+          24.4837894
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 4297353090,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 661,
+        "store": 438,
+        "priority": 1,
+        "pos": "[54.3674914,24.4842029]",
+        "lat": 24.4842029,
+        "lng": 54.3674914
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3674914,
+          24.4842029
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Middle East Specialized Medical Centre",
+        "type": "emergency",
+        "osm_id": 4298227789,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 332,
+        "store": 308,
+        "priority": 1,
+        "pos": "[54.3837177,24.4630398]",
+        "lat": 24.4630398,
+        "lng": 54.3837177
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3837177,
+          24.4630398
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 4304894214,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 623,
+        "store": 210,
+        "priority": 1,
+        "pos": "[53.7044864,23.6507847]",
+        "lat": 23.6507847,
+        "lng": 53.7044864
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          53.7044864,
+          23.6507847
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 4304897796,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 728,
+        "store": 330,
+        "priority": 1,
+        "pos": "[54.5211213,24.3479403]",
+        "lat": 24.3479403,
+        "lng": 54.5211213
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5211213,
+          24.3479403
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 4304966591,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 979,
+        "store": 186,
+        "priority": 1,
+        "pos": "[54.5373473,24.3410675]",
+        "lat": 24.3410675,
+        "lng": 54.5373473
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5373473,
+          24.3410675
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 4304967292,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 285,
+        "store": 355,
+        "priority": 1,
+        "pos": "[54.5372234,24.3438666]",
+        "lat": 24.3438666,
+        "lng": 54.5372234
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5372234,
+          24.3438666
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 4305002090,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 504,
+        "store": 161,
+        "priority": 1,
+        "pos": "[53.7081815,23.6410841]",
+        "lat": 23.6410841,
+        "lng": 53.7081815
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          53.7081815,
+          23.6410841
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ultra Care",
+        "type": "emergency",
+        "osm_id": 4312162793,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 572,
+        "store": 268,
+        "priority": 1,
+        "pos": "[54.3701647,24.4620918]",
+        "lat": 24.4620918,
+        "lng": 54.3701647
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3701647,
+          24.4620918
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NMC Specialty Building 2",
+        "type": "emergency",
+        "osm_id": 4313881191,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 880,
+        "store": 267,
+        "priority": 1,
+        "pos": "[54.3616559,24.482253]",
+        "lat": 24.482253,
+        "lng": 54.3616559
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3616559,
+          24.482253
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NMC Specialty Building 3",
+        "type": "emergency",
+        "osm_id": 4313913189,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 588,
+        "store": 310,
+        "priority": 1,
+        "pos": "[54.3614009,24.4833679]",
+        "lat": 24.4833679,
+        "lng": 54.3614009
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3614009,
+          24.4833679
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NMC Specialty Building 1",
+        "type": "emergency",
+        "osm_id": 4313913289,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 300,
+        "store": 355,
+        "priority": 1,
+        "pos": "[54.3615591,24.4824867]",
+        "lat": 24.4824867,
+        "lng": 54.3615591
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3615591,
+          24.4824867
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "W. Wilson Specialized Hospital",
+        "type": "emergency",
+        "osm_id": 4328899789,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 417,
+        "store": 477,
+        "priority": 1,
+        "pos": "[55.3715952,25.308348]",
+        "lat": 25.308348,
+        "lng": 55.3715952
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3715952,
+          25.308348
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lamasat Medical Centre",
+        "type": "emergency",
+        "osm_id": 4329407688,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 749,
+        "store": 268,
+        "priority": 1,
+        "pos": "[55.3716565,25.309149]",
+        "lat": 25.309149,
+        "lng": 55.3716565
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3716565,
+          25.309149
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Farah Specialist Medical Centre",
+        "type": "emergency",
+        "osm_id": 4329431622,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 467,
+        "store": 448,
+        "priority": 1,
+        "pos": "[55.3715652,25.3090998]",
+        "lat": 25.3090998,
+        "lng": 55.3715652
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3715652,
+          25.3090998
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Conceive-The Gynacology & Fertility Hospital",
+        "type": "emergency",
+        "osm_id": 4329431623,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 376,
+        "store": 423,
+        "priority": 1,
+        "pos": "[55.371539,25.3082316]",
+        "lat": 25.3082316,
+        "lng": 55.371539
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.371539,
+          25.3082316
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "industrial area police station",
+        "type": "emergency",
+        "osm_id": 4337079792,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 523,
+        "store": 178,
+        "priority": 1,
+        "pos": "[55.4285522,25.3024541]",
+        "lat": 25.3024541,
+        "lng": 55.4285522
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4285522,
+          25.3024541
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Canadian Specialist Hospital",
+        "type": "emergency",
+        "osm_id": 4348712090,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 598,
+        "store": 251,
+        "priority": 1,
+        "pos": "[55.3483985,25.2773644]",
+        "lat": 25.2773644,
+        "lng": 55.3483985
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3483985,
+          25.2773644
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rashid hospital",
+        "type": "emergency",
+        "osm_id": 4352135989,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 339,
+        "store": 374,
+        "priority": 1,
+        "pos": "[55.3771142,25.225707]",
+        "lat": 25.225707,
+        "lng": 55.3771142
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3771142,
+          25.225707
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "nmc jabel ali",
+        "type": "emergency",
+        "osm_id": 4373377891,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 705,
+        "store": 416,
+        "priority": 1,
+        "pos": "[55.153494,25.0033206]",
+        "lat": 25.0033206,
+        "lng": 55.153494
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.153494,
+          25.0033206
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al khawaneej Health Centre",
+        "type": "emergency",
+        "osm_id": 4374603389,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 605,
+        "store": 101,
+        "priority": 1,
+        "pos": "[55.5061302,25.2206331]",
+        "lat": 25.2206331,
+        "lng": 55.5061302
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.5061302,
+          25.2206331
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 4376874195,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 464,
+        "store": 409,
+        "priority": 1,
+        "pos": "[55.4081788,25.3207872]",
+        "lat": 25.3207872,
+        "lng": 55.4081788
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4081788,
+          25.3207872
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "University Dental Hospital",
+        "type": "emergency",
+        "osm_id": 4394496093,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 721,
+        "store": 231,
+        "priority": 1,
+        "pos": "[55.4885041,25.2985754]",
+        "lat": 25.2985754,
+        "lng": 55.4885041
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4885041,
+          25.2985754
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Noor Hospital",
+        "type": "emergency",
+        "osm_id": 4406656689,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 449,
+        "store": 243,
+        "priority": 1,
+        "pos": "[54.3594686,24.491554]",
+        "lat": 24.491554,
+        "lng": 54.3594686
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3594686,
+          24.491554
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Thumbay Hospital (GMC)",
+        "type": "emergency",
+        "osm_id": 4412993593,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 768,
+        "store": 195,
+        "priority": 1,
+        "pos": "[55.4624537,25.3820448]",
+        "lat": 25.3820448,
+        "lng": 55.4624537
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4624537,
+          25.3820448
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NMC hospital DIP",
+        "type": "emergency",
+        "osm_id": 4420986989,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 917,
+        "store": 142,
+        "priority": 1,
+        "pos": "[55.1537391,25.0029218]",
+        "lat": 25.0029218,
+        "lng": 55.1537391
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.1537391,
+          25.0029218
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "IBARS",
+        "type": "emergency",
+        "osm_id": 4426832489,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 971,
+        "store": 409,
+        "priority": 1,
+        "pos": "[55.4313014,25.3769495]",
+        "lat": 25.3769495,
+        "lng": 55.4313014
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4313014,
+          25.3769495
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "banyas police station",
+        "type": "emergency",
+        "osm_id": 4428362891,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 379,
+        "store": 431,
+        "priority": 1,
+        "pos": "[54.6103988,24.3147907]",
+        "lat": 24.3147907,
+        "lng": 54.6103988
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.6103988,
+          24.3147907
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Grey matters office",
+        "type": "emergency",
+        "osm_id": 4438960990,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 550,
+        "store": 406,
+        "priority": 1,
+        "pos": "[55.1718262,24.9983788]",
+        "lat": 24.9983788,
+        "lng": 55.1718262
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.1718262,
+          24.9983788
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Nay",
+        "type": "emergency",
+        "osm_id": 4444942889,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 538,
+        "store": 281,
+        "priority": 1,
+        "pos": "[55.3231953,25.2644931]",
+        "lat": 25.2644931,
+        "lng": 55.3231953
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3231953,
+          25.2644931
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Madam Police Station",
+        "type": "emergency",
+        "osm_id": 4469341819,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 824,
+        "store": 241,
+        "priority": 1,
+        "pos": "[55.7749029,24.9123021]",
+        "lat": 24.9123021,
+        "lng": 55.7749029
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7749029,
+          24.9123021
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Medcare Orthopaedics & Spine Hospital",
+        "type": "emergency",
+        "osm_id": 4469787201,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 610,
+        "store": 309,
+        "priority": 1,
+        "pos": "[55.2473069,25.1791736]",
+        "lat": 25.1791736,
+        "lng": 55.2473069
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2473069,
+          25.1791736
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 4476232389,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 876,
+        "store": 208,
+        "priority": 1,
+        "pos": "[55.487383,25.3763799]",
+        "lat": 25.3763799,
+        "lng": 55.487383
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.487383,
+          25.3763799
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "checkpoint",
+        "type": "emergency",
+        "osm_id": 4487139668,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 736,
+        "store": 463,
+        "priority": 1,
+        "pos": "[52.6646514,24.1057512]",
+        "lat": 24.1057512,
+        "lng": 52.6646514
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.6646514,
+          24.1057512
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "West Gate",
+        "type": "emergency",
+        "osm_id": 4497456831,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 956,
+        "store": 441,
+        "priority": 1,
+        "pos": "[52.7148838,24.1303851]",
+        "lat": 24.1303851,
+        "lng": 52.7148838
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.7148838,
+          24.1303851
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Old Check Point",
+        "type": "emergency",
+        "osm_id": 4498901146,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 435,
+        "store": 304,
+        "priority": 1,
+        "pos": "[52.7549056,24.111527]",
+        "lat": 24.111527,
+        "lng": 52.7549056
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.7549056,
+          24.111527
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Khaleej Healthcare Center",
+        "type": "emergency",
+        "osm_id": 4512501589,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 855,
+        "store": 216,
+        "priority": 1,
+        "pos": "[54.3613204,24.4474071]",
+        "lat": 24.4474071,
+        "lng": 54.3613204
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3613204,
+          24.4474071
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mediclinic",
+        "type": "emergency",
+        "osm_id": 4521791446,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 473,
+        "store": 409,
+        "priority": 1,
+        "pos": "[55.2764648,25.1982307]",
+        "lat": 25.1982307,
+        "lng": 55.2764648
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2764648,
+          25.1982307
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emirate Hospital",
+        "type": "emergency",
+        "osm_id": 4550860489,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 440,
+        "store": 194,
+        "priority": 1,
+        "pos": "[55.2372133,25.1967679]",
+        "lat": 25.1967679,
+        "lng": 55.2372133
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2372133,
+          25.1967679
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Abu Dhabi General Headquarter",
+        "type": "emergency",
+        "osm_id": 4562241672,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 234,
+        "store": 487,
+        "priority": 1,
+        "pos": "[54.5381269,24.3600903]",
+        "lat": 24.3600903,
+        "lng": 54.5381269
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5381269,
+          24.3600903
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fatima medical center fmc mussafa",
+        "type": "emergency",
+        "osm_id": 4563746394,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 743,
+        "store": 303,
+        "priority": 1,
+        "pos": "[54.5109096,24.3467518]",
+        "lat": 24.3467518,
+        "lng": 54.5109096
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5109096,
+          24.3467518
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Brightpoint Royal Women's Hospital",
+        "type": "emergency",
+        "osm_id": 4565447666,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 574,
+        "store": 245,
+        "priority": 1,
+        "pos": "[54.3933056,24.4524543]",
+        "lat": 24.4524543,
+        "lng": 54.3933056
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3933056,
+          24.4524543
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Abu Dhabi Police General Headquarters",
+        "type": "emergency",
+        "osm_id": 4565447676,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 510,
+        "store": 383,
+        "priority": 1,
+        "pos": "[54.3928497,24.4501762]",
+        "lat": 24.4501762,
+        "lng": 54.3928497
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3928497,
+          24.4501762
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u062f\u0643\u062a\u0648\u0631 \u0627\u0633\u0646\u0627\u0646",
+        "type": "emergency",
+        "osm_id": 4567012889,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 376,
+        "store": 124,
+        "priority": 1,
+        "pos": "[54.6385307,24.2967224]",
+        "lat": 24.2967224,
+        "lng": 54.6385307
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.6385307,
+          24.2967224
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Seouh Police Station",
+        "type": "emergency",
+        "osm_id": 4578280089,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 794,
+        "store": 326,
+        "priority": 1,
+        "pos": "[55.6013869,25.227662]",
+        "lat": 25.227662,
+        "lng": 55.6013869
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.6013869,
+          25.227662
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Magrebi Eye and Ear Hospital",
+        "type": "emergency",
+        "osm_id": 4587005796,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 818,
+        "store": 487,
+        "priority": 1,
+        "pos": "[54.4060632,24.4264147]",
+        "lat": 24.4264147,
+        "lng": 54.4060632
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4060632,
+          24.4264147
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "nmc hospital",
+        "type": "emergency",
+        "osm_id": 4594375306,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 732,
+        "store": 315,
+        "priority": 1,
+        "pos": "[55.7481503,24.2026331]",
+        "lat": 24.2026331,
+        "lng": 55.7481503
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7481503,
+          24.2026331
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 4595234836,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 411,
+        "store": 379,
+        "priority": 1,
+        "pos": "[55.7489689,24.1059174]",
+        "lat": 24.1059174,
+        "lng": 55.7489689
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7489689,
+          24.1059174
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jebel Ali Police Station",
+        "type": "emergency",
+        "osm_id": 4595784612,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 212,
+        "store": 392,
+        "priority": 1,
+        "pos": "[55.1482556,25.0031663]",
+        "lat": 25.0031663,
+        "lng": 55.1482556
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.1482556,
+          25.0031663
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ibin Sina",
+        "type": "emergency",
+        "osm_id": 4596876790,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 303,
+        "store": 293,
+        "priority": 1,
+        "pos": "[55.4412919,25.4042107]",
+        "lat": 25.4042107,
+        "lng": 55.4412919
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4412919,
+          25.4042107
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sheikh Khalifa General Hospital",
+        "type": "emergency",
+        "osm_id": 4596876892,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 262,
+        "store": 431,
+        "priority": 1,
+        "pos": "[55.5992492,25.5012039]",
+        "lat": 25.5012039,
+        "lng": 55.5992492
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.5992492,
+          25.5012039
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kuwaiti Hospital",
+        "type": "emergency",
+        "osm_id": 4596876893,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 398,
+        "store": 121,
+        "priority": 1,
+        "pos": "[55.4425217,25.4078571]",
+        "lat": 25.4078571,
+        "lng": 55.4425217
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4425217,
+          25.4078571
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Amina Hospital",
+        "type": "emergency",
+        "osm_id": 4596882290,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 307,
+        "store": 387,
+        "priority": 1,
+        "pos": "[55.4424832,25.4029129]",
+        "lat": 25.4029129,
+        "lng": 55.4424832
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4424832,
+          25.4029129
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NMC Medical Centre Sharjah",
+        "type": "emergency",
+        "osm_id": 4609265091,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 352,
+        "store": 146,
+        "priority": 1,
+        "pos": "[55.3857663,25.34253]",
+        "lat": 25.34253,
+        "lng": 55.3857663
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3857663,
+          25.34253
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "police",
+        "type": "emergency",
+        "osm_id": 4614291995,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 254,
+        "store": 425,
+        "priority": 1,
+        "pos": "[55.3532609,25.2730688]",
+        "lat": 25.2730688,
+        "lng": 55.3532609
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3532609,
+          25.2730688
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Seih Bin Ammar Clinic",
+        "type": "emergency",
+        "osm_id": 4641304811,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 595,
+        "store": 468,
+        "priority": 1,
+        "pos": "[55.7057485,24.2144671]",
+        "lat": 24.2144671,
+        "lng": 55.7057485
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7057485,
+          24.2144671
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emirates French Hispital",
+        "type": "emergency",
+        "osm_id": 4643884489,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 293,
+        "store": 403,
+        "priority": 1,
+        "pos": "[54.3600033,24.4930193]",
+        "lat": 24.4930193,
+        "lng": 54.3600033
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3600033,
+          24.4930193
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0645\u0631\u0643\u0632 \u0647\u064a\u0644\u064a \u0627\u0644\u0635\u062d\u064a",
+        "type": "emergency",
+        "osm_id": 4646383992,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 491,
+        "store": 186,
+        "priority": 1,
+        "pos": "[55.763839,24.2880728]",
+        "lat": 24.2880728,
+        "lng": 55.763839
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.763839,
+          24.2880728
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0645\u0633\u062a\u0634\u0641\u064a \u0632\u0627\u064a\u062f \u0627\u0644\u0639\u0633\u0643\u0631\u064a",
+        "type": "emergency",
+        "osm_id": 4646406890,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 891,
+        "store": 286,
+        "priority": 1,
+        "pos": "[54.4304476,24.4198736]",
+        "lat": 24.4198736,
+        "lng": 54.4304476
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4304476,
+          24.4198736
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Nation Hospital",
+        "type": "emergency",
+        "osm_id": 4669431293,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 645,
+        "store": 222,
+        "priority": 1,
+        "pos": "[54.3647698,24.4645335]",
+        "lat": 24.4645335,
+        "lng": 54.3647698
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3647698,
+          24.4645335
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Raha Hospital Abu Dhabi",
+        "type": "emergency",
+        "osm_id": 4685205491,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 425,
+        "store": 316,
+        "priority": 1,
+        "pos": "[54.3700299,24.4895228]",
+        "lat": 24.4895228,
+        "lng": 54.3700299
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3700299,
+          24.4895228
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Thumbay Hospital ajman",
+        "type": "emergency",
+        "osm_id": 4706631790,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 900,
+        "store": 165,
+        "priority": 1,
+        "pos": "[55.462351,25.381029]",
+        "lat": 25.381029,
+        "lng": 55.462351
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.462351,
+          25.381029
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Canada DCuan Medical center",
+        "type": "emergency",
+        "osm_id": 4712131390,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 622,
+        "store": 337,
+        "priority": 1,
+        "pos": "[55.2136658,25.1672674]",
+        "lat": 25.1672674,
+        "lng": 55.2136658
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2136658,
+          25.1672674
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "institute of Medical Aesthetic",
+        "type": "emergency",
+        "osm_id": 4712230389,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 452,
+        "store": 340,
+        "priority": 1,
+        "pos": "[55.3240127,25.2302989]",
+        "lat": 25.2302989,
+        "lng": 55.3240127
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3240127,
+          25.2302989
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Noor Hospital Family Care Centre",
+        "type": "emergency",
+        "osm_id": 4723224429,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 528,
+        "store": 310,
+        "priority": 1,
+        "pos": "[54.385503,24.4655319]",
+        "lat": 24.4655319,
+        "lng": 54.385503
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.385503,
+          24.4655319
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 4723616527,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 788,
+        "store": 288,
+        "priority": 1,
+        "pos": "[54.7628598,24.67076]",
+        "lat": 24.67076,
+        "lng": 54.7628598
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.7628598,
+          24.67076
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0645\u0631\u0643\u0632 \u0634\u0631\u0637\u0629 \u0627\u0644\u0637\u0648\u064a\u064a\u0646",
+        "type": "emergency",
+        "osm_id": 4739316827,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 367,
+        "store": 345,
+        "priority": 1,
+        "pos": "[56.073896,25.5080224]",
+        "lat": 25.5080224,
+        "lng": 56.073896
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.073896,
+          25.5080224
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0645\u0631\u0643\u0632 \u0634\u0631\u0637\u0629 \u0627\u0644\u0637\u0648\u064a\u064a\u0646",
+        "type": "emergency",
+        "osm_id": 4739316829,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 513,
+        "store": 361,
+        "priority": 1,
+        "pos": "[56.0745437,25.5106025]",
+        "lat": 25.5106025,
+        "lng": 56.0745437
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.0745437,
+          25.5106025
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Medeor 24x7 Hospital",
+        "type": "emergency",
+        "osm_id": 4741454634,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 644,
+        "store": 500,
+        "priority": 1,
+        "pos": "[55.306581,25.2574151]",
+        "lat": 25.2574151,
+        "lng": 55.306581
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.306581,
+          25.2574151
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Burjeel Royal Hospital",
+        "type": "emergency",
+        "osm_id": 4746324841,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 231,
+        "store": 387,
+        "priority": 1,
+        "pos": "[55.7587557,24.2238929]",
+        "lat": 24.2238929,
+        "lng": 55.7587557
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7587557,
+          24.2238929
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Noor Hospital",
+        "type": "emergency",
+        "osm_id": 4747224734,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 691,
+        "store": 301,
+        "priority": 1,
+        "pos": "[55.7682321,24.2229818]",
+        "lat": 24.2229818,
+        "lng": 55.7682321
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7682321,
+          24.2229818
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mustashfa Sagar",
+        "type": "emergency",
+        "osm_id": 4762503251,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 872,
+        "store": 184,
+        "priority": 1,
+        "pos": "[55.9765925,25.7719538]",
+        "lat": 25.7719538,
+        "lng": 55.9765925
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.9765925,
+          25.7719538
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bareen Hospital",
+        "type": "emergency",
+        "osm_id": 4772848623,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 752,
+        "store": 467,
+        "priority": 1,
+        "pos": "[54.5542797,24.3390925]",
+        "lat": 24.3390925,
+        "lng": 54.5542797
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5542797,
+          24.3390925
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Car Checkup n Registration Area Sharjah",
+        "type": "emergency",
+        "osm_id": 4787894427,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 799,
+        "store": 229,
+        "priority": 1,
+        "pos": "[55.3853641,25.2980159]",
+        "lat": 25.2980159,
+        "lng": 55.3853641
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3853641,
+          25.2980159
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "New Medical Center",
+        "type": "emergency",
+        "osm_id": 4787925432,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 530,
+        "store": 129,
+        "priority": 1,
+        "pos": "[55.3858964,25.3427385]",
+        "lat": 25.3427385,
+        "lng": 55.3858964
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3858964,
+          25.3427385
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Medeor",
+        "type": "emergency",
+        "osm_id": 4791492123,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 545,
+        "store": 107,
+        "priority": 1,
+        "pos": "[54.3697403,24.4805142]",
+        "lat": 24.4805142,
+        "lng": 54.3697403
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3697403,
+          24.4805142
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Shamil Police station",
+        "type": "emergency",
+        "osm_id": 4792240121,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 474,
+        "store": 437,
+        "priority": 1,
+        "pos": "[56.0020633,25.3235141]",
+        "lat": 25.3235141,
+        "lng": 56.0020633
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.0020633,
+          25.3235141
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Medeor",
+        "type": "emergency",
+        "osm_id": 4809030122,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 435,
+        "store": 183,
+        "priority": 1,
+        "pos": "[54.6135631,24.4541783]",
+        "lat": 24.4541783,
+        "lng": 54.6135631
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.6135631,
+          24.4541783
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "salmah police station",
+        "type": "emergency",
+        "osm_id": 4817238921,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 483,
+        "store": 410,
+        "priority": 1,
+        "pos": "[55.5777888,25.5005656]",
+        "lat": 25.5005656,
+        "lng": 55.5777888
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.5777888,
+          25.5005656
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Liwa hospital",
+        "type": "emergency",
+        "osm_id": 4838741421,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 496,
+        "store": 310,
+        "priority": 1,
+        "pos": "[53.8074803,23.1471115]",
+        "lat": 23.1471115,
+        "lng": 53.8074803
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          53.8074803,
+          23.1471115
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Almaqta Healthcare Center",
+        "type": "emergency",
+        "osm_id": 4874626521,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 655,
+        "store": 163,
+        "priority": 1,
+        "pos": "[54.5042097,24.4022648]",
+        "lat": 24.4022648,
+        "lng": 54.5042097
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5042097,
+          24.4022648
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ghayathi Community Hospital",
+        "type": "emergency",
+        "osm_id": 4895781122,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 807,
+        "store": 261,
+        "priority": 1,
+        "pos": "[52.8018261,23.8993421]",
+        "lat": 23.8993421,
+        "lng": 52.8018261
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.8018261,
+          23.8993421
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "All Wanda medical center",
+        "type": "emergency",
+        "osm_id": 4902430521,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 496,
+        "store": 223,
+        "priority": 1,
+        "pos": "[54.3712227,24.4711335]",
+        "lat": 24.4711335,
+        "lng": 54.3712227
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3712227,
+          24.4711335
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 4924693321,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 695,
+        "store": 150,
+        "priority": 1,
+        "pos": "[54.5214287,24.360754]",
+        "lat": 24.360754,
+        "lng": 54.5214287
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5214287,
+          24.360754
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Social Support Centre",
+        "type": "emergency",
+        "osm_id": 4929559042,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 205,
+        "store": 233,
+        "priority": 1,
+        "pos": "[55.5082147,25.4244518]",
+        "lat": 25.4244518,
+        "lng": 55.5082147
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.5082147,
+          25.4244518
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 4931798224,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 297,
+        "store": 320,
+        "priority": 1,
+        "pos": "[55.3545368,25.268084]",
+        "lat": 25.268084,
+        "lng": 55.3545368
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3545368,
+          25.268084
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sharjah International Holistic Health Center",
+        "type": "emergency",
+        "osm_id": 4937183907,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 602,
+        "store": 347,
+        "priority": 1,
+        "pos": "[55.3909247,25.346097]",
+        "lat": 25.346097,
+        "lng": 55.3909247
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3909247,
+          25.346097
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Minha Medical Centre",
+        "type": "emergency",
+        "osm_id": 4937656207,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 355,
+        "store": 495,
+        "priority": 1,
+        "pos": "[55.3935312,25.3376723]",
+        "lat": 25.3376723,
+        "lng": 55.3935312
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3935312,
+          25.3376723
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wellness One Day Surgery Centre",
+        "type": "emergency",
+        "osm_id": 5015141840,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 409,
+        "store": 359,
+        "priority": 1,
+        "pos": "[54.3981282,24.4431987]",
+        "lat": 24.4431987,
+        "lng": 54.3981282
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3981282,
+          24.4431987
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0645\u0631\u0643\u0632 \u0627\u0644\u0645\u062f\u064a\u0646\u0647 \u0644\u0644\u0635\u062d\u0647 \u0627\u0644\u0645\u0647\u0646\u064a\u0647",
+        "type": "emergency",
+        "osm_id": 5031705231,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 673,
+        "store": 246,
+        "priority": 1,
+        "pos": "[54.361459,24.4827281]",
+        "lat": 24.4827281,
+        "lng": 54.361459
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.361459,
+          24.4827281
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Yas Island Police Station",
+        "type": "emergency",
+        "osm_id": 5068504437,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 819,
+        "store": 336,
+        "priority": 1,
+        "pos": "[54.6033531,24.4931254]",
+        "lat": 24.4931254,
+        "lng": 54.6033531
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.6033531,
+          24.4931254
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pioneer Medical Services LLC",
+        "type": "emergency",
+        "osm_id": 5069436521,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 958,
+        "store": 220,
+        "priority": 1,
+        "pos": "[54.3847475,24.4645465]",
+        "lat": 24.4645465,
+        "lng": 54.3847475
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3847475,
+          24.4645465
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0645\u062f\u064a\u0631\u064a\u0629 \u0634\u0631\u0637\u0629 \u0627\u0644\u0645\u0646\u0637\u0642\u0629 \u0627\u0644\u063a\u0631\u0628\u064a\u0629 \u0637\u0631\u064a\u0641",
+        "type": "emergency",
+        "osm_id": 5074809923,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 644,
+        "store": 169,
+        "priority": 1,
+        "pos": "[53.7650129,24.0522001]",
+        "lat": 24.0522001,
+        "lng": 53.7650129
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          53.7650129,
+          24.0522001
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0627\u0644\u0646\u0642\u0644\u064a\u0627\u062a \u0648\u0627\u0644\u0645\u0634\u0627\u063a\u0644 \u0637\u0631\u064a\u0641",
+        "type": "emergency",
+        "osm_id": 5074809924,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 932,
+        "store": 442,
+        "priority": 1,
+        "pos": "[53.7349465,24.0084376]",
+        "lat": 24.0084376,
+        "lng": 53.7349465
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          53.7349465,
+          24.0084376
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "New National Medical",
+        "type": "emergency",
+        "osm_id": 5111165421,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 599,
+        "store": 255,
+        "priority": 1,
+        "pos": "[54.5321252,24.3374451]",
+        "lat": 24.3374451,
+        "lng": 54.5321252
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5321252,
+          24.3374451
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tahya Home Health Care",
+        "type": "emergency",
+        "osm_id": 5112984221,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 384,
+        "store": 189,
+        "priority": 1,
+        "pos": "[55.764393,24.2274178]",
+        "lat": 24.2274178,
+        "lng": 55.764393
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.764393,
+          24.2274178
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Happy Life Home Health Care",
+        "type": "emergency",
+        "osm_id": 5141815624,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 443,
+        "store": 399,
+        "priority": 1,
+        "pos": "[55.7719568,24.2205874]",
+        "lat": 24.2205874,
+        "lng": 55.7719568
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7719568,
+          24.2205874
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 5156435322,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 847,
+        "store": 176,
+        "priority": 1,
+        "pos": "[54.3560207,24.4622087]",
+        "lat": 24.4622087,
+        "lng": 54.3560207
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3560207,
+          24.4622087
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "eliya Medical Center",
+        "type": "emergency",
+        "osm_id": 5170714659,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 840,
+        "store": 228,
+        "priority": 1,
+        "pos": "[55.3800857,25.319359]",
+        "lat": 25.319359,
+        "lng": 55.3800857
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3800857,
+          25.319359
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ghayathi Hospital",
+        "type": "emergency",
+        "osm_id": 5197396422,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 495,
+        "store": 142,
+        "priority": 1,
+        "pos": "[52.801847,23.8993434]",
+        "lat": 23.8993434,
+        "lng": 52.801847
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.801847,
+          23.8993434
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Imperial College London Diabetes Center",
+        "type": "emergency",
+        "osm_id": 5215492321,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 452,
+        "store": 125,
+        "priority": 1,
+        "pos": "[55.6467537,24.1922707]",
+        "lat": 24.1922707,
+        "lng": 55.6467537
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.6467537,
+          24.1922707
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Digdagah Hospital",
+        "type": "emergency",
+        "osm_id": 5219621332,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 237,
+        "store": 320,
+        "priority": 1,
+        "pos": "[55.9659031,25.6876691]",
+        "lat": 25.6876691,
+        "lng": 55.9659031
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.9659031,
+          25.6876691
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cambridge Medical And Rehabilitation Centre",
+        "type": "emergency",
+        "osm_id": 5253352721,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 552,
+        "store": 144,
+        "priority": 1,
+        "pos": "[54.637609,24.3512451]",
+        "lat": 24.3512451,
+        "lng": 54.637609
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.637609,
+          24.3512451
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0645\u0633\u062a\u0634\u0641\u064a \u0627\u0644\u0648\u0642\u0646",
+        "type": "emergency",
+        "osm_id": 5274090421,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 318,
+        "store": 158,
+        "priority": 1,
+        "pos": "[55.5664763,23.6373046]",
+        "lat": 23.6373046,
+        "lng": 55.5664763
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.5664763,
+          23.6373046
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tawam Imperial College London Diabetes Center",
+        "type": "emergency",
+        "osm_id": 5276842722,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 444,
+        "store": 403,
+        "priority": 1,
+        "pos": "[55.6469703,24.1922776]",
+        "lat": 24.1922776,
+        "lng": 55.6469703
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.6469703,
+          24.1922776
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0645\u0631\u0643\u0632 \u0634\u0631\u0637\u0629 \u0627\u0644\u0648\u0642\u0646",
+        "type": "emergency",
+        "osm_id": 5276897623,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 680,
+        "store": 265,
+        "priority": 1,
+        "pos": "[55.5662314,23.6270579]",
+        "lat": 23.6270579,
+        "lng": 55.5662314
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.5662314,
+          23.6270579
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Police Ambulance Flat",
+        "type": "emergency",
+        "osm_id": 5295657922,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 364,
+        "store": 386,
+        "priority": 1,
+        "pos": "[55.7515556,24.2374135]",
+        "lat": 24.2374135,
+        "lng": 55.7515556
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7515556,
+          24.2374135
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "THUMBAY MEDI City",
+        "type": "emergency",
+        "osm_id": 5344534322,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 853,
+        "store": 301,
+        "priority": 1,
+        "pos": "[55.5017808,25.4183616]",
+        "lat": 25.4183616,
+        "lng": 55.5017808
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.5017808,
+          25.4183616
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Traffic Fine Department",
+        "type": "emergency",
+        "osm_id": 5369970821,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 934,
+        "store": 145,
+        "priority": 1,
+        "pos": "[54.4054723,24.4473916]",
+        "lat": 24.4473916,
+        "lng": 54.4054723
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4054723,
+          24.4473916
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "HR building - Al Ain hospital",
+        "type": "emergency",
+        "osm_id": 5401030222,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 428,
+        "store": 209,
+        "priority": 1,
+        "pos": "[55.7320328,24.2316982]",
+        "lat": 24.2316982,
+        "lng": 55.7320328
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7320328,
+          24.2316982
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency Department - Al Ain hospital",
+        "type": "emergency",
+        "osm_id": 5401036322,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 971,
+        "store": 174,
+        "priority": 1,
+        "pos": "[55.7330242,24.2315342]",
+        "lat": 24.2315342,
+        "lng": 55.7330242
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7330242,
+          24.2315342
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 5441211245,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 320,
+        "store": 176,
+        "priority": 1,
+        "pos": "[55.8764582,25.5837969]",
+        "lat": 25.5837969,
+        "lng": 55.8764582
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.8764582,
+          25.5837969
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Universal Hospital",
+        "type": "emergency",
+        "osm_id": 5500774223,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 347,
+        "store": 338,
+        "priority": 1,
+        "pos": "[54.3789422,24.4596856]",
+        "lat": 24.4596856,
+        "lng": 54.3789422
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3789422,
+          24.4596856
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wasal police",
+        "type": "emergency",
+        "osm_id": 5650717021,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 324,
+        "store": 489,
+        "priority": 1,
+        "pos": "[55.2562296,25.2093143]",
+        "lat": 25.2093143,
+        "lng": 55.2562296
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2562296,
+          25.2093143
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "lic help registration",
+        "type": "emergency",
+        "osm_id": 5692546421,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 772,
+        "store": 285,
+        "priority": 1,
+        "pos": "[55.4430874,25.3587656]",
+        "lat": 25.3587656,
+        "lng": 55.4430874
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4430874,
+          25.3587656
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "New Hope Hospital",
+        "type": "emergency",
+        "osm_id": 5694989972,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 399,
+        "store": 132,
+        "priority": 1,
+        "pos": "[55.3632982,25.3198569]",
+        "lat": 25.3198569,
+        "lng": 55.3632982
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3632982,
+          25.3198569
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Burjeel Royal Asharej Hospital",
+        "type": "emergency",
+        "osm_id": 5797715953,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 559,
+        "store": 303,
+        "priority": 1,
+        "pos": "[55.6624872,24.2062864]",
+        "lat": 24.2062864,
+        "lng": 55.6624872
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.6624872,
+          24.2062864
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pergil.burjeel",
+        "type": "emergency",
+        "osm_id": 5891279785,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 367,
+        "store": 181,
+        "priority": 1,
+        "pos": "[54.3809541,24.4791145]",
+        "lat": 24.4791145,
+        "lng": 54.3809541
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3809541,
+          24.4791145
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "mediclinic qusais",
+        "type": "emergency",
+        "osm_id": 5897112487,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 285,
+        "store": 440,
+        "priority": 1,
+        "pos": "[55.3884742,25.2821664]",
+        "lat": 25.2821664,
+        "lng": 55.3884742
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3884742,
+          25.2821664
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Osteopathy Health Centre",
+        "type": "emergency",
+        "osm_id": 6064375612,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 803,
+        "store": 146,
+        "priority": 1,
+        "pos": "[55.2112593,25.1483438]",
+        "lat": 25.1483438,
+        "lng": 55.2112593
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2112593,
+          25.1483438
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0634\u0631\u0637\u0629 \u0648\u0627\u0633\u0637",
+        "type": "emergency",
+        "osm_id": 6065352086,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 509,
+        "store": 195,
+        "priority": 1,
+        "pos": "[55.4585589,25.3517887]",
+        "lat": 25.3517887,
+        "lng": 55.4585589
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4585589,
+          25.3517887
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 6142844888,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 912,
+        "store": 388,
+        "priority": 1,
+        "pos": "[54.3742322,24.475498]",
+        "lat": 24.475498,
+        "lng": 54.3742322
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3742322,
+          24.475498
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RUWAIS HOSPITAL",
+        "type": "emergency",
+        "osm_id": 6163108275,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 935,
+        "store": 180,
+        "priority": 1,
+        "pos": "[52.6651871,24.0856678]",
+        "lat": 24.0856678,
+        "lng": 52.6651871
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.6651871,
+          24.0856678
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "al saha al shifa tatim",
+        "type": "emergency",
+        "osm_id": 6175233585,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 249,
+        "store": 464,
+        "priority": 1,
+        "pos": "[55.3896198,25.35866]",
+        "lat": 25.35866,
+        "lng": 55.3896198
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3896198,
+          25.35866
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0637\u0628 \u0627\u0644\u0648\u0642\u0627\u0626\u064a",
+        "type": "emergency",
+        "osm_id": 6175233586,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 574,
+        "store": 148,
+        "priority": 1,
+        "pos": "[55.4067005,25.34576]",
+        "lat": 25.34576,
+        "lng": 55.4067005
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4067005,
+          25.34576
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 6252173242,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 217,
+        "store": 207,
+        "priority": 1,
+        "pos": "[56.354556,25.5140709]",
+        "lat": 25.5140709,
+        "lng": 56.354556
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.354556,
+          25.5140709
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Parking.accomodition",
+        "type": "emergency",
+        "osm_id": 6371743491,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 500,
+        "store": 124,
+        "priority": 1,
+        "pos": "[54.4046181,24.4514825]",
+        "lat": 24.4514825,
+        "lng": 54.4046181
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4046181,
+          24.4514825
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Adm.ras.alkhaima.muncipality",
+        "type": "emergency",
+        "osm_id": 6371743492,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 410,
+        "store": 337,
+        "priority": 1,
+        "pos": "[55.9381152,25.7846769]",
+        "lat": 25.7846769,
+        "lng": 55.9381152
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.9381152,
+          25.7846769
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Alkhaled.car.samweel",
+        "type": "emergency",
+        "osm_id": 6371743493,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 334,
+        "store": 374,
+        "priority": 1,
+        "pos": "[54.5095967,24.3610518]",
+        "lat": 24.3610518,
+        "lng": 54.5095967
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5095967,
+          24.3610518
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Asd.saadiat",
+        "type": "emergency",
+        "osm_id": 6371769486,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 843,
+        "store": 361,
+        "priority": 1,
+        "pos": "[54.3427868,24.4716262]",
+        "lat": 24.4716262,
+        "lng": 54.3427868
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3427868,
+          24.4716262
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NMC dip",
+        "type": "emergency",
+        "osm_id": 6404934385,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 202,
+        "store": 460,
+        "priority": 1,
+        "pos": "[55.1541134,25.0029206]",
+        "lat": 25.0029206,
+        "lng": 55.1541134
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.1541134,
+          25.0029206
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Specialized Rehabilitation Hospital",
+        "type": "emergency",
+        "osm_id": 6493351085,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 708,
+        "store": 344,
+        "priority": 1,
+        "pos": "[54.4492787,24.4213944]",
+        "lat": 24.4213944,
+        "lng": 54.4492787
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4492787,
+          24.4213944
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "LIFE CARE HOSPITAL MISAFFAH",
+        "type": "emergency",
+        "osm_id": 6712095386,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 373,
+        "store": 282,
+        "priority": 1,
+        "pos": "[54.5210047,24.3608366]",
+        "lat": 24.3608366,
+        "lng": 54.5210047
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5210047,
+          24.3608366
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "LIFE LINE HOSPITAL MISAFFAH",
+        "type": "emergency",
+        "osm_id": 6712111885,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 281,
+        "store": 356,
+        "priority": 1,
+        "pos": "[54.5160306,24.3789185]",
+        "lat": 24.3789185,
+        "lng": 54.5160306
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5160306,
+          24.3789185
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 6833863197,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 991,
+        "store": 155,
+        "priority": 1,
+        "pos": "[56.1675778,25.2970134]",
+        "lat": 25.2970134,
+        "lng": 56.1675778
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.1675778,
+          25.2970134
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 7010644199,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 235,
+        "store": 165,
+        "priority": 1,
+        "pos": "[56.0938011,26.029566]",
+        "lat": 26.029566,
+        "lng": 56.0938011
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.0938011,
+          26.029566
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0634\u0631\u0637\u0629 \u062d\u0628\u062d\u0628",
+        "type": "emergency",
+        "osm_id": 7160219973,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 550,
+        "store": 294,
+        "priority": 1,
+        "pos": "[55.9932643,25.6095747]",
+        "lat": 25.6095747,
+        "lng": 55.9932643
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.9932643,
+          25.6095747
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "infinity",
+        "type": "emergency",
+        "osm_id": 7259046186,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 402,
+        "store": 211,
+        "priority": 1,
+        "pos": "[54.1628714,23.7978909]",
+        "lat": 23.7978909,
+        "lng": 54.1628714
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.1628714,
+          23.7978909
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0645\u0633\u062a\u0634\u0641\u0649",
+        "type": "emergency",
+        "osm_id": 7259046187,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 910,
+        "store": 317,
+        "priority": 1,
+        "pos": "[53.7276116,23.6581824]",
+        "lat": 23.6581824,
+        "lng": 53.7276116
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          53.7276116,
+          23.6581824
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Barraquer Eye Hospital",
+        "type": "emergency",
+        "osm_id": 7331761185,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 486,
+        "store": 131,
+        "priority": 1,
+        "pos": "[55.3206903,25.2097152]",
+        "lat": 25.2097152,
+        "lng": 55.3206903
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3206903,
+          25.2097152
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Aster Medical Clinic",
+        "type": "emergency",
+        "osm_id": 7340170641,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 246,
+        "store": 304,
+        "priority": 1,
+        "pos": "[55.4056739,25.2795792]",
+        "lat": 25.2795792,
+        "lng": 55.4056739
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4056739,
+          25.2795792
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Burjeel Day Surgery Center",
+        "type": "emergency",
+        "osm_id": 7380314389,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 970,
+        "store": 313,
+        "priority": 1,
+        "pos": "[54.4082432,24.4947868]",
+        "lat": 24.4947868,
+        "lng": 54.4082432
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4082432,
+          24.4947868
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "American",
+        "type": "emergency",
+        "osm_id": 7404885064,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 388,
+        "store": 122,
+        "priority": 1,
+        "pos": "[55.2004475,25.0995266]",
+        "lat": 25.0995266,
+        "lng": 55.2004475
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2004475,
+          25.0995266
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "American",
+        "type": "emergency",
+        "osm_id": 7414566560,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 737,
+        "store": 305,
+        "priority": 1,
+        "pos": "[55.200764,25.099551]",
+        "lat": 25.099551,
+        "lng": 55.200764
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.200764,
+          25.099551
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Shifa International Hospitals DWC",
+        "type": "emergency",
+        "osm_id": 7760496209,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 929,
+        "store": 139,
+        "priority": 1,
+        "pos": "[55.1185477,24.908941]",
+        "lat": 24.908941,
+        "lng": 55.1185477
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.1185477,
+          24.908941
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Amana health care",
+        "type": "emergency",
+        "osm_id": 8104318489,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 354,
+        "store": 341,
+        "priority": 1,
+        "pos": "[54.5883496,24.436245]",
+        "lat": 24.436245,
+        "lng": 54.5883496
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.5883496,
+          24.436245
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u062a\u062c\u0645\u0639\u0627\u062a \u0645\u0633\u062a\u0634\u0641\u0649 \u0643\u0631\u0648\u0646\u0627 razeen 4",
+        "type": "emergency",
+        "osm_id": 8153393792,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 651,
+        "store": 412,
+        "priority": 1,
+        "pos": "[54.8494452,24.1944744]",
+        "lat": 24.1944744,
+        "lng": 54.8494452
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.8494452,
+          24.1944744
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dibba Al Hisn Border Post",
+        "type": "emergency",
+        "osm_id": 8278597817,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 858,
+        "store": 310,
+        "priority": 1,
+        "pos": "[56.2663225,25.6062842]",
+        "lat": 25.6062842,
+        "lng": 56.2663225
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.2663225,
+          25.6062842
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dialysis Center Al Towar",
+        "type": "emergency",
+        "osm_id": 8678596117,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 879,
+        "store": 281,
+        "priority": 1,
+        "pos": "[55.3970135,25.2511315]",
+        "lat": 25.2511315,
+        "lng": 55.3970135
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3970135,
+          25.2511315
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Zulekha Hosptial",
+        "type": "emergency",
+        "osm_id": 9155997899,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 560,
+        "store": 145,
+        "priority": 1,
+        "pos": "[55.3841973,25.2915405]",
+        "lat": 25.2915405,
+        "lng": 55.3841973
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3841973,
+          25.2915405
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bella Roma Specialty Hospital",
+        "type": "emergency",
+        "osm_id": 9212268131,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 460,
+        "store": 293,
+        "priority": 1,
+        "pos": "[55.218666,25.1578056]",
+        "lat": 25.1578056,
+        "lng": 55.218666
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.218666,
+          25.1578056
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "DHA central service complex",
+        "type": "emergency",
+        "osm_id": 9370196202,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 720,
+        "store": 189,
+        "priority": 1,
+        "pos": "[55.2931854,25.2374019]",
+        "lat": 25.2374019,
+        "lng": 55.2931854
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2931854,
+          25.2374019
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "breath & health alternative medical centre",
+        "type": "emergency",
+        "osm_id": 9379438444,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 998,
+        "store": 185,
+        "priority": 1,
+        "pos": "[55.214126,25.1528136]",
+        "lat": 25.1528136,
+        "lng": 55.214126
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.214126,
+          25.1528136
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "FMC medical centre",
+        "type": "emergency",
+        "osm_id": 9383197462,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 658,
+        "store": 443,
+        "priority": 1,
+        "pos": "[55.2032505,25.1378964]",
+        "lat": 25.1378964,
+        "lng": 55.2032505
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2032505,
+          25.1378964
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (hospital)",
+        "type": "emergency",
+        "osm_id": 9411977923,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 274,
+        "store": 247,
+        "priority": 1,
+        "pos": "[55.3886951,25.3415559]",
+        "lat": 25.3415559,
+        "lng": 55.3886951
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3886951,
+          25.3415559
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Azure Clinics",
+        "type": "emergency",
+        "osm_id": 9682167718,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 341,
+        "store": 150,
+        "priority": 1,
+        "pos": "[54.3627269,24.4898198]",
+        "lat": 24.4898198,
+        "lng": 54.3627269
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3627269,
+          24.4898198
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "\u0645\u0631\u0643\u0632 \u0634\u0631\u0637\u0629 \u0647\u064a\u0644\u064a",
+        "type": "emergency",
+        "osm_id": 9878819851,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 422,
+        "store": 481,
+        "priority": 1,
+        "pos": "[55.7648575,24.2772963]",
+        "lat": 24.2772963,
+        "lng": 55.7648575
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.7648575,
+          24.2772963
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 10156290717,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 364,
+        "store": 214,
+        "priority": 1,
+        "pos": "[56.2826602,25.6206977]",
+        "lat": 25.6206977,
+        "lng": 56.2826602
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.2826602,
+          25.6206977
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Smart Police Station Drive-Thru",
+        "type": "emergency",
+        "osm_id": 10550156493,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 262,
+        "store": 190,
+        "priority": 1,
+        "pos": "[55.4759108,25.2350553]",
+        "lat": 25.2350553,
+        "lng": 55.4759108
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4759108,
+          25.2350553
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 10648605992,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 262,
+        "store": 180,
+        "priority": 1,
+        "pos": "[54.6867683,24.2215146]",
+        "lat": 24.2215146,
+        "lng": 54.6867683
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.6867683,
+          24.2215146
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "HOPE Rehabilitation",
+        "type": "emergency",
+        "osm_id": 10781435731,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 717,
+        "store": 379,
+        "priority": 1,
+        "pos": "[55.4658526,25.3905616]",
+        "lat": 25.3905616,
+        "lng": 55.4658526
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4658526,
+          25.3905616
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NMC Medical Centre",
+        "type": "emergency",
+        "osm_id": 10893313888,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 374,
+        "store": 132,
+        "priority": 1,
+        "pos": "[54.48897,24.3457522]",
+        "lat": 24.3457522,
+        "lng": 54.48897
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.48897,
+          24.3457522
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Alma Polyclinic",
+        "type": "emergency",
+        "osm_id": 11185679169,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 434,
+        "store": 403,
+        "priority": 1,
+        "pos": "[55.207794,25.1439349]",
+        "lat": 25.1439349,
+        "lng": 55.207794
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.207794,
+          25.1439349
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Saif Bin Zayed Police Academy",
+        "type": "emergency",
+        "osm_id": 11333474269,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 788,
+        "store": 150,
+        "priority": 1,
+        "pos": "[54.4150746,24.4335202]",
+        "lat": 24.4335202,
+        "lng": 54.4150746
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4150746,
+          24.4335202
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Nexx Home Healthcare Services",
+        "type": "emergency",
+        "osm_id": 11505821512,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 349,
+        "store": 441,
+        "priority": 1,
+        "pos": "[55.2596551,25.1843712]",
+        "lat": 25.1843712,
+        "lng": 55.2596551
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2596551,
+          25.1843712
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 11528505150,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 876,
+        "store": 292,
+        "priority": 1,
+        "pos": "[54.3444963,24.478344]",
+        "lat": 24.478344,
+        "lng": 54.3444963
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3444963,
+          24.478344
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wasit Police Station",
+        "type": "emergency",
+        "osm_id": 11545391871,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 339,
+        "store": 359,
+        "priority": 1,
+        "pos": "[55.4529399,25.3537209]",
+        "lat": 25.3537209,
+        "lng": 55.4529399
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.4529399,
+          25.3537209
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Hudariyat Police Point",
+        "type": "emergency",
+        "osm_id": 11812201857,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 771,
+        "store": 465,
+        "priority": 1,
+        "pos": "[54.3497768,24.4139227]",
+        "lat": 24.4139227,
+        "lng": 54.3497768
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3497768,
+          24.4139227
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 11882412691,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 769,
+        "store": 469,
+        "priority": 1,
+        "pos": "[55.3120087,25.2666524]",
+        "lat": 25.2666524,
+        "lng": 55.3120087
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3120087,
+          25.2666524
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emergency (police)",
+        "type": "emergency",
+        "osm_id": 12042106560,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 447,
+        "store": 282,
+        "priority": 1,
+        "pos": "[55.8096313,25.705034]",
+        "lat": 25.705034,
+        "lng": 55.8096313
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.8096313,
+          25.705034
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Getchecked Clinic",
+        "type": "emergency",
+        "osm_id": 12048812455,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 238,
+        "store": 256,
+        "priority": 1,
+        "pos": "[55.1918492,25.1404426]",
+        "lat": 25.1404426,
+        "lng": 55.1918492
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.1918492,
+          25.1404426
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "BIOS CLINIC",
+        "type": "emergency",
+        "osm_id": 12194930325,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 975,
+        "store": 197,
+        "priority": 1,
+        "pos": "[55.2910597,25.1909698]",
+        "lat": 25.1909698,
+        "lng": 55.2910597
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2910597,
+          25.1909698
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dubai Police",
+        "type": "emergency",
+        "osm_id": 12327807367,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 268,
+        "store": 161,
+        "priority": 1,
+        "pos": "[55.304875,25.0682591]",
+        "lat": 25.0682591,
+        "lng": 55.304875
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.304875,
+          25.0682591
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Abu Dhabi Police Station",
+        "type": "emergency",
+        "osm_id": 12450271583,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 551,
+        "store": 299,
+        "priority": 1,
+        "pos": "[54.7321771,24.6179784]",
+        "lat": 24.6179784,
+        "lng": 54.7321771
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.7321771,
+          24.6179784
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NYUAD Health Center",
+        "type": "emergency",
+        "osm_id": 12486106553,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 515,
+        "store": 347,
+        "priority": 1,
+        "pos": "[54.4346032,24.5245139]",
+        "lat": 24.5245139,
+        "lng": 54.4346032
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.4346032,
+          24.5245139
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Check post",
+        "type": "emergency",
+        "osm_id": 12492806601,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 660,
+        "store": 322,
+        "priority": 1,
+        "pos": "[56.1473361,25.9403421]",
+        "lat": 25.9403421,
+        "lng": 56.1473361
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.1473361,
+          25.9403421
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mediclinic Springs",
+        "type": "emergency",
+        "osm_id": 12789620579,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 679,
+        "store": 347,
+        "priority": 1,
+        "pos": "[55.1705534,25.0545023]",
+        "lat": 25.0545023,
+        "lng": 55.1705534
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.1705534,
+          25.0545023
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Perfect Doctors Clinic",
+        "type": "emergency",
+        "osm_id": 13164397343,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 404,
+        "store": 217,
+        "priority": 1,
+        "pos": "[55.2153502,25.1536739]",
+        "lat": 25.1536739,
+        "lng": 55.2153502
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.2153502,
+          25.1536739
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ishaq Bin Omran Medical Center",
+        "type": "emergency",
+        "osm_id": 13325985077,
+        "country": "Unknown",
+        "prod": 0,
+        "dem": 512,
+        "store": 200,
+        "priority": 1,
+        "pos": "[55.5390507,25.3004065]",
+        "lat": 25.3004065,
+        "lng": 55.5390507
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.5390507,
+          25.3004065
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Ain",
+        "type": "region",
+        "osm_id": 13249272,
+        "country": "Unknown",
+        "prod": 460,
+        "dem": 735,
+        "store": 82,
+        "priority": 5,
+        "pos": "[55.3354963,23.712634]",
+        "lat": 23.712634,
+        "lng": 55.3354963
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.3354963,
+          23.712634
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Abu Dhabi",
+        "type": "region",
+        "osm_id": 13249273,
+        "country": "Unknown",
+        "prod": 309,
+        "dem": 558,
+        "store": 949,
+        "priority": 1,
+        "pos": "[54.3227478,24.2606591]",
+        "lat": 24.2606591,
+        "lng": 54.3227478
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3227478,
+          24.2606591
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Dhafrah Region",
+        "type": "region",
+        "osm_id": 13249274,
+        "country": "Unknown",
+        "prod": 130,
+        "dem": 398,
+        "store": 932,
+        "priority": 2,
+        "pos": "[53.165354,24.0283067]",
+        "lat": 24.0283067,
+        "lng": 53.165354
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          53.165354,
+          24.0283067
+        ]
+      }
+    }
+  ]
+}

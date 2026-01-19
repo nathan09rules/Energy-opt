@@ -46,28 +46,28 @@ export const initialPowerSources = [
     id: 8304878670,
     lat: 40.7162289,
     lng: -74.014699,
-    info: { code: 'S', color: '#FFD700' },
+    info: { code: 'S', color: '#FFD700', renewable: true },
     name: 'Solar Generator'
   },
   {
     id: 742054629,
     lat: 40.712587,
     lng: -74.0034475,
-    info: { code: 'D', color: '#00FF88' },
+    info: { code: 'S', color: '#FFD700', renewable: true },
     name: 'Solar Photovoltaic Panel'
   },
   {
     id: 1457797800,
     lat: 40.7128018,
     lng: -74.0062233,
-    info: { code: 'S', color: '#FFD700' },
+    info: { code: 'S', color: '#FFD700', renewable: true },
     name: 'Solar Photovoltaic Panel'
   },
   {
     id: 1457797801,
     lat: 40.7126138,
     lng: -74.005849,
-    info: { code: 'S', color: '#FFD700' },
+    info: { code: 'S', color: '#FFD700', renewable: true },
     name: 'Solar Photovoltaic Panel'
   }
 ];

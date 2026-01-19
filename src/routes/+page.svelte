@@ -24,6 +24,18 @@
   import { place, draw, path, autoConnect } from "$lib/graph.js";
   import { optimize } from "$lib/optamize.js";
 
+  const typeMap = {
+    solar: { code: "S", color: "#FFD700", renewable: true },
+    wind: { code: "W", color: "#00BFFF", renewable: true },
+    hydro: { code: "H", color: "#4169E1", renewable: true },
+    nuclear: { code: "N", color: "#ADFF2F", renewable: true },
+    biomass: { code: "B", color: "#32CD32", renewable: true },
+    geothermal: { code: "G", color: "#F4A460", renewable: true },
+    coal: { code: "C", color: "#8B4513", renewable: false },
+    gas: { code: "G", color: "#FFA500", renewable: false },
+    oil: { code: "O", color: "#FF4500", renewable: false },
+  };
+
   // Reactive statement to redraw when graph changes
   $: if ($graph && map && L) draw(map, get(graph), L, getGraphLayer());
 
@@ -68,14 +80,30 @@
         const res = await fetch(url, { method: "POST", body: query });
         if (!res.ok) continue;
         const data = await res.json();
-        const newSources = data.elements.map((el) => ({
-          id: el.id,
-          lat: el.lat || el.center.lat,
-          lng: el.lon || el.center.lon,
-          info: { code: "P", color: "#00FF88" },
-          name: el.tags.name || "Station",
-        }));
+        const newSources = data.elements.map((el) => {
+          const tags = el.tags || {};
+          const rawType = (
+            tags["generator:source"] ||
+            tags["fuel"] ||
+            tags["power:source"] ||
+            ""
+          ).toLowerCase();
+          const info = typeMap[rawType] || {
+            code: tags.name ? tags.name.charAt(0).toUpperCase() : "P",
+            color: "#FF8800", // Default to non-renewable orange
+            renewable: false,
+          };
+
+          return {
+            id: el.id,
+            lat: el.lat || el.center.lat,
+            lng: el.lon || el.center.lon,
+            info,
+            name: tags.name || "Station",
+          };
+        });
         powerSources.set(newSources);
+        console.log("Fetched Stations:", get(powerSources));
         syncPowerSources();
         reoptimize();
         isScanning = false;
@@ -93,6 +121,7 @@
       map = await initMap("map", "../data.geojson");
       L = getL();
       powerSources.set(initialPowerSources);
+      console.log("Initial Stations:", get(powerSources));
       syncPowerSources();
       reoptimize();
 
@@ -315,7 +344,7 @@
         {:else}
           <!-- Advanced Mode (Full Access) -->
           <div class="inspect-row">
-            <label for="prod">Prod:</label><input
+            <label for="prod">Production:</label><input
               id="prod"
               type="number"
               bind:value={$activeData.prod}
@@ -323,7 +352,7 @@
             />
           </div>
           <div class="inspect-row">
-            <label for="dem">Dem:</label><input
+            <label for="dem">Demand:</label><input
               id="dem"
               type="number"
               bind:value={$activeData.dem}
@@ -346,14 +375,23 @@
               on:change={reoptimize}
             />
           </div>
-
-          {#if currentMode === "predict"}
-            <hr />
+          {#if false}
             <div class="inspect-row">
-              <label for="future-use">Future Use:</label><span id="future-use"
-                >Expected +12%</span
-              >
+              <label for="pos">Position:</label><input
+                id="pos"
+                type="position"
+                bind:value={$activeData.pos}
+              />
             </div>
+
+            {#if currentMode === "predict"}
+              <hr />
+              <div class="inspect-row">
+                <label for="future-use">Future Use:</label><span id="future-use"
+                  >Expected +12%</span
+                >
+              </div>
+            {/if}
           {/if}
         {/if}
       </div>
@@ -395,7 +433,7 @@
           setTimeout(() => {
             path(map, get(graph), L, getGraphLayer(), ledger[i]);
             activeIndex = i;
-          }, 1); // Staggered delay
+          }, 10 * i); // Staggered delay
         }
       }}>PLAY ALL</button
     >
