@@ -44,7 +44,7 @@
   let isDashboardOpen = false;
   let showAdvanced = false;
   let isScanning = false;
-  let PlayedAll = false;
+  let isPlayingAll = false;
   let ledger = [];
   let activeIndex = -1;
 
@@ -373,6 +373,24 @@
               on:change={reoptimize}
             />
           </div>
+          {#if $activeData.log && $activeData.log.length > 0}
+            <hr />
+            <div class="inspect-row">
+              <strong>Energy Log:</strong>
+            </div>
+            {#each $activeData.log as entry}
+              <div
+                class="inspect-row"
+                style="font-size: 0.7rem; justify-content: flex-start;"
+              >
+                Step {entry.step}: {entry.type}
+                {entry.amount}
+                {entry.type === "sent"
+                  ? `to ${entry.to}`
+                  : `from ${entry.from}`}
+              </div>
+            {/each}
+          {/if}
           {#if false}
             <div class="inspect-row">
               <label for="pos">Position:</label><input
