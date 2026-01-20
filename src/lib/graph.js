@@ -129,15 +129,7 @@ export function draw(map, graphData, L, layerGroup) {
                 activeModel.set(node);
             });
 
-            if (node.info?.code) {
-                L.marker([node.lat, node.lng], {
-                    icon: L.divIcon({
-                        className: 'station-icon',
-                        html: `<div style="color: black; font-weight: bold; font-size: 10px; margin-top: -2px; margin-left: -1px;">${node.info.code}</div>`,
-                        iconSize: [12, 12]
-                    })
-                }).addTo(layerGroup);
-            }
+
         }
     });
 

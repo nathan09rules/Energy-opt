@@ -10,7 +10,7 @@ export function optimize() {
 
     const data = structuredClone(rawData);
     const ledger = [];
-    const lossPerStep = parseFloat(CONFIGS["transmission loss factor"]) || 0.05;
+    const lossPerStep = parseFloat(get(CONFIGS)["transmission loss factor"]) || 0.05;
 
     // Surplus and Deficit func
     const getSurplus = () => Object.keys(data.loc).filter(id => (data.loc[id].prod - data.loc[id].dem) > 0);

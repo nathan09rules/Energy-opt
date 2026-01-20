@@ -36,13 +36,15 @@
     oil: { code: "O", color: "#FF4500", renewable: false },
   };
 
-  // Reactive statement to redraw when graph changes
-  $: if ($graph && map && L) draw(map, get(graph), L, getGraphLayer());
+  // Reactive statement to redraw when graph or activeData changes
+  $: if (($graph || $activeData) && map && L)
+    draw(map, get(graph), L, getGraphLayer());
 
   let map, L;
   let isDashboardOpen = false;
   let showAdvanced = false;
   let isScanning = false;
+  let PlayedAll = false;
   let ledger = [];
   let activeIndex = -1;
 
@@ -239,10 +241,6 @@
 
 <div class="mode-badge">MODE: {currentMode.toUpperCase()}</div>
 
-<button class="search-btn" on:click={loadPowerData}>
-  {isScanning ? "📡 FETCHING ENERGY DATA..." : "📡 PULSE SCAN"}
-</button>
-
 <div id="ui">
   <!-- Top Right Controls (Classic Style) -->
   <div id="drop">
@@ -401,6 +399,14 @@
       </p>
     {/if}
   </div>
+  {#if showAdvanced}
+    <div
+      id="log"
+      style="position: fixed; bottom: 15px; right: 15px; border-radius: 20px; width: 100px; height: 300px; background-color: rgba(255, 255, 255, 0.9);"
+    >
+      {ledger.length}
+    </div>
+  {/if}
 
   <!-- Timeline (Classic Style) -->
   <div id="timeline">
@@ -427,13 +433,17 @@
     >
     <button
       on:click={() => {
-        activeIndex = -1;
-        draw(map, get(graph), L, getGraphLayer());
-        for (let i = 0; i < ledger.length; i++) {
-          setTimeout(() => {
-            path(map, get(graph), L, getGraphLayer(), ledger[i]);
-            activeIndex = i;
-          }, 10 * i); // Staggered delay
+        if (!PlayedAll) {
+          PlayedAll = true;
+          activeIndex = -1;
+          draw(map, get(graph), L, getGraphLayer());
+          for (let i = 0; i < ledger.length; i++) {
+            setTimeout(() => {
+              path(map, get(graph), L, getGraphLayer(), ledger[i]);
+              activeIndex = i;
+              if (i === ledger.length - 1) isPlayingAll = false;
+            }, 10 * i); // Staggered delay
+          }
         }
       }}>PLAY ALL</button
     >
@@ -463,23 +473,32 @@
 
   <div style="overflow-y: auto; flex: 1;">
     <h3 style="font-size: 0.9rem;">Grid Constants</h3>
-    {#each Object.entries(CONFIGS) as [key, value], i}
+    {#each Object.entries($CONFIGS) as [key, value], i}
       <div style="display: flex; flex-direction: column; margin-bottom: 10px;">
         <label for="config-{i}" style="font-size: 0.7rem;">{key}</label>
         <input
           id="config-{i}"
           type="number"
           step="0.1"
-          bind:value={CONFIGS[key]}
-          on:change={reoptimize}
-          style="width: 100%; border: 1px solid black;"
+          {value}
+          on:change={(e) => {
+            CONFIGS.update((c) => ({
+              ...c,
+              [key]: parseFloat(e.target.value) || 0,
+            }));
+            reoptimize();
+          }}
+          style="width: 90%; margin-left: 1%; border: 1px solid black;"
         />
       </div>
     {/each}
   </div>
 
   <div style="padding: 10px; border: 1px solid gray; font-size: 0.8rem;">
-    <strong>Active Phase:</strong>
-    {currentMode.toUpperCase()}
+    <button
+      on:click={reoptimize}
+      style="width: 100%; padding: 5px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;"
+      >OPTIMIZE</button
+    >
   </div>
 </div>

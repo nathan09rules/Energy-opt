@@ -1,6 +1,7 @@
 // Configuration file for the application
+import { writable } from 'svelte/store';
 
-export const CONFIGS = {
+export const CONFIGS = writable({
     "location resistance": 2.5,
     "main resistance": 1.2,
     "max neighbors": 3,
@@ -10,4 +11,4 @@ export const CONFIGS = {
     "priority weight": 10,          // weight for priority in optimization
     "distance weight": 1,           // weight for distance in optimization
     "base demand": 50,              // default demand if missing
-};
+});

@@ -11,6 +11,9 @@ let graphLayer;
 
 export async function initMap(containerId, geojsonUrl) {
   L = window.L || (await import('leaflet')).default;
+  await import('leaflet.markercluster/dist/MarkerCluster.css');
+  await import('leaflet.markercluster/dist/MarkerCluster.Default.css');
+  const markerCluster = await import('leaflet.markercluster');
 
   map = L.map(containerId, { zoomControl: false });
 
@@ -28,6 +31,14 @@ export async function initMap(containerId, geojsonUrl) {
 
     layer = L.geoJSON(geojson, {
       style: { color: 'black', weight: 1, fillOpacity: 0.5, fillColor: '#00ff88' },
+      pointToLayer: (feature, latlng) => {
+        return L.circleMarker(latlng, {
+          color: 'black',
+          fillColor: '#3388ff',
+          fillOpacity: 0.8,
+          radius: 8
+        });
+      },
       onEachFeature: (feature, lyr) => {
         const id = nextId++;
         const props = { ...feature.properties, id, type: 'loc', neighbors: [] };
@@ -43,7 +54,12 @@ export async function initMap(containerId, geojsonUrl) {
           activeData.set(props);
         });
       }
-    }).addTo(map);
+    });
+
+    // Create cluster group and add layer to it
+    const markers = L.markerClusterGroup();
+    markers.addLayer(layer);
+    map.addLayer(markers);
 
     const tempLocs = {};
     layer.eachLayer(l => {
@@ -132,9 +148,19 @@ export function syncPowerSources() {
 
 export function getMarkerLayerGroup() { return markerLayerGroup; }
 
-export function sublines(graph) {
-  // TODO: Implement sublines function to update connections
-  // Probably connects locs to mains or updates neighbors
+export function sublines(graphData) {
+  const locs = Object.values(graphData.loc);
+  locs.forEach(loc => {
+    loc.neighbors = [];
+    const others = locs.filter(l => l.id !== loc.id);
+    others.sort((a, b) => {
+      const d1 = Math.sqrt(Math.pow(loc.lat - a.lat, 2) + Math.pow(loc.lng - a.lng, 2));
+      const d2 = Math.sqrt(Math.pow(loc.lat - b.lat, 2) + Math.pow(loc.lng - b.lng, 2));
+      return d1 - d2;
+    });
+    loc.neighbors = others.slice(0, 3).map(o => o.id); // top 3 nearest
+  });
+  graph.set(graphData); // update store
 }
 
 export function updateInspect(data) {
