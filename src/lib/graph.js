@@ -175,7 +175,7 @@ export function path(map, graphData, L, layerGroup, entry) {
 
     // Determine path color based on source type
     const sourceNode = graphData.loc[entry.start];
-    let pathColor = sourceNode.prod > 50 ? '#ff8800' : '#00ff88'; // Default renewable green
+    let pathColor = sourceNode.prod > 50 ? '#ade6b1ff' : '#ff8800'; // Default renewable green
     if (entry.type === 'grid-injection' || entry.type === 'grid_injection') {
         pathColor = '#add8e6';
     } else if (sourceNode) {
@@ -183,12 +183,17 @@ export function path(map, graphData, L, layerGroup, entry) {
             pathColor = '#ff8800'; // Non-renewable orange
         }
     }
+    const border = L.polyline(pts, {
+        color: '#000000',
+        weight: 7,       // Thicker than the main line (6 + 4)
+        opacity: 0.5,
+        lineJoin: 'round' // Makes the corners look smooth
+    }).addTo(layerGroup);
 
     const p = L.polyline(pts, {
         color: pathColor,
-        weight: 8,
+        weight: 5,
         opacity: 0.8,
-        dashArray: '10, 20',
         className: 'energy-flow-path'
     }).addTo(layerGroup);
 
@@ -221,6 +226,7 @@ export function path(map, graphData, L, layerGroup, entry) {
     // Cleanup line
     setTimeout(() => {
         if (layerGroup && layerGroup.hasLayer(p)) layerGroup.removeLayer(p);
+        if (layerGroup && layerGroup.hasLayer(border)) layerGroup.removeLayer(border);
     }, 4000);
 }
 

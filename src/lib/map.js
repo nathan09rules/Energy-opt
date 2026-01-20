@@ -108,7 +108,7 @@ export function syncPowerSources() {
 
       currentGraph.loc[source.id] = {
         ...source,
-        prod: 5000, // High production for stations
+        prod: source.renewable ? parseInt(Math.random() * (100 - 10) + 10) : 2000, // High production for stations
         dem: 0,
         priority: 1,
         store: 1000,

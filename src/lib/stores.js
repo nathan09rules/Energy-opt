@@ -46,8 +46,8 @@ export const initialPowerSources = [
     id: 8304878670,
     lat: 40.7162289,
     lng: -74.014699,
-    info: { code: 'S', color: '#FFD700', renewable: true },
-    name: 'Solar Generator'
+    info: { code: 'H', color: '#4169E1', renewable: true },
+    name: 'Hydroelectric Dam'
   },
   {
     id: 742054629,
@@ -67,7 +67,43 @@ export const initialPowerSources = [
     id: 1457797801,
     lat: 40.7126138,
     lng: -74.005849,
+    info: { code: 'O', color: '#ff1500', renewable: true },
+    name: 'Solar Photovoltaic Panel'
+  },
+  {
+
+    id: 1457797802,
+    lat: 40.70871949811982,
+    lng: -74.01164130619357,
     info: { code: 'S', color: '#FFD700', renewable: true },
     name: 'Solar Photovoltaic Panel'
+  },
+  {
+    id: 1457797803,
+    lat: 40.7068230147228,
+    lng: -74.0146040092517,
+    info: { code: 'S', color: '#FFD700', renewable: true },
+    name: 'Solar Photovoltaic Panel'
+  },
+  {
+    id: 1457797804,
+    lat: 40.72046126415034,
+    lng: -74.01205133801675,
+    info: { code: 'N', color: '#ADFF2F', renewable: false },
+    name: 'Nuclear Power Plant'
+  },
+  {
+    id: 1457797805,
+    lat: 40.70797026199809,
+    lng: -73.9993812957756,
+    info: { code: 'C', color: '#ff5900', renewable: false },
+    name: 'Coal-fired Power Plant'
+  },
+  {
+    id: 1457797806,
+    lat: 40.70133346395292,
+    lng: -74.01110645351064,
+    info: { code: 'O', color: '#652300ff', renewable: false },
+    name: 'Oil-fired Power Plant'
   }
 ];
